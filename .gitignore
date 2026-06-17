@@ -36,3 +36,7 @@ node_modules/
 
 # Backup of Word templates (we don't redistribute originals)
 20260226145600_*.docx
+
+# Demo runtime artifacts
+biobridge/demo/demo_results.json
+biobridge/**/__pycache__/
