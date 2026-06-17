@@ -1,5 +1,9 @@
 # MAV — 基于知识图谱与大语言模型的仿生飞行器智能问答与方案推荐方法
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20726399.svg)](https://doi.org/10.5281/zenodo.20726399)
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC_BY_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+[![License: MIT](https://img.shields.io/badge/Code_License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
 > 西北工业大学航空学院 · 控制工程硕士论文研究项目
 >
 > 论文方向（小论文）：**基于图增强检索的仿生飞行器概念设计智能问答与方案推荐方法**（拟投航空学报）
@@ -141,7 +145,8 @@ python papers/fwmav-qa-benchmark/scripts/validate.py \
   author = {Wang, Jialong},
   year   = {2026},
   url    = {https://github.com/humble-long/MAV},
-  doi    = {TBD-Zenodo}
+  doi    = {10.5281/zenodo.20726399},
+  publisher = {Zenodo}
 }
 
 @article{wang2026biobridge,
