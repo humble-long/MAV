@@ -1,6 +1,6 @@
 """OpenAI Function Calling 工具规格 (JSON Schema).
 
-把 4 个物理工具 + 3 个 KG 工具的接口暴露给 LLM。
+把 4 个物理工具 + 3 个 KG 工具 + 1 个张量分解粗筛工具暴露给 LLM。
 所有 spec 遵循 OpenAI Tool Use 标准（被 DeepSeek、Anthropic、Google 兼容）。
 """
 
@@ -8,6 +8,7 @@ from __future__ import annotations
 import json
 from .physics_tools import PHYSICS_TOOLS
 from .kg_tools import KG_TOOLS
+from .tensor_recall import tensor_recall_tool
 
 
 TOOL_SPECS = [
@@ -141,6 +142,66 @@ TOOL_SPECS = [
         },
     },
 
+    {
+        "type": "function",
+        "function": {
+            "name": "tensor_recall",
+            "description": (
+                "[创新点 3] 基于 4 阶张量 CP 分解 + KNN 的方案候选粗筛。"
+                "用嵌入向量空间检索，速度快（毫秒级）、覆盖广，从 39 个 FWMAV 中召回 Top-K 候选。"
+                "注意：粗筛后建议用创新点 2 的物理工具（hassanalian_weight 等）做精排校验。"
+                "适用场景：B1/B2 类方案推荐题，先粗筛再精排是论文核心范式。"
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "weight_g": {"type": "number", "description": "目标重量约束（g）"},
+                    "wingspan_mm": {"type": "number", "description": "目标翼展（mm）"},
+                    "frequency_hz": {"type": "number", "description": "目标扑频（Hz）"},
+                    "speed_max_m_s": {"type": "number", "description": "目标最大速度（m/s）"},
+                    "endurance_s": {"type": "number", "description": "目标续航（秒）"},
+                    "can_hover": {"type": "boolean", "description": "是否需要悬停能力"},
+                    "mission": {
+                        "type": "string",
+                        "enum": ["research", "task", "maneuver", "performance", "other"],
+                        "description": "任务大类（research=研究/验证, task=侦察/巡航/监测, maneuver=高机动/特技, performance=高效率/长航时, other=表演/教学）",
+                    },
+                    "top_k": {"type": "integer", "description": "返回的候选数", "default": 10},
+                },
+            },
+        },
+    },
+
+    {
+        "type": "function",
+        "function": {
+            "name": "tensor_recall",
+            "description": (
+                "[创新点 3] 基于 4 阶张量 CP 分解 + KNN 的方案候选粗筛。"
+                "用嵌入向量空间检索，速度快（毫秒级）、覆盖广，从 39 个 FWMAV 中召回 Top-K 候选。"
+                "注意：粗筛后建议用创新点 2 的物理工具（hassanalian_weight 等）做精排校验。"
+                "适用场景：B1/B2 类方案推荐题，先粗筛再精排是论文核心范式。"
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "weight_g": {"type": "number", "description": "目标重量约束（g）"},
+                    "wingspan_mm": {"type": "number", "description": "目标翼展（mm）"},
+                    "frequency_hz": {"type": "number", "description": "目标扑频（Hz）"},
+                    "speed_max_m_s": {"type": "number", "description": "目标最大速度（m/s）"},
+                    "endurance_s": {"type": "number", "description": "目标续航（秒）"},
+                    "can_hover": {"type": "boolean", "description": "是否需要悬停能力"},
+                    "mission": {
+                        "type": "string",
+                        "enum": ["research", "task", "maneuver", "performance", "other"],
+                        "description": "任务大类（research=研究/验证, task=侦察/巡航/监测, maneuver=高机动/特技, performance=高效率/长航时, other=表演/教学）",
+                    },
+                    "top_k": {"type": "integer", "description": "返回的候选数", "default": 10},
+                },
+            },
+        },
+    },
+
     # ============ KG 检索工具 ============
     {
         "type": "function",
@@ -219,7 +280,7 @@ TOOL_SPECS = [
 
 
 # 工具注册表合并
-ALL_TOOLS = {**PHYSICS_TOOLS, **KG_TOOLS}
+ALL_TOOLS = {**PHYSICS_TOOLS, **KG_TOOLS, "tensor_recall": tensor_recall_tool}
 
 
 def call_tool(tool_name: str, **kwargs) -> dict:

@@ -40,3 +40,8 @@ node_modules/
 # Demo runtime artifacts
 biobridge/demo/demo_results.json
 biobridge/**/__pycache__/
+
+# Tensor decomp cache (binary, regenerable)
+biobridge/demo/tensor_decomp_cache.npz
+biobridge/demo/tensor_decomp_cache_meta.json
+biobridge/demo/innov3_demo_results.json

@@ -251,27 +251,57 @@ class LLMClient:
                     }],
                 }
 
-        # 4. 题目涉及"推荐"或"参考样机" → 调 search_fwmav
-        if any(k in text_zh for k in ["推荐", "参考样机", "可参考"]) and "search_fwmav" not in prior_tools:
-            args = {"limit": 5}
-            if "悬停" in text_zh:
-                args["can_hover"] = True
-            ws_match = re.search(r'翼展[^\d]*?(?:不超过|≤|<=)?\s*(\d+)\s*(?:mm|毫米)', text_zh)
-            if ws_match:
-                args["wingspan_max_mm"] = float(ws_match.group(1))
-            for bio in bio_keywords:
-                if bio in text_zh:
-                    args["biological_prototype"] = bio
-                    break
-            return {
-                "role": "assistant",
-                "content": None,
-                "tool_calls": [{
-                    "id": "call_search",
-                    "name": "search_fwmav",
-                    "arguments": args,
-                }],
-            }
+        # 4. 题目涉及"推荐"或"参考样机" → 优先调 tensor_recall 做粗筛（创新点 3），再考虑 search_fwmav
+        if any(k in text_zh for k in ["推荐", "参考样机", "可参考"]):
+            # 4a. 第一步：tensor_recall 粗筛
+            if "tensor_recall" not in prior_tools:
+                args = {"top_k": 10}
+                if "悬停" in text_zh:
+                    args["can_hover"] = True
+                ws_match = re.search(r'翼展[^\d]*?(?:不超过|≤|<=|<)?\s*(\d+)\s*(?:mm|毫米)', text_zh)
+                if ws_match:
+                    args["wingspan_mm"] = float(ws_match.group(1))
+                w_match = re.search(r'重量[^\d]*?(\d+(?:\.\d+)?)\s*g', text_zh)
+                if w_match:
+                    args["weight_g"] = float(w_match.group(1))
+                if endurance_match := re.search(r'续航[^\d]*?(\d+(?:\.\d+)?)\s*分钟', text_zh):
+                    args["endurance_s"] = float(endurance_match.group(1)) * 60
+                if "巡航" in text_zh or "侦察" in text_zh:
+                    args["mission"] = "task"
+                elif "机动" in text_zh or "特技" in text_zh:
+                    args["mission"] = "maneuver"
+                elif "长航时" in text_zh or "悬停" in text_zh:
+                    args["mission"] = "performance"
+                return {
+                    "role": "assistant",
+                    "content": None,
+                    "tool_calls": [{
+                        "id": "call_tensor_recall",
+                        "name": "tensor_recall",
+                        "arguments": args,
+                    }],
+                }
+            # 4b. 第二步：粗筛已有，再用 search_fwmav 验证（可选，演示协同）
+            if "search_fwmav" not in prior_tools:
+                args = {"limit": 5}
+                if "悬停" in text_zh:
+                    args["can_hover"] = True
+                ws_match = re.search(r'翼展[^\d]*?(?:不超过|≤|<=)?\s*(\d+)\s*(?:mm|毫米)', text_zh)
+                if ws_match:
+                    args["wingspan_max_mm"] = float(ws_match.group(1))
+                for bio in bio_keywords:
+                    if bio in text_zh:
+                        args["biological_prototype"] = bio
+                        break
+                return {
+                    "role": "assistant",
+                    "content": None,
+                    "tool_calls": [{
+                        "id": "call_search",
+                        "name": "search_fwmav",
+                        "arguments": args,
+                    }],
+                }
 
         # 5. 都查过了 → 综合答案
         summary_parts = ["[Mock LLM 综合答案]"]
