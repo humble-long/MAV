@@ -1,0 +1,38 @@
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.idea/
+.vscode/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+
+# Logs / temp
+*.log
+*.tmp
+*.bak
+*.bak2
+
+# Editor / project local
+.claude/
+.nezha/
+
+# Sensitive files (extra protection)
+*.env
+.env.*
+secrets.*
+
+# Large or generated artifacts not in repo
+*.ipynb_checkpoints/
+node_modules/
+
+# Backup of Word templates (we don't redistribute originals)
+20260226145600_*.docx
