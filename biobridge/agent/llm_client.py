@@ -61,14 +61,19 @@ class LLMClient:
             print(f"[LLMClient] 使用 real 模式: model={self.model}, base={self.base_url}")
 
     def _try_setup_real_api(self):
-        """按优先级尝试 DeepSeek / OpenAI API."""
-        if os.environ.get("DEEPSEEK_API_KEY"):
+        """按优先级尝试 DeepSeek / OpenAI / Tencent qproxy API."""
+        # 优先级 1: 显式指定的 OPENAI_BASE_URL（如腾讯 qproxy）
+        if os.environ.get("OPENAI_BASE_URL") and os.environ.get("OPENAI_API_KEY"):
+            self.api_key = os.environ["OPENAI_API_KEY"]
+            self.base_url = os.environ["OPENAI_BASE_URL"]
+            self.model = os.environ.get("OPENAI_MODEL", "claude-sonnet-4-6")
+        elif os.environ.get("DEEPSEEK_API_KEY"):
             self.api_key = os.environ["DEEPSEEK_API_KEY"]
             self.base_url = "https://api.deepseek.com/v1"
             self.model = "deepseek-chat"
         elif os.environ.get("OPENAI_API_KEY"):
             self.api_key = os.environ["OPENAI_API_KEY"]
-            self.base_url = os.environ.get("OPENAI_BASE_URL", "https://api.openai.com/v1")
+            self.base_url = "https://api.openai.com/v1"
             self.model = os.environ.get("OPENAI_MODEL", "gpt-4o-mini")
 
     def chat_with_tools(self, messages: list, tools: list) -> dict:
@@ -95,13 +100,16 @@ class LLMClient:
             raise RuntimeError("请先 pip install openai")
 
         client = OpenAI(api_key=self.api_key, base_url=self.base_url)
-        resp = client.chat.completions.create(
-            model=self.model,
-            messages=messages,
-            tools=tools,
-            tool_choice="auto",
-            temperature=0.3,
-        )
+        # 注意: Anthropic 风格的 API（如腾讯 qproxy 的 Claude）要求 max_tokens
+        kwargs = {
+            "model": self.model,
+            "messages": messages,
+            "tools": tools,
+            "tool_choice": "auto",
+            "temperature": 0.3,
+            "max_tokens": 2048,
+        }
+        resp = client.chat.completions.create(**kwargs)
         msg = resp.choices[0].message
         return {
             "role": msg.role,
