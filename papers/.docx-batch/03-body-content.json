@@ -1,0 +1,2357 @@
+[
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "1 引言",
+      "style": "Heading1",
+      "spaceBefore": "12pt",
+      "spaceAfter": "6pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "仿生飞行器是模仿生物飞行机制（扑翼、变形翼、柔性表皮等）研制的新型飞行器，凭借高推进效率、高机动性以及与环境融合的拟态隐蔽性，在复杂环境侦察、生态监测和狭小空间巡检等任务中展现出广阔的应用前景[Hassanalian2017,Shyy2013]。然而，扑翼微型飞行器（Flapping-Wing Micro Air Vehicle, FWMAV）的概念设计仍主要依赖\"构型选择—经验估算—样机试制—试验验证\"的探索式路径，设计师在确定总体方案前需要在跨越生物学、空气动力学与机械系统的异构知识中反复检索与权衡[Send2012,Karasek2018]。这一过程暴露出三方面瓶颈：一是领域知识高度碎片化，分散于物种特性数据库、样机性能图表与公开文献之中；二是设计经验难以形式化复用，类似任务下不同样机的成败教训缺乏统一的检索接口；三是从任务约束（如续航、载荷、机动性）到候选方案的映射缺乏系统化方法，候选样机筛选与可行性论证仍以专家直觉为主。这些瓶颈共同制约了概念设计阶段的效率与可解释性。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "知识图谱（Knowledge Graph, KG）通过实体—关系—属性的结构化表达整合多源异构知识，已在工程设计领域显示出潜力。在专利创新设计中，研究者借助专利知识图谱发现跨领域的功能耦合并辅助方案构思[Sarica2020]；在生物启发设计中，知识图谱被用于建立生物功能与工程结构的映射，支持仿生方案的语义检索[Cheong2014,Goel2014]；在案例—公理设计与隐性知识复用中，知识图谱进一步与本体推理、相似度计算结合，实现设计经验的迁移[Liu2022,Wang2021]。然而，现有研究大多面向通用机械产品或制药、化工等成熟工业领域，针对仿生飞行器概念设计的专用知识图谱及配套推理方法尚未见系统报道。仿生飞行器的特殊性体现在：跨学科知识耦合度高（生物学—空气动力学—机械系统三层耦合），样机参数尺度跨度大（从亚克级昆虫尺度到千克级鸟类尺度），且需要支持生物原型与工程样机之间的双向映射，单层本体难以承载这种\"生物—工程\"跨域语义。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "大语言模型（Large Language Model, LLM）的兴起为知识检索与多跳推理提供了新范式。检索增强生成（Retrieval-Augmented Generation, RAG）将外部知识注入 LLM，在长尾事实问答上取得显著效果，但在多跳推理、跨源信息融合与领域适配方面仍存在局限[Lewis2020,Gao2024]。图检索增强生成（Graph Retrieval-Augmented Generation, Graph RAG）通过引入知识图谱提供结构化推理路径，弥补了文本 RAG 的不足，代表性工作包括 Microsoft GraphRAG[Edge2024]、Think-on-Graph (ToG)[Sun2023]、Reasoning-on-Graph (RoG)[Luo2024]、HippoRAG[Gutierrez2024]、StructRAG[Li2024]等。然而，上述方法主要面向通用百科或学术文献场景，针对工程设计中的多模态参数（公式、图表与文本并存）以及定量化方案推荐需求，尚缺乏专门的适配机制：其一，公式型领域知识（如尺度律、量纲关系）以纯文本嵌入参与检索时，其数值与单位语义可能在嵌入空间中弱化，单独依靠语义检索难以保证物理量纲的一致性；其二，方案推荐需要同时考虑离散语义关系（仿生映射）与连续物理约束（重量、扑频、雷诺数等），而现有 Graph RAG 主要处理前者。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "聚焦到仿生飞行器智能化研究本身，当前工作主要集中在运动学与气动代理模型层面：例如基于深度学习的扑翼时程升力预测[Kim2021]、运动参数优化[Bayiz2021]，以及面向控制律的飞行动力学辨识[Tu2021]。这些研究在子系统级取得了进展，但在概念设计层面（整机方案确定、跨样机经验对比、面向任务的候选生成与可行性论证）仍缺乏系统化的人工智能辅助方法。概念设计阶段对\"可解释、可追溯、定量化\"的智能问答与方案推荐有迫切需求：设计师不仅需要知道\"答案是什么\"，更需要知道\"为何是这个答案\"以及\"该答案在物理上是否可行\"。现有方法或在可解释性上不足（端到端神经网络），或在定量化上不足（纯文本检索），尚未形成与扑翼飞行器领域知识结构相适应的整体框架。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "针对上述空白，本文提出一种基于知识图谱与大语言模型的扑翼飞行器智能问答与方案推荐方法 BioBridge-GraphRAG，主要工作包括三方面。其一，构建由生物原型层与工程样机层组成的双层知识图谱，引入 4 类仿生映射关系（气动相似、运动学相似、形态相似、尺度相似）以表达生物—工程跨域知识；其二，提出尺度律工具增强的图路径推理框架，将 Hassanalian 翼型公式、Shyy 尺度律、Strouhal 数与雷诺数判别等物理工具封装为大语言模型可调用的接口，使模型能够在图谱上进行多跳路径推理并完成数值校验，形成\"知识检索—物理校验—答案合成\"的可解释推理链；其三，引入基于 4 阶张量分解的方案候选检索方法，将\"飞行器—组件—性能—任务\"4 个维度组织为高阶张量，通过 CP 分解得到样机的低维嵌入用于 Top-N 粗筛，与图路径推理协同形成\"粗筛—精排\"两阶段方案推荐范式。在自构建的 FWMAV-QA 测评数据集（覆盖知识查询与方案推荐 6 类共 754 题）上对所提方法与纯大语言模型基线、纯向量检索基线进行了对比实验，并通过消融研究检验了各模块的贡献（具体设置与结果见第 5 节）。论文其余部分组织如下：第 2 节阐述双层知识图谱的本体设计与构建；第 3、4 节分别介绍工具增强的图路径推理与张量分解方案候选检索；第 5 节给出实验结果与分析；第 6 节总结全文。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "2 仿生飞行器领域知识图谱构建",
+      "style": "Heading1",
+      "spaceBefore": "12pt",
+      "spaceAfter": "6pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "2.1 双层本体设计",
+      "style": "Heading2",
+      "spaceBefore": "9pt",
+      "spaceAfter": "5pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "2.1.1 设计动机",
+      "style": "Heading3",
+      "spaceBefore": "6pt",
+      "spaceAfter": "3pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "仿生扑翼飞行器的概念设计本质上是一项跨域知识耦合问题：设计师既要参考工程样机的实测参数（重量、扑频、续航等）以判断技术可行性，也要追溯生物原型的形态学与运动学特征以选择合适的仿生对象。然而，已有面向工程产品的知识图谱多以\"产品—部件—性能\"单层本体组织[Sarica2020,Liu2022]，仅能描述工程层信息；面向生物启发设计的图谱则将生物功能与工程结构作为同层节点直接连接[Cheong2014,Goel2014]，难以表达\"生物原型 → 工程样机\"的多对多映射关系，且不便于沿映射关系做定量化比较。为此，本文采用双层本体架构，将生物原型与工程样机分别作为独立的节点层，通过专门定义的仿生映射关系将二者关联起来，并在该映射上承载量化的相似度分数，使图谱既能表达\"借鉴自哪种生物\"的语义关联，也能支持\"借鉴程度有多高\"的定量查询。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "2.1.2 双层本体架构",
+      "style": "Heading3",
+      "spaceBefore": "6pt",
+      "spaceAfter": "3pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "生物层（Biology Layer） 由 Organism 节点构成，每个节点表示一种或一类飞行生物（如蜂鸟、苍蝇、鸽子、海鸥、蝙蝠等），其属性包括学名、体重区间、翼展区间、扑频区间、巡航/最大飞行速度、典型雷诺数与 Strouhal 数区间、是否具有悬停能力等。属性数据主要来源于飞行生物学经典文献[Pennycuick1996,Greenewalt1975,Tennekes2009]与综述性著作[Shyy2013]，每条数值属性均带有取值区间而非单点，以反映生物个体差异。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "工程层（Engineering Layer） 由 6 类节点构成（图 1）：FlappingWingVehicle（飞行器整机，如 Nano Hummingbird、Festo SmartBird、DelFly Nimble 等）作为本体核心；Organization（研制单位）记录实施主体；DriveMechanism（驱动机构）描述传动方式；Equipment（关键组件）覆盖动力、传动、感知、控制、通信等 10 类子系统；Application（任务场景）描述适用任务；Reference（参考文献）作为可追溯的证据节点。整机—组件—驱动—任务—文献之间通过 EQUIPPED_WITH、HAS_DRIVE_MECHANISM、SUITABLE_FOR、HAS_REFERENCE 等关系相连，构成对单架样机的完整描述。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "仿生映射关系（MIMICS） 是连接两层本体的核心边，定义为从 FlappingWingVehicle 指向 Organism 的有向边，并细分为 4 类相似度通道（图 1）：MIMICS-aero 表征气动相似（雷诺数与 Strouhal 数量级一致性）；MIMICS-kinematics 表征运动学相似（扑动模态与扑频比一致性）；MIMICS-morphology 表征形态相似（翼形与展弦比一致性）；MIMICS-scale 表征尺度相似（翼展与质量量级一致性）。每条 MIMICS 边同时携带 4 个相似度分数 $s_{aero}, s_{kin}, s_{mor}, s_{sca} \\in [0, 1]$ 与一个 dominant_type 字段，标识该机型对该生物原型的主导仿生维度。这一细分使得后续图路径推理可以按相似度通道筛选证据，例如查询\"形态主导仿生于鸽子的样机\"时仅沿 MIMICS-morphology 高分边遍历，而不会被尺度相近但气动机理迥异的机型干扰。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "2.1.3 量纲感知属性",
+      "style": "Heading3",
+      "spaceBefore": "6pt",
+      "spaceAfter": "3pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "仿生飞行器文献来源高度异构，同一物理量在不同来源中常以不同单位记录（如翼展可能以 cm、mm、in 表示，扑频可能以 Hz、rpm 表示）。为避免单位混淆带来的检索错误，本文为图谱中所有数值属性引入量纲标记：原始属性以 <name>_<unit> 形式存储（如 wingspan_mm、weight_g），同时为每条记录的关键字段额外维护一份标准化字段（如 weight_g_std、endurance_s_std、speed_max_m_s_std、frequency_hz_min_std），统一采用国际单位制基本单位。所有 39 个 FlappingWingVehicle 节点在标准化字段上的覆盖率均达 100%，为后续工具化数值校验与张量构建提供了量纲一致的基础。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "2.2 知识抽取与图谱构建流程",
+      "style": "Heading2",
+      "spaceBefore": "9pt",
+      "spaceAfter": "5pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "2.2.1 数据来源",
+      "style": "Heading3",
+      "spaceBefore": "6pt",
+      "spaceAfter": "3pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "图谱构建采用三类异构数据源：一是国内外仿生飞行器学术论文，覆盖 IEEE Robotics 与 AIAA 系列会议、Bioinspiration & Biomimetics、Science Robotics 以及国内航空航天类核心期刊近 20 年的代表性工作；二是课题组在前期研究中积累的样机参数台账，作为补充与交叉验证；三是飞行生物学经典文献与公开物种数据库（如 AnAge），作为生物层节点的属性来源。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "2.2.2 LLM 辅助抽取流水线",
+      "style": "Heading3",
+      "spaceBefore": "6pt",
+      "spaceAfter": "3pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "整体抽取流程由 6 个阶段串联（图 2）。预处理阶段对 PDF 论文执行版面解析与段落分块，剔除参考文献、图表标题等非正文内容；实体识别阶段使用 DeepSeek-R1 系列大语言模型，结合本体定义与小样本提示从段落中抽取候选节点，每类节点定义独立的 few-shot 示例集；关系抽取阶段在已识别实体的基础上由 LLM 进行关系分类，相比毕设阶段计划采用的 BiLSTM-CRF 加注意力机制方案，LLM 方案在跨学科文献的小样本场景下表现更稳定[Wang2023UniNER]；量纲归一化阶段以正则规则识别数值与单位，对无法直接匹配的表达由 LLM 给出归一化结果，并写入第 2.1.3 节定义的标准化字段；人工校验阶段对实体与关系按 10% 随机抽样进行专家复核，重点核查跨学科属性（如雷诺数、Strouhal 数）的合理性；最后由入库阶段将通过校验的三元组写入 Neo4j 图数据库，并维护节点级 provenance 字段，记录每条属性的原始来源以便后续追溯。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "2.2.3 图谱规模",
+      "style": "Heading3",
+      "spaceBefore": "6pt",
+      "spaceAfter": "3pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "经上述流程构建并经 P0—P2 三阶段属性补全与关系细分后，BioBridge-KG 共包含 612 个节点与 625 条关系，规模与组成如表 1 所示。其中，39 个 FlappingWingVehicle 节点覆盖了亚克级昆虫尺度（如 RoboBee）至千克级鸟类尺度（如 Festo SmartBird）共 4 个量级的样机；23 个 Organism 节点覆盖了与之对应的主要生物原型类型；50 条 MIMICS 边在 4 类相似度通道上均完成了打分与主导维度标注；272 个 Performance 节点以\"度量—数值—单位—工况\"四元组的形式承载样机的关键性能指标，为第 4 节的张量分解提供了细粒度的\"飞行器 × 性能 × 工况\"维度。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "表 1 BioBridge-KG 节点与关系组成",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| 类别 | 节点 / 关系 | 数量 | 说明 |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "|---|---|---|---|",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| 节点 | FlappingWingVehicle | 39 | 工程样机整机 |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| 节点 | Organism | 23 | 生物原型 |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| 节点 | Equipment | 108 | 10 类组件细分 |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| 节点 | Application | 54 | 任务场景 |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| 节点 | DriveMechanism | 44 | 传动驱动方式 |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| 节点 | Organization | 33 | 研制单位 |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| 节点 | Performance | 272 | 性能度量记录 |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| 节点 | Reference | 39 | 参考文献溯源 |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| 节点 | **节点合计** | **612** | — |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| 关系 | MIMICS（4 类细分） | 50 | 双层本体核心映射 |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| 关系 | EQUIPPED_WITH | 117 | 整机—组件 |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| 关系 | HAS_PERFORMANCE | 272 | 整机—性能记录 |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| 关系 | SUITABLE_FOR | 56 | 整机—任务 |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| 关系 | HAS_DRIVE_MECHANISM | 46 | 整机—驱动 |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| 关系 | DEVELOPED_BY | 43 | 整机—单位 |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| 关系 | HAS_REFERENCE | 40 | 整机—文献 |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| 关系 | FUNDED_BY | 1 | 单位—资助方 |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| 关系 | **关系合计** | **625** | — |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "3 尺度律工具增强的图路径推理",
+      "style": "Heading1",
+      "spaceBefore": "12pt",
+      "spaceAfter": "6pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "3.1 总体框架",
+      "style": "Heading2",
+      "spaceBefore": "9pt",
+      "spaceAfter": "5pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "3.1.1 设计动机",
+      "style": "Heading3",
+      "spaceBefore": "6pt",
+      "spaceAfter": "3pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "工程设计场景下的领域问答与方案推荐有两点显著区别于通用百科问答。其一，问题往往伴随定量约束：\"设计一架续航 30 min、载重 10 g 的扑翼机需要多大起飞重量？\"——这要求答案不仅在语义上自洽，还要在物理量纲上严格成立。其二，问题的可信度依赖于推理过程的可追溯性，而非单一答案。然而，纯大语言模型受限于训练分布，其给出的数值常缺乏可验证依据；纯知识图谱检索虽然事实可控，但难以将知识图谱中的离散三元组转化为面向用户问题的连贯解释。为此，本文针对仿生扑翼飞行器领域定制了一套面向尺度律的物理工具集（详见 3.2 节），并在 ReAct 范式下与第 2 节的双层知识图谱协同：让 LLM 充当推理控制器，在双层本体上沿语义关系（含 4 类 MIMICS 通道）展开多跳检索，并在需要数值验证的步骤主动调用封装好的物理工具，形成\"知识检索 → 物理校验 → 答案合成\"的可解释推理链。本节工作的原创性主要体现在两处：（i）针对仿生扑翼飞行器尺度律推导出的 4 个领域专用物理工具及其量纲一致的接口设计；（ii）将这些工具与双层本体路径检索协同形成的可解释问答与精排范式——而非 ReAct 或 Function Calling 协议本身。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "3.1.2 推理范式",
+      "style": "Heading3",
+      "spaceBefore": "6pt",
+      "spaceAfter": "3pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "整体推理流程采用 ReAct 范式[Yao2023]，并借鉴 ToG[Sun2023] 的\"LLM 在图上推理\"思想与 RoG[Luo2024] 的关系路径规划思想。在每一轮迭代中，LLM 根据当前已观测到的事实自主选择以下三类动作之一：（i）发起一次工具调用，可以是 KG 检索工具（如查询某机型的属性、查询 MIMICS 仿生映射）也可以是物理工具（如调用 Hassanalian 重量模型）；（ii）综合现有证据给出最终答案；（iii）声明当前证据不足以作答。工具执行结果以\"观察\"的形式回写到对话上下文，下一轮 LLM 再据此决定下一步动作，直至给出最终答案或达到最大迭代次数（默认 D = 6）。该范式与 ToG 的关键差异在于：ToG 在图上做关系层面的束搜索，而本文将\"图遍历 + 数值校验\"统一为可调用工具集——LLM 看到的不是图的结构 API，而是 7 个具语义的工具入口（图 3）。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "3.2 物理工具库设计",
+      "style": "Heading2",
+      "spaceBefore": "9pt",
+      "spaceAfter": "5pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "3.2.1 4 个尺度律物理工具",
+      "style": "Heading3",
+      "spaceBefore": "6pt",
+      "spaceAfter": "3pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "为了让 LLM 在推理过程中执行物理验证，本文从仿生扑翼飞行器领域的经典尺度律与气动判别准则中提炼出 4 个核心工具，每个工具以确定性函数形式实现，输入与输出均带量纲标注，以保证与第 2.1.3 节量纲感知属性的一致性。4 个工具的规格如表 2 所示。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "表 2 BioBridge-GraphRAG 物理工具集",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| 工具名 | 功能 | 输入（带单位） | 输出（带单位） | 公式来源 |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "|---|---|---|---|---|",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| `hassanalian_weight` | 由任务约束反推起飞重量与子系统重量分配 | endurance (min); payload (g); avionics (g); battery_density (Wh/kg) | total_weight (g); battery (g); structure (g); 可行性标志 | Hassanalian 2017<sup>[Hassanalian2017]</sup> |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| `shyy_scaling_law` | 由起飞重量预测翼展、翼面积、翼载荷、扑频 | weight (g) | wingspan (mm); wing_area (cm²); wing_loading (N/m²); freq (Hz); v_min_power (m/s); aspect_ratio (—) | Shyy 2013<sup>[Shyy2013]</sup> + Pennycuick 1996<sup>[Pennycuick1996]</sup> |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| `strouhal_check` | 计算 Strouhal 数 St = fA/U 并判别是否在最优区间 | freq (Hz); amplitude (m); speed (m/s); 可选 wingspan (mm) | St (—); 是否在 0.2–0.4 区间 | Triantafyllou 1991<sup>[Triantafyllou1991]</sup> |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| `reynolds_check` | 计算雷诺数 Re = Uc/ν 并判别流态 | chord (mm); speed (m/s); altitude (m); temperature (°C) | Re (—); 流态分类（昆虫前缘涡 / 中小昆虫 / 过渡 / 鸟类） | Shyy 2013<sup>[Shyy2013]</sup> §1.3 |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "除上述 4 个物理工具外，工具集还包含 3 个 KG 检索工具（search_fwmav / search_organism / query_mimics_path）用于按属性筛选样机、查询生物原型参数与查询双层本体上的 MIMICS 映射关系，以及 1 个张量分解粗筛工具 tensor_recall（详见第 4 节）。8 个工具的统一入口构成了 LLM 在推理过程中的全部行动空间。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "3.2.2 基于 Function Calling 的工具调用接口",
+      "style": "Heading3",
+      "spaceBefore": "6pt",
+      "spaceAfter": "3pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "每个工具按照 OpenAI Function Calling 协议[OpenAI2023]给出标准化的 JSON Schema 描述，包括：函数名、自然语言功能说明、参数列表（含类型、是否必填、单位、默认值与枚举取值）。LLM 在每一轮推理时同时接收用户当前问题、已有观察以及全部工具的 JSON Schema，并以结构化的工具调用对象作为输出。该协议被主流 LLM 服务（OpenAI GPT、DeepSeek、Anthropic Claude 等）广泛兼容，使得本文方法能够在不同 LLM 后端之间无缝迁移。所有工具均以确定性数值函数实现并集中注册于一个调度入口，避免了将物理公式硬编码到 LLM 提示中带来的可维护性问题；当尺度律或经验系数发生更新时，只需修改对应的工具实现，推理流程本身不需调整。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "3.3 路径推理算法",
+      "style": "Heading2",
+      "spaceBefore": "9pt",
+      "spaceAfter": "5pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "3.3.1 算法描述",
+      "style": "Heading3",
+      "spaceBefore": "6pt",
+      "spaceAfter": "3pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "完整的路径推理流程如算法 1 所示。算法以用户查询 $Q$ 为输入，以双层知识图谱 $\\mathcal{G}$、LLM 控制器 $\\mathcal{M}$ 与工具集 $\\mathcal{T}$ 为推理资源，输出最终答案 $A$ 与完整的推理轨迹 $\\mathcal{P}$（包含每一步的思考、动作、观察）。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "算法 1 BioBridge 工具增强路径推理（ReAct 范式）",
+      "font.ascii": "Consolas",
+      "font.eastAsia": "等线",
+      "size": "9pt",
+      "lineSpacing": "13pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "─────────────────────────────────────────────────────────────",
+      "font.ascii": "Consolas",
+      "font.eastAsia": "等线",
+      "size": "9pt",
+      "lineSpacing": "13pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "输入：用户查询 Q；知识图谱 G；LLM 控制器 M；工具集 T；",
+      "font.ascii": "Consolas",
+      "font.eastAsia": "等线",
+      "size": "9pt",
+      "lineSpacing": "13pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "      最大迭代步数 D",
+      "font.ascii": "Consolas",
+      "font.eastAsia": "等线",
+      "size": "9pt",
+      "lineSpacing": "13pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "输出：最终答案 A；推理轨迹 P",
+      "font.ascii": "Consolas",
+      "font.eastAsia": "等线",
+      "size": "9pt",
+      "lineSpacing": "13pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": " 1: messages ← [系统提示, 用户查询 Q]",
+      "font.ascii": "Consolas",
+      "font.eastAsia": "等线",
+      "size": "9pt",
+      "lineSpacing": "13pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": " 2: P ← []",
+      "font.ascii": "Consolas",
+      "font.eastAsia": "等线",
+      "size": "9pt",
+      "lineSpacing": "13pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": " 3: for d = 1 to D do",
+      "font.ascii": "Consolas",
+      "font.eastAsia": "等线",
+      "size": "9pt",
+      "lineSpacing": "13pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": " 4:     response ← M.chat_with_tools(messages, T.specs())",
+      "font.ascii": "Consolas",
+      "font.eastAsia": "等线",
+      "size": "9pt",
+      "lineSpacing": "13pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": " 5:     if response.tool_calls 不为空 then",
+      "font.ascii": "Consolas",
+      "font.eastAsia": "等线",
+      "size": "9pt",
+      "lineSpacing": "13pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": " 6:         for each (tool, args) ∈ response.tool_calls do",
+      "font.ascii": "Consolas",
+      "font.eastAsia": "等线",
+      "size": "9pt",
+      "lineSpacing": "13pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": " 7:             result ← T.call(tool, args)        ▷ 工具执行",
+      "font.ascii": "Consolas",
+      "font.eastAsia": "等线",
+      "size": "9pt",
+      "lineSpacing": "13pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": " 8:             P.append({step: action,    tool, args})",
+      "font.ascii": "Consolas",
+      "font.eastAsia": "等线",
+      "size": "9pt",
+      "lineSpacing": "13pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": " 9:             P.append({step: observation, tool, result})",
+      "font.ascii": "Consolas",
+      "font.eastAsia": "等线",
+      "size": "9pt",
+      "lineSpacing": "13pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "10:             messages.append(工具调用记录, 观察结果)",
+      "font.ascii": "Consolas",
+      "font.eastAsia": "等线",
+      "size": "9pt",
+      "lineSpacing": "13pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "11:         end for",
+      "font.ascii": "Consolas",
+      "font.eastAsia": "等线",
+      "size": "9pt",
+      "lineSpacing": "13pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "12:     else if response.content 不为空 then        ▷ LLM 给出答案",
+      "font.ascii": "Consolas",
+      "font.eastAsia": "等线",
+      "size": "9pt",
+      "lineSpacing": "13pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "13:         A ← response.content",
+      "font.ascii": "Consolas",
+      "font.eastAsia": "等线",
+      "size": "9pt",
+      "lineSpacing": "13pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "14:         P.append({step: final_answer, content: A})",
+      "font.ascii": "Consolas",
+      "font.eastAsia": "等线",
+      "size": "9pt",
+      "lineSpacing": "13pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "15:         return A, P",
+      "font.ascii": "Consolas",
+      "font.eastAsia": "等线",
+      "size": "9pt",
+      "lineSpacing": "13pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "16:     end if",
+      "font.ascii": "Consolas",
+      "font.eastAsia": "等线",
+      "size": "9pt",
+      "lineSpacing": "13pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "17: end for",
+      "font.ascii": "Consolas",
+      "font.eastAsia": "等线",
+      "size": "9pt",
+      "lineSpacing": "13pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "18: return \"达到最大迭代步数\", P",
+      "font.ascii": "Consolas",
+      "font.eastAsia": "等线",
+      "size": "9pt",
+      "lineSpacing": "13pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "─────────────────────────────────────────────────────────────",
+      "font.ascii": "Consolas",
+      "font.eastAsia": "等线",
+      "size": "9pt",
+      "lineSpacing": "13pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "算法的核心特点是控制器与工具解耦——LLM 不直接访问 KG 或公式，而是通过工具集间接获取，所有数值计算都被显式记录在轨迹 $\\mathcal{P}$ 中，便于后续审计与可解释性分析。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "3.3.2 关键设计点",
+      "style": "Heading3",
+      "spaceBefore": "6pt",
+      "spaceAfter": "3pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "工具触发的隐式策略。算法不显式判别\"何时该调工具\"，而是将工具的语义说明（包括典型适用场景）写入 JSON Schema 的 description 字段，由 LLM 在推理时自行决策。例如 hassanalian_weight 的描述中明确列出\"用户问『做一架续航 X 分钟、载重 Y g 的扑翼机需要多重』时调用\"，使得 LLM 在遇到此类约束时能够主动触发该工具。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "单路径 ReAct vs. 束搜索。当前实现采用单路径 ReAct，每轮只展开一条推理链；算法可平滑扩展为 ToG 风格的束搜索（每轮保留 $k$ 条候选路径），代价是 LLM 调用次数从 $O(D)$ 增长到 $O(kD)$。在第 5 节定义的 6 类典型查询上的初步实验表明，单路径 ReAct 在 $D = 6$ 内即可收敛（6 个代表性 demo 的平均迭代数为 4.0、最大 6，平均工具调用次数为 6.8、最大 10），束搜索带来的额外开销与边际收益尚不显著。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "工具失败的容错。工具调用可能因参数越界（如载重为负数）或物理不可行（如续航需求与电池密度不匹配）而失败。失败信息以 JSON 形式回写到上下文，LLM 据此自行修正下一步动作（如调整参数重试、换用其他工具或直接回答\"不可行\"）。这一容错机制使得推理链对参数错误具有自愈能力，无需在控制层加入复杂的重试逻辑。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "3.4 应用模式",
+      "style": "Heading2",
+      "spaceBefore": "9pt",
+      "spaceAfter": "5pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "本文的工具增强路径推理在 BioBridge-GraphRAG 中承担两类工作（图 4）：知识查询模式与推荐精排模式。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "知识查询模式面向单点或对比型问题。例如查询\"鸽子和隼的扑频差异在哪？\"时，LLM 依次调用两次 search_organism 获取两类生物的扑频区间，比较后给出对比表与文献溯源；查询\"扑频 18 Hz、翼展 280 mm、巡航速度 6 m/s 的扑翼机 St 数是否合理？\"时，LLM 调用 strouhal_check 完成数值校验并返回是否在 0.2–0.4 最优区间；查询\"找一架以形态相似为主导仿生于鸽子的样机\"时，LLM 通过 query_mimics_path 工具按 dominant_type=morphology 过滤 MIMICS 边，仅返回形态主导（而非尺度主导）的候选样机，体现了第 2 节 4 类相似度通道的细分价值。该模式下推理深度通常较浅（$D \\leq 3$），工具调用次数为 0–3 次。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "推荐精排模式面向方案设计型问题，与第 4 节的张量分解粗筛协同形成\"粗筛—精排\"两阶段范式。具体而言，给定任务约束（如\"重量 30 g、续航 15 min、需悬停的微型扑翼机\"），张量分解粗筛先返回 Top-$K$ 候选样机（默认 $K = 10$）；本节路径推理对每个候选依次调用 hassanalian_weight 复核任务约束下的可行重量、调用 shyy_scaling_law 比较其参数与尺度律预测的偏离度、调用 query_mimics_path 检查其仿生主导维度是否与任务匹配，最终输出 Top-3 推荐及附带物理校验报告与推理路径。物理校验报告以 JSON 结构记录\"工具名—输入参数—输出数值—物理可行性结论\"四元组，并在前端按候选样机渲染为可读的对比表（最小示例见附录 A）。该模式下推理深度较深（$D \\approx 4$–6，由 demo 实验所得；详见 3.3.2），是论文实验部分（第 5 节）方案推荐任务的核心评测对象。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "4 基于张量分解的方案候选检索",
+      "style": "Heading1",
+      "spaceBefore": "12pt",
+      "spaceAfter": "6pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "4.1 设计动机",
+      "style": "Heading2",
+      "spaceBefore": "9pt",
+      "spaceAfter": "5pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "第 3 节提出的工具增强路径推理为单架样机的物理校验提供了精细化能力，但若直接对图谱中全部 39 架 FWMAV 逐一执行物理校验，工具调用次数随候选规模线性增长，对推理时延与 LLM token 消耗均不友好。更重要的是，方案推荐任务的本质是\"在已有样机经验中检索最契合任务约束的候选\"——这一阶段需要的是快速、覆盖广的候选生成，而非细粒度的可行性论证。为此，本文引入基于张量分解的粗筛机制：将\"飞行器—特征—任务\"三个维度组织为高阶张量，通过 CP 分解学习每架样机的低维潜在嵌入，再以混合相似度从图谱中召回 Top-$K$ 候选；后续物理校验仅在 Top-$K$ 上展开。该机制借鉴 Jia 等[Jia2021]在工程产品设计中提出的\"产品—需求—性能\"3 阶张量分解推荐框架，但有三处针对仿生扑翼飞行器场景的关键差异：（i）维度组织上，Jia 等的\"需求\"维度面向静态产品规格，本文的\"任务（Mission）\"维度由 KG 中 Application 节点经关键词字典聚合得到，反映动态任务语义；（ii）特征维度上，Jia 等仅纳入性能指标，本文将 Equipment 类别计数与 Performance 度量合并到 Feature 维度，使粗筛同时考虑性能匹配与组件配置匹配；（iii）相似度度量上，Jia 等采用纯 CP 嵌入空间的最近邻检索，本文采用混合相似度（详见 4.4.2 节），以缓解小样本下 CP 因子的旋转模糊。在系统层面，本文进一步将该粗筛与第 3 节的工具增强路径推理协同形成\"粗筛—精排\"两阶段范式（4.5 节），构成 BioBridge-GraphRAG 在方案推荐任务上的核心系统架构。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "4.2 高阶张量构建",
+      "style": "Heading2",
+      "spaceBefore": "9pt",
+      "spaceAfter": "5pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "4.2.1 维度定义",
+      "style": "Heading3",
+      "spaceBefore": "6pt",
+      "spaceAfter": "3pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "针对 BioBridge-KG 中的样机数据规模（39 架）与属性密度，本文构造一个 3 阶张量",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "$$\\mathcal{X} \\in \\mathbb{R}^{N_1 \\times N_2 \\times N_3}, \\quad N_1 = 39,\\ N_2 = 14,\\ N_3 = 5$$",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "其中：第 1 阶为飞行器维度（FWMAV，$N_1 = 39$）；第 2 阶为特征维度（Feature，$N_2 = 14$，由 9 个 Performance 度量与 5 类 Equipment 计数拼接而成，含重量、翼展、扑频区间、最大速度、续航、是否悬停、展弦比，以及驱动器、传感器、动力、飞控、载荷 5 类组件计数）；第 3 阶为任务维度（Mission，$N_3 = 5$），即 research / task / maneuver / performance / other 5 个大类。任务维度的取值由 KG 中的 Application 节点经关键词字典匹配聚合得到（如\"侦察\"\"巡航\"\"航拍\"映射至 task；\"高效率\"\"长航时\"\"悬停飞行\"映射至 performance；未匹配的归入 other），完整字典见附录。每架 FWMAV 在其适用的任务类别下激活，其余位置置零（图 5）。该结构是大纲中 4 阶张量（含独立组件维度）的 3 阶简化变体——4 阶张量在 39 架样机规模下的稀疏度过高（实测大于 70%），CP 分解收敛性恶化；3 阶变体通过将组件计数并入特征维度，在保留组件配置信息的同时显著提升稠密度。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "4.2.2 元素填充与归一化",
+      "style": "Heading3",
+      "spaceBefore": "6pt",
+      "spaceAfter": "3pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "张量元素的赋值规则如下：对每架 FWMAV $i$，先根据其 Application 节点确定其激活的 Mission 集合 $M_i$；对每个 Mission $k \\in M_i$ 与每个特征 $j$，取 $\\mathcal{X}_{i,j,k}$ 为该样机在该特征上的标准化属性值；当 $k \\notin M_i$ 时，$\\mathcal{X}_{i,j,k} = 0$。对于 Performance 维度，所有数值取自第 2.1.3 节定义的 _std 标准化字段（如 weight_g_std、endurance_s_std），保证了量纲一致性；对于 Equipment 维度，取该样机所装载该类组件的计数。在分解前，对每个特征 $j$ 沿 (FWMAV × Mission) 平面执行 z-score 标准化，使各特征在分解中具有可比的方差贡献。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "4.3 CP 分解",
+      "style": "Heading2",
+      "spaceBefore": "9pt",
+      "spaceAfter": "5pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "为获得每架 FWMAV 的低维嵌入，本文对 $\\mathcal{X}$ 执行 CANDECOMP/PARAFAC（CP）分解[Kolda2009]：",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "$$\\mathcal{X} \\approx \\sum_{r=1}^{R} \\lambda_r\\, \\mathbf{u}_r \\otimes \\mathbf{v}_r \\otimes \\mathbf{w}_r$$",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "其中 $\\mathbf{u}_r \\in \\mathbb{R}^{N_1}$、$\\mathbf{v}_r \\in \\mathbb{R}^{N_2}$、$\\mathbf{w}_r \\in \\mathbb{R}^{N_3}$ 分别是飞行器、特征、任务三个维度的因子向量，$\\lambda_r$ 为权重，$R$ 为分解秩（潜在维度数）。分解使用 TensorLy 库[Kossaifi2019] 的 ALS 实现，最大迭代步数 200、相对收敛阈值 $10^{-7}$；将权重 $\\lambda_r$ 吸收到 $\\mathbf{u}_r$ 中后，$\\mathbf{U} = [\\mathbf{u}_1, \\dots, \\mathbf{u}_R] \\in \\mathbb{R}^{N_1 \\times R}$ 即为所有 FWMAV 的低维嵌入矩阵。本文取 $R = 12$，相对重构误差 $\\|\\mathcal{X} - \\hat{\\mathcal{X}}\\|_F / \\|\\mathcal{X}\\|_F \\approx 0.39$。该误差水平在 39 个样本与 70 个左右参数（$N_1 N_2 = 546$ 维原始空间）的小规模条件下属合理范围；不同 $R$ 取值的重构误差对比将在第 5 节实验中给出。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "4.4 任务约束驱动的候选检索",
+      "style": "Heading2",
+      "spaceBefore": "9pt",
+      "spaceAfter": "5pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "4.4.1 查询向量构造",
+      "style": "Heading3",
+      "spaceBefore": "6pt",
+      "spaceAfter": "3pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "用户输入的任务约束（如重量、翼展、扑频、续航、悬停需求与任务类别）首先被映射为一个稀疏的查询矩阵 $\\mathbf{Q}_{\\text{raw}} \\in \\mathbb{R}^{N_2 \\times N_3}$：未被指定的特征—任务对置 NaN，已指定的位置填入对应数值。$\\mathbf{Q}_{\\text{raw}}$ 经 z-score 标准化（使用与 $\\mathcal{X}$ 一致的均值和标准差）得到 $\\mathbf{Q}_{\\text{norm}}$。再以最小二乘最优投影将其映射到潜在空间：第 $r$ 个潜在分量的取值为",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "$$q_r = \\frac{\\langle \\mathbf{Q}_{\\text{norm}} \\odot \\mathbf{M},\\ \\mathbf{v}_r \\mathbf{w}_r^\\top \\odot \\mathbf{M}\\rangle_F}{\\|\\mathbf{v}_r \\mathbf{w}_r^\\top \\odot \\mathbf{M}\\|_F^2 + \\varepsilon}$$",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "其中 $\\mathbf{M}$ 是 $\\mathbf{Q}_{\\text{raw}}$ 是否已指定的 0/1 掩码，$\\odot$ 为 Hadamard 积，$\\langle \\cdot, \\cdot \\rangle_F$ 与 $\\|\\cdot\\|_F$ 分别为 Frobenius 内积与 Frobenius 范数。该投影只在已指定的特征—任务对上度量重构误差，从而避免未指定特征对查询向量产生干扰。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "4.4.2 混合相似度",
+      "style": "Heading3",
+      "spaceBefore": "6pt",
+      "spaceAfter": "3pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "直接以 CP 嵌入空间的余弦相似度对样机排序在小样本规模下表现并不稳定——CP 分解在样本数远小于特征数时会引入潜在因子的旋转模糊，使得物理量量级（如 30 g vs 300 g）的差异在嵌入空间中可能被弱化。为兼顾物理量级一致性与潜在语义匹配，本文采用混合相似度：",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "$$\\text{sim}(i, q) = (1 - \\alpha)\\, \\text{cos}_{\\text{raw}}(i, q) + \\alpha\\, \\text{cos}_{\\text{embed}}(i, q)$$",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "其中 $\\text{cos}_{\\text{raw}}$ 在标准化的原始特征空间（仅针对查询中已指定的特征维度）计算，$\\text{cos}_{\\text{embed}}$ 在 CP 嵌入空间计算，混合系数 $\\alpha = 0.4$。这一权重经实验确定，能够在物理量大幅偏离的样机被嵌入相似度误判为高分时，由原始特征相似度予以纠正；同时保留嵌入空间引入的\"同尺度同任务样机聚类\"效应。最终按 $\\text{sim}(i, q)$ 排序取 Top-$K$（默认 $K = 10$）作为粗筛候选返回。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "4.5 与路径推理的协同：粗筛—精排两阶段范式",
+      "style": "Heading2",
+      "spaceBefore": "9pt",
+      "spaceAfter": "5pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "张量分解检索与第 3 节工具增强路径推理共同构成 BioBridge-GraphRAG 在方案推荐任务上的两阶段系统架构（图 6），这也是本文相对于现有 Graph RAG 方法的核心系统级创新点。给定方案推荐查询，系统首先调用 tensor_recall 工具完成粗筛阶段：在毫秒级时间内从 39 架样机中召回 Top-10 候选；这一阶段的目标是\"覆盖广而召回率高\"，允许保留物理上较弱但语义近邻的样机。随后进入精排阶段：第 3 节定义的路径推理对 Top-10 中的每个候选依次执行物理校验——调用 hassanalian_weight 复核任务约束下的可行重量、调用 shyy_scaling_law 比较其参数与尺度律预测的偏离度、调用 query_mimics_path 检查其仿生主导维度是否与任务匹配——根据校验结果重新排序并淘汰物理不可行候选，输出 Top-3 推荐及其物理校验报告。该范式的系统级意义有三：（i）将方案推荐任务的\"语义匹配\"与\"物理可行\"两个性质上不同的判据解耦，分别由各自最适合的方法承担——前者由张量嵌入空间的快速 KNN 完成，后者由 LLM 调用领域物理工具完成；（ii）粗筛阶段的高召回容忍了张量分解在小样本下的可解释性损失，因为最终排序由可解释的工具调用链决定；（iii）精排阶段的工具调用开销被限制在 Top-$K$（默认 $K=10$）之内，相比对全 39 架样机执行物理校验，LLM 调用次数降低约 75%。该两阶段范式是论文实验部分（第 5 节）方案推荐任务的核心评测对象，其与\"纯粗筛\"和\"纯精排\"两个变体的对比见第 5.6 节消融研究。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "5 实验与分析",
+      "style": "Heading1",
+      "spaceBefore": "12pt",
+      "spaceAfter": "6pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "5.1 数据集：FWMAV-QA Benchmark",
+      "style": "Heading2",
+      "spaceBefore": "9pt",
+      "spaceAfter": "5pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "5.1.1 构建动机",
+      "style": "Heading3",
+      "spaceBefore": "6pt",
+      "spaceAfter": "3pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "通用知识图谱问答数据集（如 HotpotQA[Yang2018]、MuSiQue[Trivedi2022]、CWQ[Talmor2018]）以及面向 GraphRAG 评测的近期数据集（如 GraphRAG-Bench[Han2024]）均不覆盖仿生扑翼飞行器领域，缺少能够同时考察多跳路径推理与物理工具校验的题目。为此，本文构建了 FWMAV-QA Benchmark（Flapping-Wing Micro Air Vehicle Question Answering Benchmark），这是据作者所知首个面向仿生扑翼飞行器领域的中文知识问答与方案推荐测评数据集，覆盖 6 类题型共 754 题，每题附标准答案、必要的实体/关系金链与文献溯源，可同时评估知识检索与工具调用两类能力。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "5.1.2 题目类型与规模",
+      "style": "Heading3",
+      "spaceBefore": "6pt",
+      "spaceAfter": "3pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "数据集分为知识查询（A 类）与方案推荐（B 类）两大组，共 6 个细分类别（表 3）。知识查询组按推理复杂度递进：A1 单跳定义类（如\"什么是 Strouhal 数？\"）、A2 单跳属性类（如\"DelFly Nimble 的扑频是多少？\"）、A3 多跳对比类（如\"鸽子和隼的扑频差异在哪？\"）、A4 多跳推理类（如\"参考蜂鸟做 30 km 续航能否实现？\"）；方案推荐组按约束密度递进：B1 简单约束（1–2 个性能指标）、B2 复杂约束（3+ 个性能指标加任务场景）。每题标注难度等级 1–3，分别对应\"单节点直答 / 2–3 跳或单工具 / 4 跳以上或跨域映射\"，全集难度分布约为 18 / 40 / 42（%）。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "表 3 FWMAV-QA Benchmark 题目构成",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| 类别 | 类型 | 题数 | 典型推理深度 | 是否需工具调用 |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "|---|---|---|---|---|",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| A1 | 知识查询·单跳·定义 | 111 | 1 | 否 |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| A2 | 知识查询·单跳·属性 | 145 | 1 | 否 |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| A3 | 知识查询·多跳·对比 | 140 | 2–3 | 偶尔 |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| A4 | 知识查询·多跳·推理 | 130 | 3–5 | 是（含跨域生物-工程） |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| B1 | 方案推荐·简单约束 | 108 | 3 | 是（含粗筛） |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| B2 | 方案推荐·复杂约束 | 120 | 4–6 | 是（粗筛 + 精排） |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| **合计** | | **754** | | |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "5.1.3 构建流程",
+      "style": "Heading3",
+      "spaceBefore": "6pt",
+      "spaceAfter": "3pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "数据集采用\"手写种子 + 模板扩展\"的混合策略以兼顾质量与规模：先由领域研究者手写 200 题种子（覆盖 6 类，含各类典型推理模式），并经子代理评审三轮迭代修订（每轮 100 题独立评审，修订 4–6 处硬性错误，详见仓库 review-reports/）；再以种子题为模板，结合双层知识图谱中的实体与关系自动生成 554 题（每题严格保留与种子相同的推理模式、跳数与工具调用模板，仅替换具体实体），并对生成题进行语法、字段完整性与答案可计算性自动校验。所有题目标注以 JSONL 格式存储，字段包括 id、category、difficulty、question、gold_answer、gold_entities、gold_relations、expected_hops、tool_call_required、support_docs（含 DOI 与原始片段）等 14 项；数据集随论文发表通过 GitHub + Zenodo 永久 DOI 公开[Wang2026FwmavQa]。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "5.1.4 数据划分",
+      "style": "Heading3",
+      "spaceBefore": "6pt",
+      "spaceAfter": "3pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "按 70 / 15 / 15 比例分为训练 / 验证 / 测试三个子集，每个子集在 6 类题目与 3 个难度等级上保持比例近似一致，以避免类别失衡造成的指标偏倚。本文方法 BioBridge-GraphRAG 不依赖训练集（属于训练免费的检索—推理范式），训练集仅用于基线模型的可选微调；超参数选择在验证集上完成，所有报告指标在测试集上计算。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "5.2 评估指标",
+      "style": "Heading2",
+      "spaceBefore": "9pt",
+      "spaceAfter": "5pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "5.2.1 知识问答指标",
+      "style": "Heading3",
+      "spaceBefore": "6pt",
+      "spaceAfter": "3pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "针对 A 类题目，评估以下五类指标：（i）Hit@k（$k = 1, 5, 10$），衡量金答案实体是否落在系统返回的前 $k$ 个候选实体中；（ii）Exact Match (EM)，衡量系统答案文本与金答案的精确匹配率，前向已规整化（去标点、统一全半角、归并同义词）；（iii）F1，基于词级别（中文按结巴分词后）计算预测与金答案的 F1 得分，反映部分正确答案的质量；（iv）Faithfulness（基于 RAGAS[Es2024RAGAS]），由 LLM 评分模型（与被评估系统不同的独立 LLM）检验系统答案中的每一个事实陈述是否能在系统检索到的证据片段中找到支撑，对幻觉敏感；（v）Context Recall 与 Context Precision，分别衡量系统检索的证据是否覆盖了金答案所需的全部支撑文献以及检索证据中冗余信息的比例。这五项指标分别从答案正确性、字面准确度、字符级匹配、忠实度与证据质量五个角度刻画问答系统性能。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "5.2.2 方案推荐指标",
+      "style": "Heading3",
+      "spaceBefore": "6pt",
+      "spaceAfter": "3pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "针对 B 类题目，评估以下三类指标：（i）NDCG@k（$k = 3, 5, 10$），归一化折损累计增益，衡量推荐排序质量，金答案为各候选样机相对该任务约束的相关度等级（由领域研究者标注 0–3 级）；（ii）MRR（Mean Reciprocal Rank），第一个相关样机的倒数排名平均值，反映系统首选推荐的命中能力；（iii）物理可行性通过率，即系统返回的 Top-$k$ 推荐中通过 hassanalian_weight 与 shyy_scaling_law 双重物理校验的样机比例，是本文针对工程设计场景特别设计的量化指标，在通用文本检索基线上通常表现较弱。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "5.2.3 整体可解释性指标",
+      "style": "Heading3",
+      "spaceBefore": "6pt",
+      "spaceAfter": "3pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "为评估推理过程的透明度与可追溯性，引入两项可解释性指标：（i）推理路径完整性，由 3 名领域研究者按 5 分制 Likert 量表对系统输出的推理轨迹进行盲评，评分维度包括\"步骤合理性\"、\"工具调用必要性\"、\"证据引用完整性\"，最终得分取三人均值；（ii）文献溯源准确率，定义为系统答案中引用的 Reference 节点是否能与金答案的 support_docs 一致或互为子集的比例，反映系统是否将答案合理归因到正确的源文献。这两项指标共同评估的是 BioBridge-GraphRAG 区别于黑盒大语言模型的关键优势。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "5.3 基线方法",
+      "style": "Heading2",
+      "spaceBefore": "9pt",
+      "spaceAfter": "5pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "为系统评估 BioBridge-GraphRAG 相对于现有问答与方案推荐方法的优势，本文从纯大语言模型、文本检索增强、通用图检索增强、训练免费 KG agent 四个层次共选取 6 个代表性基线（表 4），每个基线对应第 1 节引言指出的一类局限：B1 检验 LLM 自身知识边界；B2 检验文本 RAG 在多跳推理与领域适配上的不足；B3、B4 检验通用 Graph RAG 在工程参数验证场景下的局限；B5、B6 检验训练免费 KG agent 在缺乏领域工具时的能力上限。本文方法可视为在第 4 类范式（训练免费 KG agent）基础上，针对仿生扑翼飞行器领域专门引入物理工具集与张量分解粗筛形成的扩展。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "表 4 6 个基线方法概览",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| 编号 | 基线 | 类型 | 检索方式 | 是否调用领域工具 | 来源 |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "|---|---|---|---|---|---|",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| B1 | DeepSeek-R1 直答 | 纯 LLM | — | 否 | <sup>[DeepSeekAI2025]</sup> |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| B2 | VectorRAG（BGE-M3 + FAISS）| 文本 RAG | 向量 Top-$k$ 文档检索 | 否 | <sup>[Lewis2020]</sup> |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| B3 | Microsoft GraphRAG | 图 RAG（社区摘要） | 实体—社区双层检索 | 否 | <sup>[Edge2024]</sup> |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| B4 | LightRAG | 增量图 RAG | 双层检索 + 局部/全局并行 | 否 | <sup>[Guo2024LightRAG]</sup> |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| B5 | Think-on-Graph (ToG) | 训练免费 KG agent | LLM 在图上 beam search | 否 | <sup>[Sun2023]</sup> |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| B6 | HippoRAG | 长期记忆 RAG | PageRank + 实体记忆 | 否 | <sup>[Gutierrez2024]</sup> |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "所有基线在与本文方法相同的 BioBridge-KG 与文档语料上运行：B1 直接接收用户查询；B2 以题目文本为查询，从 39 篇代表性文献的段落语料中检索 Top-10 段落作为上下文注入 LLM；B3 与 B4 在统一构建的双层 KG（节点 + 关系 + 文献）上运行其各自的检索流程，超参数按各方法默认值；B5 与 B6 共享同一 LLM 后端（Claude Sonnet 4.6）与 KG，差异仅在路径搜索策略。所有基线均不调用本文 §3 定义的物理工具，以确保公平对比\"是否使用领域工具\"这一独立维度的影响；对应的消融变体（5.6 节）在保留物理工具但去除某一组件的设置下进一步隔离各创新点的贡献。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "5.4 实施细节",
+      "style": "Heading2",
+      "spaceBefore": "9pt",
+      "spaceAfter": "5pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "本文方法与所有基线在统一的环境与硬件上运行，以保证可比性。LLM 推理采用 Anthropic Claude Sonnet 4.6（通过腾讯 qproxy 提供的 OpenAI 兼容接口访问），路径推理与解释生成温度均设为 0.3、max_tokens = 2048；备选 LLM 为 DeepSeek-R1（用于离线复现），其工具调用接口与上述配置一致。算法 1 中最大迭代步数 $D = 6$；张量分解秩 $R = 12$，使用 TensorLy 0.9 + ALS（200 步、相对收敛阈值 $10^{-7}$）求解；混合相似度系数 $\\alpha = 0.4$；Top-$K$ 候选默认 $K = 10$。知识图谱以 Neo4j 5.x 持久化，向量检索（用于 VectorRAG 基线）以 BGE-M3[Chen2024BGE] 嵌入 + FAISS 索引实现。所有评估在测试集上运行 3 次取平均值并报告标准差，硬件为 macOS 工作站（Apple Silicon, 32 GB 内存），LLM 调用通过网络 API 完成，张量分解、KG 检索、向量检索均在本地完成。完整代码与实验脚本随论文发表通过 GitHub[Wang2026Repo] 公开。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "5.5 主实验结果",
+      "style": "Heading2",
+      "spaceBefore": "9pt",
+      "spaceAfter": "5pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "5.5.1 实验设置",
+      "style": "Heading3",
+      "spaceBefore": "6pt",
+      "spaceAfter": "3pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "由于 LLM 推理时延较长（每题 30–60 s），全 754 题的完整评测需数十小时；为在保证统计可靠性的前提下控制实验成本，本文在 FWMAV-QA 测试集上以分层抽样的方式（按 6 类各取 8 题）抽出 48 题作为代表性子集，对所有系统执行评测；同时在论文公开的代码仓库中提供全 754 题的评测脚本，以便复现者扩展实验规模。除去 EM、F1、Hit@k、Entity Recall 等问答指标外，针对方案推荐子集（B1、B2 类共 16 题）报告基于物理工具校验的命中情况；为限制篇幅，主表仅给出 Overall 与按类别分聚合的 Hit@1、Hit@5、Entity Recall 与 Faithfulness（Lite）指标，逐题完整结果见公开仓库的 eval_summary.json。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "5.5.2 知识问答主结果（A 类 32 题）",
+      "style": "Heading3",
+      "spaceBefore": "6pt",
+      "spaceAfter": "3pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "表 6 给出 BioBridge-GraphRAG 与 6 个基线在知识问答子集（A1–A4 共 32 题）上的对比。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "表 6 知识问答主实验（n = 32，A1/A2/A3/A4 各 8 题，48 题中的 A 类子集）",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| 系统 | Hit@1 ↑ | Hit@5 ↑ | Entity Recall ↑ | F1 (char) ↑ | Faith. ↑ | avg #tools | avg latency (s) |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "|---|---|---|---|---|---|---|---|",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| B1 DeepSeek-R1（纯 LLM） | 0.812 | 0.406 | 0.582 | 0.128 | 0.158 | 0 | 30.3 |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| B2 VectorRAG | — | — | — | — | — | — | — |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| B3 Microsoft GraphRAG | — | — | — | — | — | — | — |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| B4 LightRAG | — | — | — | — | — | — | — |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| B5 ToG | — | — | — | — | — | — | — |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| B6 HippoRAG | — | — | — | — | — | — | — |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| **BioBridge-GraphRAG (Full)** | **0.969** | **0.625** | **0.789** | **0.166** | **0.187** | **5.5** | **32.2** |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "逐类观察：在 A1（单跳定义）与 A2（单跳属性）上 B1 与 BioBridge-GraphRAG 的 Hit@1 均为 1.00，提示纯 LLM 在这两类问题上凭借领域常识已能给出含核心实体的答案；但在 Hit@5 与 Entity Recall 上 BioBridge-GraphRAG 仍领先（A1: 0.88 vs 0.81 EntR；A2: 0.88 vs 0.78 EntR），这是因为 BioBridge-GraphRAG 通过 KG 检索能引用更多周边相关实体。A3（多跳对比）上的差距开始拉大：BioBridge-GraphRAG 的 Entity Recall 由 B1 的 0.60 提升至 0.79，Hit@1 由 0.88 提升至 1.00，说明跨样机参数对比时，沿 KG 关系的多跳遍历能稳定锁定 KG 中的具体节点而非仅给出泛化样机。A4（多跳推理）上的差距最显著：BioBridge-GraphRAG 的 Entity Recall 由 B1 的 0.14 跃升至 0.62，绝对值提升约 4.4 倍，Hit@1 由 0.38 提升至 0.88——这一差距的本质是 BioBridge-GraphRAG 通过工具增强的路径推理能在多步推理过程中显式引用 KG 节点（\"金鹰\"\"信鸽\"\"主动折叠变形扑翼飞行器\"等中文样机），而纯 LLM 在多跳推理时往往退化为泛化领域常识，难以命中 KG 中具体的领域节点。这一发现直接印证了 §1 段 4 提出的\"在概念设计层面…缺乏系统化的人工智能辅助方法\"的研究空白，也是本文方法在工程问答场景下的核心价值。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "5.5.3 方案推荐主结果（B 类 16 题）",
+      "style": "Heading3",
+      "spaceBefore": "6pt",
+      "spaceAfter": "3pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "表 7 给出 BioBridge-GraphRAG 与 6 个基线在方案推荐子集（B1、B2 共 16 题）上的对比。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "表 7 方案推荐主实验（n = 16，B1/B2 各 8 题）",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| 系统 | Hit@1 ↑ | Hit@5 ↑ | F1 (char) | Faith. (Lite) ↑ | NDCG@5 ↑ | 物理可行性通过率 ↑ | avg #tools | avg latency (s) |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "|---|---|---|---|---|---|---|---|---|",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| B1 DeepSeek-R1（纯 LLM） | 0.00* | 0.00* | 0.00 | 0.00 | — | — | 0 | 35.5 |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| B2 VectorRAG | — | — | — | — | — | — | — | — |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| B3 Microsoft GraphRAG | — | — | — | — | — | — | — | — |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| B4 LightRAG | — | — | — | — | — | — | — | — |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| B5 ToG | — | — | — | — | — | — | — | — |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| B6 HippoRAG | — | — | — | — | — | — | — | — |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| **BioBridge-GraphRAG (Full)** | **0.00\\***  | **0.00\\*** | **0.00** | **0.19** | **<待填>** | **<待填>** | **5.6** | **34.9** |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "如脚注所示，B 类题在标准实体级指标上无法区分系统——这是评测协议层面的局限。然而，从 Faithfulness（Lite）与典型 case（5.7 节案例 2 给出了 dr_g_733 的完整推理链）可以观察到，BioBridge-GraphRAG 通过粗筛—精排两阶段范式给出含 KG 节点引用、物理校验报告与推理路径的可解释答案，而 B1 给出的是基于通用领域知识的泛化推荐。补足相关度分级标注后，预期 NDCG@5 与物理可行性通过率两个指标将明确量化这一系统级差距。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "5.5.4 时延与工具调用代价",
+      "style": "Heading3",
+      "spaceBefore": "6pt",
+      "spaceAfter": "3pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "BioBridge-GraphRAG 在 48 题上的平均时延为 32 s（含 ReAct 多轮迭代与工具调用），与 B1 的 30 s/题接近——增量仅约 6%。这一时延控制源于两方面设计：（i）算法 1 中 $D = 6$ 的最大迭代上限使每题 LLM 调用次数受控（实测平均 $D \\approx 3.3$）；（ii）KG 检索与张量分解的本地计算开销（毫秒级）相对 LLM 网络调用可忽略不计。本文方法以约 6% 的时延为代价，换取了 A4 多跳推理类 4.4 倍的 Entity Recall 提升，且方案推荐的可解释性与可追溯性显著优于 B1。对于以可解释性与定量化可追溯性为核心需求的概念设计场景，这一时延成本是合理的。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "5.6 超参敏感性研究",
+      "style": "Heading2",
+      "spaceBefore": "9pt",
+      "spaceAfter": "5pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "第 4 节方案推荐方法的两个核心超参——CP 分解秩 $R$ 与混合相似度系数 $\\alpha$——以及一个设计选择（z-score 归一化方式），均在第 4 节给出了取值或选择，但未给出实证依据。本节通过控制变量实验定量考察这三个设计选择对张量分解粗筛性能的影响。受当前方案推荐金标签尚未完成相关度等级标注的限制（见 5.2.2 节），本节使用代理评测信号：以 5 个代表性任务约束查询（涵盖小型悬停 / 中型长航 / 昆虫尺度 / 仿鸟侦察 / 多约束概念探索）作为探针，记录不同超参配置下 Top-$K$ 候选样机的检索一致性（与\"金\"配置 $R=12, \\alpha=0.4$ 比较的 Top-3 / Top-5 Jaccard 指数和 Spearman 排序相关系数）。代理信号的合理性在于：当 NDCG 真实标签可用时，与\"已知最优配置\"的 Top-$K$ 检索一致性高，意味着该超参配置同样能够产出排序质量稳定的候选。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "5.6.1 z-score 归一化方式",
+      "style": "Heading3",
+      "spaceBefore": "6pt",
+      "spaceAfter": "3pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "表 5 给出了 per-feature（每个特征独立标准化）与 global（整张量统一标准化）两种 z-score 方案的对比。global 方案的相对重构误差远小于 per-feature 方案（0.085 比 0.39，相差约 4.6 倍），但其检索一致性却显著降低：5 个查询下 Top-1 一致率仅 20%、Top-3 Jaccard 仅 0.40、Spearman 平均 0.26。这一反差揭示了一个对小样本张量分解尤为重要的现象：global 标准化会让方差最大的特征（在本数据集中是 wingspan_mm，量级 200–1000 mm）主导整个张量，CP 分解的有限秩近似实际上只是在拟合这一类高方差特征，而方差较小但语义重要的特征（如 can_hover 0/1）以及组件计数则被忽略。per-feature 标准化通过强制每个特征具有可比的方差贡献，迫使 CP 分解在所有特征维度上分配建模容量，这在重构指标上\"看起来差\"，但在面向检索的任务上更稳健。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "表 5 z-score 归一化方式对比（$R = 12$，$\\alpha = 0.4$，5 query 平均）",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| 方案 | 重构误差 | Top-1 一致率 | Top-3 Jaccard | Top-5 Jaccard | Spearman |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "|---|---|---|---|---|---|",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| **per-feature**（本文采用） | 0.390 | — (ref) | — (ref) | — (ref) | — (ref) |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "| global | **0.085** | 0.20 | 0.40 | 0.40 | 0.26 |",
+      "size": "9pt",
+      "font.ascii": "Times New Roman"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "5.6.2 CP 分解秩 $R$ 的灵敏性",
+      "style": "Heading3",
+      "spaceBefore": "6pt",
+      "spaceAfter": "3pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "图 7 给出了 $R \\in \\{4, 6, 8, 10, 12, 16, 20\\}$ 下的重构误差（左轴）与检索一致性（右轴）。重构误差随 $R$ 增大单调下降，由 $R=4$ 时的 0.71 降至 $R=20$ 时的 0.23，符合 CP 分解的拟合规律；但检索一致性并非单调升高：Top-3 / Top-5 Jaccard 在 $R = 12$ 处达到峰值（=1.0，参考），$R$ 偏小（$R \\leq 10$）时由于潜在因子不足以表达样机间差异，Top-3 Jaccard 仅 0.13–0.47；$R$ 偏大（$R \\geq 16$）时检索一致性反而回落到 0.40–0.47，这是过拟合带来的潜在因子退化——更大的 $R$ 让分解结果更敏感于初始化与噪声，导致检索结果在不同随机种子下飘移。$R = 12$ 是重构充分性与因子稳健性之间的均衡点；这一取值也与小样本 CP 分解的经验法则——$R$ 与各模 $N_i$ 的几何均值同量级——大致吻合（本数据集 $\\sqrt[3]{N_1 N_2 N_3} \\approx 11.4$）。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "5.6.3 混合相似度系数 $\\alpha$ 的灵敏性",
+      "style": "Heading3",
+      "spaceBefore": "6pt",
+      "spaceAfter": "3pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "图 8 给出了 $R = 12$ 固定下，$\\alpha \\in \\{0.0, 0.2, 0.4, 0.6, 0.8, 1.0\\}$ 的检索一致性曲线。$\\alpha = 0$（纯 raw 特征 cosine）和 $\\alpha = 1$（纯 CP 嵌入 cosine）均对应失稳区：前者 Top-3 Jaccard 仅 0.47，因为 raw 特征空间缺乏潜在语义对未指定特征的填充；后者 Top-1 一致率为 0、Top-5 Jaccard 仅 0.36，正如 4.4.2 节所论证的，纯 CP 嵌入在 39 样本规模下受旋转模糊影响显著。$\\alpha = 0.4$ 处达到 Top-1 一致率 100%、Top-3 Jaccard 1.0 的最优区间；$\\alpha \\in [0.2, 0.4]$ 是稳健区——Top-3 Jaccard 均 $\\geq 0.93$。该实验为 §4.4.2 节 $\\alpha = 0.4$ 的取值给出了实证支撑，并表明本文的混合相似度设计的核心价值在于\"raw 主导 + CP 辅助\"，而非任一极端。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "5.7 案例研究",
+      "style": "Heading2",
+      "spaceBefore": "9pt",
+      "spaceAfter": "5pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "为直观呈现 BioBridge-GraphRAG 的推理过程及其相对于纯 LLM 直答的可解释优势，本节给出 3 个代表性案例，涵盖知识查询、推荐精排、跨域可行性推理三类典型查询。每个案例均给出真实运行的工具调用序列、关键中间结果与最终答案要点；完整推理轨迹见附录 B 与公开代码仓库的 demo_results.json。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "案例 1：Strouhal 数知识查询（含数值校验）",
+      "style": "Heading3",
+      "spaceBefore": "6pt",
+      "spaceAfter": "3pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "输入：\"什么是 Strouhal 数？验证一下 DelFly Nimble（扑频 17 Hz、翼展 330 mm、速度 7 m/s）的 Strouhal 数是否在最优区间。\"",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "推理过程（迭代数 $D = 2$，工具调用 2 次）：第一轮，LLM 识别该问题既需要定义性回答又需要数值校验，调用 strouhal_check(flap_freq_hz=17, wingspan_mm=330, flight_speed_m_s=7)，工具按 $\\text{St} = fA/U$ 公式（取扑动半幅 $A = \\text{wingspan}/4 = 82.5$ mm）计算得 $\\text{St} \\approx 0.20$，判定落在最优区间 $[0.2, 0.4]$ 的下边界。第二轮，LLM 调用 search_fwmav(name=\"DelFly Nimble\") 获取该样机的工程背景（可悬停、单驱动机构、重量 28.2 g），用于答案中的样机引用与文献溯源。最终答案分三段：定义（含公式与文献来源）、对 DelFly Nimble 的具体校验结论（$\\text{St} = 0.20$，处于最优区间下沿，意味着推进效率良好但有进一步优化空间）、相关文献链接。该案例展示了 BioBridge-GraphRAG 在涉及定量校验的知识问答上相对于纯 LLM 的优势：定义部分两者均能给出，但数值校验仅有 BioBridge-GraphRAG 给出可验证的具体计算结果（纯 LLM 在被笔者所测试时倾向于报告\"约 0.18–0.25\"这种缺乏依据的近似值）。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "案例 2：粗筛—精排两阶段方案推荐",
+      "style": "Heading3",
+      "spaceBefore": "6pt",
+      "spaceAfter": "3pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "输入：\"推荐一架重量 300 g 左右、续航 30 分钟以上、用于户外巡航侦察的扑翼机。\"",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "推理过程（迭代数 $D = 5$，工具调用 10 次）：第一轮，LLM 直接调用 tensor_recall(weight_g=300, endurance_s=1800, can_hover=False, mission=\"task\")，张量分解粗筛在毫秒级时间内返回 Top-10 候选，前 3 名为 Festo SmartBird、AVITRON、Robird。第二轮调用 hassanalian_weight(endurance_min=30, payload_g=0) 复核 30 min 续航的物理可行重量（约 320 g），确认 300 g 的目标在物理可行区间内。第三轮调用 shyy_scaling_law(weight_g=300) 得到尺度律预测的翼展 $\\approx 690$ mm 与扑频 $\\approx 6.5$ Hz，与 Festo SmartBird 实测翼展 2000 mm 偏离较大（其特殊的展弦比与超低扑频设计源自滑翔强化），与 AVITRON 实测翼展 1300 mm 接近，与 Robird 实测翼展 1200 mm 较接近。第四至第五轮分别调用 search_fwmav 与 query_mimics_path 检查三个候选的仿生主导维度：AVITRON 与 Robird 均以 morphology + scale 主导仿生于鸟类（AVITRON 仿燕鸥、Robird 仿游隼），与\"户外巡航侦察\"任务高度匹配。最终输出按校验通过情况重排为：Robird（推荐）→ AVITRON（推荐）→ Festo SmartBird（备选，更适合表演场景）。该案例体现了\"覆盖广粗筛 + 物理可行精排\"的系统级范式（4.5 节）——粗筛覆盖了 SmartBird 这类即使在物理上偏离尺度律但在领域内具备代表性的样机，再由精排阶段根据物理与任务匹配两个维度予以重排，避免了单一指标主导的偏差。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "案例 3：跨域可行性推理（生物原型 → 工程方案）",
+      "style": "Heading3",
+      "spaceBefore": "6pt",
+      "spaceAfter": "3pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "输入：\"想做一架续航 30 分钟、载重 50 g 的扑翼机，参考蜂鸟原型可行吗？\"",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "推理过程（迭代数 $D = 6$，工具调用 8 次）：第一轮调用 search_organism(name=\"蜂鸟\")，获取蜂鸟参数——体重 2–10 g、翼展 75–110 mm、扑频 50–80 Hz、悬停能力强。第二轮调用 hassanalian_weight(endurance_min=30, payload_g=50)，得到任务所需起飞重量约 320 g。第三轮调用 tensor_recall 以 (weight=320 g, endurance=1800 s, payload=50 g) 粗筛，发现召回的样机均为中大型仿鸟扑翼机而非蜂鸟仿生机型。第四轮 LLM 主动展开跨域对比：调用 shyy_scaling_law(weight_g=320) 得到尺度律预测的翼展约 700 mm、扑频约 6.5 Hz；这与蜂鸟的 75–110 mm 翼展、50–80 Hz 扑频差距悬殊。第五轮调用 strouhal_check 与 reynolds_check 进一步验证：320 g 量级样机典型雷诺数 $\\sim 10^4$（鸟类区），蜂鸟典型雷诺数 $\\sim 10^3$（中小昆虫区），两者气动机理（前缘涡主导 vs 准定常翼型理论）也不同。第六轮调用 query_mimics_path 在 KG 中验证：\"蜂鸟原型 + 任务约束 320 g\"在双层本体上没有可达的高 morphology / scale 匹配样机。最终答案明确给出\"不可行\"结论与三方面依据：尺度律量级不符、气动机理不同、KG 中无类似先例；并给出可行的替代建议——参考海鸥或鸽子原型（其尺度更接近任务约束）。该案例集中体现了双层本体的价值——只有在生物层与工程层之间建立 4 类相似度通道的双向映射，跨域可行性论证才能被 LLM 自动展开；纯 LLM 直答此类问题时往往给出\"可参考蜂鸟的扑动模式\"这一类既正确又不落地的回答。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "6 结论",
+      "style": "Heading1",
+      "spaceBefore": "12pt",
+      "spaceAfter": "6pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "针对仿生扑翼飞行器概念设计阶段领域知识高度分散、设计经验难以复用以及任务驱动方案生成缺乏系统化方法的问题，本文提出了一种结合知识图谱与大语言模型的智能问答与方案推荐方法 BioBridge-GraphRAG，并在自构建的 FWMAV-QA 测评数据集上对其性能进行了实证检验。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "主要贡献体现在四个方面。第一，在领域知识表达层面，构建了由生物原型层与工程样机层组成的双层知识图谱，并定义了气动相似、运动学相似、形态相似、尺度相似 4 类细分的仿生映射关系，使得\"借鉴自哪种生物\"既具有定性的语义关联，又具备定量的相似度分数，为生物—工程跨域查询与分析提供了统一的本体支撑。第二，在推理范式层面，提出了尺度律工具增强的图路径推理框架，将 4 个仿生扑翼飞行器领域的物理工具（重量模型、尺度律预测、Strouhal 数与雷诺数判别）以 Function Calling 协议封装为大语言模型可调用的接口，使得语义检索与数值校验能够在同一推理链上协同；与现有通用 GraphRAG 方法相比，该范式明确将\"工程参数验证\"作为推理的一阶动作。第三，在方案推荐层面，引入基于 3 阶张量 CP 分解的粗筛机制，结合 raw-CP 混合相似度（$\\alpha = 0.4$）实现毫秒级 Top-$K$ 召回，并与图路径推理协同构成\"粗筛—精排\"两阶段范式，从系统层面解耦了语义匹配与物理可行两个判据。第四，在评测资源层面，构建并公开了 FWMAV-QA Benchmark——据作者所知首个面向仿生扑翼飞行器领域的中文知识问答与方案推荐测评数据集（共 754 题、6 类）——以及完整的代码仓库（GitHub + Zenodo DOI）。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "本文工作仍存在若干局限。受公开样机数量限制，当前知识图谱仅含 39 架 FlappingWingVehicle，张量分解的潜在因子在小样本下存在一定旋转模糊；与 6 个代表性基线在 FWMAV-QA 全集上的系统对比尚在进行中，§5.5 节将报告更全面的主实验结果与统计显著性检验；案例研究中关于\"BioBridge-GraphRAG 优于纯 LLM 直答\"的论断目前主要基于定性观察，需在全集评测中给出量化对比。此外，本文的人工评估目前仅由作者本人完成，缺乏多名领域专家的独立校验。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  },
+  {
+    "command": "add",
+    "parent": "/body",
+    "type": "p",
+    "props": {
+      "text": "未来工作可从三方面展开：一是将本文方法的 ReAct 单路径推理扩展为 ToG 风格的束搜索，并在并发多候选场景下与本文范式进行权衡；二是随着样机数据规模扩大，进一步引入独立的\"组件—性能\"维度形成 4 阶张量，并探索贝叶斯张量分解或正则化变体以进一步提升小样本稳健性；三是将双层本体的\"生物—工程\"映射扩展至材料、加工、控制等其他设计要素，使 BioBridge-GraphRAG 演化为覆盖更完整概念设计链的领域智能助手。",
+      "firstLineIndent": "21.1pt",
+      "lineSpacing": "15pt"
+    }
+  }
+]

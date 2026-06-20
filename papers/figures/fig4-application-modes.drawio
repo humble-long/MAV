@@ -1,0 +1,94 @@
+<mxGraphModel dx="1400" dy="900" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="700" math="0" shadow="0">
+  <root>
+    <mxCell id="0"/>
+    <mxCell id="1" parent="0"/>
+
+    <mxCell id="title" value="BioBridge-GraphRAG 两类应用模式对比" style="text;html=1;align=center;verticalAlign=middle;fontSize=16;fontStyle=1;fontColor=#1F2A36;" vertex="1" parent="1">
+      <mxGeometry x="100" y="20" width="1000" height="30" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="left_box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F4F8FB;strokeColor=#3A6B8A;strokeWidth=1.5;dashed=1;dashPattern=8 4;" vertex="1" parent="1">
+      <mxGeometry x="40" y="80" width="540" height="600" as="geometry"/>
+    </mxCell>
+    <mxCell id="left_title" value="模式 A：知识查询模式" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontColor=#3A6B8A;" vertex="1" parent="1">
+      <mxGeometry x="60" y="92" width="500" height="26" as="geometry"/>
+    </mxCell>
+    <mxCell id="left_subtitle" value="单点 / 对比型问题  ·  D ≤ 3  ·  工具调用 0–3 次" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontColor=#5C7894;fontStyle=2;" vertex="1" parent="1">
+      <mxGeometry x="60" y="118" width="500" height="20" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="right_box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAF5EE;strokeColor=#B85450;strokeWidth=1.5;dashed=1;dashPattern=8 4;" vertex="1" parent="1">
+      <mxGeometry x="620" y="80" width="540" height="600" as="geometry"/>
+    </mxCell>
+    <mxCell id="right_title" value="模式 B：推荐精排模式" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontColor=#B85450;" vertex="1" parent="1">
+      <mxGeometry x="640" y="92" width="500" height="26" as="geometry"/>
+    </mxCell>
+    <mxCell id="right_subtitle" value="方案设计型问题  ·  D ≈ 4–6  ·  与张量分解粗筛协同（粗筛—精排两阶段）" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontColor=#9C5048;fontStyle=2;" vertex="1" parent="1">
+      <mxGeometry x="640" y="118" width="500" height="20" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="left_q" value="&lt;b&gt;输入查询：&lt;/b&gt;&#10;&quot;鸽子和隼的扑频差异在哪？&quot;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;strokeWidth=1.5;fontSize=11;verticalAlign=middle;align=center;" vertex="1" parent="1">
+      <mxGeometry x="100" y="160" width="420" height="55" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="left_t1" value="① search_organism(name=&quot;鸽子&quot;)&#10;→ 扑频 [3, 5] Hz, 体重 [200, 400] g" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EAF2E5;strokeColor=#587A4A;strokeWidth=1;fontSize=10;verticalAlign=middle;align=left;spacingLeft=10;" vertex="1" parent="1">
+      <mxGeometry x="100" y="240" width="420" height="50" as="geometry"/>
+    </mxCell>
+    <mxCell id="left_t2" value="② search_organism(name=&quot;隼&quot;)&#10;→ 扑频 [4, 6] Hz, 体重 [500, 900] g" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EAF2E5;strokeColor=#587A4A;strokeWidth=1;fontSize=10;verticalAlign=middle;align=left;spacingLeft=10;" vertex="1" parent="1">
+      <mxGeometry x="100" y="305" width="420" height="50" as="geometry"/>
+    </mxCell>
+    <mxCell id="left_t3" value="（可选）③ query_mimics_path(dominant_type=&quot;morphology&quot;)&#10;按形态相似度找以鸽子为原型的样机（兑现 4 类相似度通道）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EAF2E5;strokeColor=#587A4A;strokeWidth=1;dashed=1;fontSize=10;verticalAlign=middle;align=left;spacingLeft=10;" vertex="1" parent="1">
+      <mxGeometry x="100" y="370" width="420" height="50" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="left_a" value="&lt;b&gt;LLM 综合输出：&lt;/b&gt;&#10;&#10;• 鸽子扑频 3–5 Hz，隼扑频 4–6 Hz&#10;• 差异源自体重不同（鸽子 ≈ 0.5×隼）&#10;• 对比表 + 文献溯源（HAS_REFERENCE）&#10;• 无需物理工具调用" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8EFF5;strokeColor=#3A6B8A;strokeWidth=1.5;fontSize=11;verticalAlign=middle;align=left;spacingLeft=12;spacingTop=6;" vertex="1" parent="1">
+      <mxGeometry x="100" y="450" width="420" height="120" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="left_metric" value="📊 评测指标：Hit@k, EM, F1, RAGAS Faithfulness（5.2.1 节）" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;fontColor=#3A6B8A;fontStyle=2;" vertex="1" parent="1">
+      <mxGeometry x="100" y="600" width="420" height="20" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="right_q" value="&lt;b&gt;输入查询：&lt;/b&gt;&#10;&quot;重量 30 g、续航 15 min、需悬停的微型扑翼机推荐&quot;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;strokeWidth=1.5;fontSize=11;verticalAlign=middle;align=center;" vertex="1" parent="1">
+      <mxGeometry x="680" y="160" width="420" height="55" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="recall_box" value="&lt;b&gt;粗筛阶段（创新 3）&lt;/b&gt;&#10;tensor_recall(weight=30, endurance=900s, can_hover=True)&#10;→ Top-10 候选（毫秒级）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#7E57C2;strokeWidth=1.5;fontSize=10;verticalAlign=middle;align=left;spacingLeft=10;spacingTop=4;" vertex="1" parent="1">
+      <mxGeometry x="680" y="240" width="420" height="60" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="rerank_label" value="精排阶段（创新 2）：对每个候选依次执行 →" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;fontStyle=1;fontColor=#B85450;" vertex="1" parent="1">
+      <mxGeometry x="680" y="310" width="420" height="20" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="right_t1" value="① hassanalian_weight(15min, 0g 载重)&#10;→ 复核物理可行重量 ≈ 28 g，与候选 25–35 g 匹配" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE8E2;strokeColor=#B85450;strokeWidth=1;fontSize=10;verticalAlign=middle;align=left;spacingLeft=10;" vertex="1" parent="1">
+      <mxGeometry x="680" y="335" width="420" height="48" as="geometry"/>
+    </mxCell>
+    <mxCell id="right_t2" value="② shyy_scaling_law(weight=30g)&#10;→ 翼展预测 280 mm，扑频 18 Hz；与候选偏离度量化" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE8E2;strokeColor=#B85450;strokeWidth=1;fontSize=10;verticalAlign=middle;align=left;spacingLeft=10;" vertex="1" parent="1">
+      <mxGeometry x="680" y="390" width="420" height="48" as="geometry"/>
+    </mxCell>
+    <mxCell id="right_t3" value="③ query_mimics_path(候选, dominant_type)&#10;→ 检查仿生主导维度是否与「悬停 + 微型」任务匹配" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE8E2;strokeColor=#B85450;strokeWidth=1;fontSize=10;verticalAlign=middle;align=left;spacingLeft=10;" vertex="1" parent="1">
+      <mxGeometry x="680" y="445" width="420" height="48" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="right_a" value="&lt;b&gt;LLM 综合输出：&lt;/b&gt; Top-3 推荐&#10;&#10;1. Nano Hummingbird (排名 1, 物理校验全通过)&#10;2. RoboBee X-Wing (排名 2, 续航偏短)&#10;3. KUBeetle-S (排名 3, 重量略高)&#10;附：JSON 物理校验报告 + 推理路径 P" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8EFF5;strokeColor=#3A6B8A;strokeWidth=1.5;fontSize=10;verticalAlign=middle;align=left;spacingLeft=12;spacingTop=6;" vertex="1" parent="1">
+      <mxGeometry x="680" y="510" width="420" height="100" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="right_metric" value="📊 评测指标：NDCG@5, MRR, 物理校验通过率（5.2.2 节）" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;fontColor=#B85450;fontStyle=2;" vertex="1" parent="1">
+      <mxGeometry x="680" y="630" width="420" height="20" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="e_l1" style="endArrow=classic;html=1;strokeColor=#3A6B8A;strokeWidth=1.4;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="left_q" target="left_t1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="e_l2" style="endArrow=classic;html=1;strokeColor=#3A6B8A;strokeWidth=1.4;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="left_t1" target="left_t2" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="e_l3" style="endArrow=classic;html=1;strokeColor=#3A6B8A;strokeWidth=1.2;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="left_t2" target="left_t3" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="e_l4" style="endArrow=classic;html=1;strokeColor=#3A6B8A;strokeWidth=1.4;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="left_t3" target="left_a" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <mxCell id="e_r1" style="endArrow=classic;html=1;strokeColor=#B85450;strokeWidth=1.6;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="right_q" target="recall_box" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="e_r2" style="endArrow=classic;html=1;strokeColor=#B85450;strokeWidth=1.6;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="recall_box" target="right_t1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="e_r3" style="endArrow=classic;html=1;strokeColor=#B85450;strokeWidth=1.4;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="right_t1" target="right_t2" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="e_r4" style="endArrow=classic;html=1;strokeColor=#B85450;strokeWidth=1.4;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="right_t2" target="right_t3" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="e_r5" style="endArrow=classic;html=1;strokeColor=#B85450;strokeWidth=1.6;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="right_t3" target="right_a" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+  </root>
+</mxGraphModel>

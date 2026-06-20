@@ -1,0 +1,105 @@
+<mxGraphModel dx="1400" dy="900" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="600" math="0" shadow="0">
+  <root>
+    <mxCell id="0"/>
+    <mxCell id="1" parent="0"/>
+
+    <mxCell id="title" value="BioBridge-GraphRAG 粗筛—精排两阶段方案推荐范式" style="text;html=1;align=center;verticalAlign=middle;fontSize=16;fontStyle=1;fontColor=#1F2A36;" vertex="1" parent="1">
+      <mxGeometry x="100" y="20" width="1200" height="30" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="query" value="&lt;b&gt;方案推荐查询&lt;/b&gt;&#10;&quot;30 g、续航 15 min&#10;需悬停的微型扑翼机&quot;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;strokeWidth=1.5;fontSize=11;verticalAlign=middle;align=center;" vertex="1" parent="1">
+      <mxGeometry x="40" y="240" width="160" height="100" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="recall_box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F2FA;strokeColor=#7E57C2;strokeWidth=1.5;dashed=1;dashPattern=8 4;" vertex="1" parent="1">
+      <mxGeometry x="240" y="100" width="320" height="400" as="geometry"/>
+    </mxCell>
+    <mxCell id="recall_title" value="① 粗筛阶段（创新点 3 — 张量分解）" style="text;html=1;align=center;verticalAlign=middle;fontSize=12;fontStyle=1;fontColor=#7E57C2;" vertex="1" parent="1">
+      <mxGeometry x="240" y="112" width="320" height="22" as="geometry"/>
+    </mxCell>
+    <mxCell id="recall_subtitle" value="目标：覆盖广 + 召回率高 + 毫秒级" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;fontColor=#9673A6;fontStyle=2;" vertex="1" parent="1">
+      <mxGeometry x="240" y="135" width="320" height="18" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="r_step1" value="任务约束 → 查询矩阵 𝐐_raw" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8E3F0;strokeColor=#7E57C2;strokeWidth=1;fontSize=10;verticalAlign=middle;align=center;" vertex="1" parent="1">
+      <mxGeometry x="270" y="170" width="260" height="40" as="geometry"/>
+    </mxCell>
+    <mxCell id="r_step2" value="z-score 标准化 → 𝐐_norm&#10;最小二乘投影 → 𝐪 ∈ ℝ^R (R=12)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8E3F0;strokeColor=#7E57C2;strokeWidth=1;fontSize=10;verticalAlign=middle;align=center;" vertex="1" parent="1">
+      <mxGeometry x="270" y="225" width="260" height="50" as="geometry"/>
+    </mxCell>
+    <mxCell id="r_step3" value="混合相似度 sim = 0.6·cos_raw + 0.4·cos_embed&#10;对 39 架 FWMAV 排序" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8E3F0;strokeColor=#7E57C2;strokeWidth=1;fontSize=10;verticalAlign=middle;align=center;" vertex="1" parent="1">
+      <mxGeometry x="270" y="290" width="260" height="50" as="geometry"/>
+    </mxCell>
+    <mxCell id="r_step4" value="返回 Top-K 候选（默认 K=10）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D6CCEA;strokeColor=#7E57C2;strokeWidth=1.5;fontSize=10;fontStyle=1;verticalAlign=middle;align=center;" vertex="1" parent="1">
+      <mxGeometry x="270" y="355" width="260" height="40" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="r_perf" value="🕐 时延 ≈ 几毫秒  ·  无需 LLM 调用" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;fontColor=#7E57C2;fontStyle=2;" vertex="1" parent="1">
+      <mxGeometry x="270" y="445" width="260" height="20" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="topk_box" value="&lt;b&gt;Top-10 候选样机&lt;/b&gt;&#10;&#10;Nano Hummingbird (sim=0.91)&#10;RoboBee X-Wing (sim=0.87)&#10;KUBeetle-S (sim=0.84)&#10;DelFly Nimble (sim=0.81)&#10;… (6 个)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#9673A6;strokeWidth=1.5;fontSize=10;verticalAlign=top;align=left;spacingTop=8;spacingLeft=10;" vertex="1" parent="1">
+      <mxGeometry x="600" y="220" width="160" height="160" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="rerank_box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FBF1EE;strokeColor=#B85450;strokeWidth=1.5;dashed=1;dashPattern=8 4;" vertex="1" parent="1">
+      <mxGeometry x="800" y="100" width="380" height="400" as="geometry"/>
+    </mxCell>
+    <mxCell id="rerank_title" value="② 精排阶段（创新点 2 — 工具增强路径推理）" style="text;html=1;align=center;verticalAlign=middle;fontSize=12;fontStyle=1;fontColor=#B85450;" vertex="1" parent="1">
+      <mxGeometry x="800" y="112" width="380" height="22" as="geometry"/>
+    </mxCell>
+    <mxCell id="rerank_subtitle" value="目标：物理可行 + 可解释 + 精排可信" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;fontColor=#9C5048;fontStyle=2;" vertex="1" parent="1">
+      <mxGeometry x="800" y="135" width="380" height="18" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="rerank_loop_label" value="对每个候选执行：" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontStyle=1;fontColor=#B85450;" vertex="1" parent="1">
+      <mxGeometry x="820" y="165" width="200" height="20" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="rr_step1" value="hassanalian_weight(任务约束)&#10;复核物理可行重量" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8E0DA;strokeColor=#B85450;strokeWidth=1;fontSize=10;verticalAlign=middle;align=left;spacingLeft=8;" vertex="1" parent="1">
+      <mxGeometry x="830" y="190" width="320" height="42" as="geometry"/>
+    </mxCell>
+    <mxCell id="rr_step2" value="shyy_scaling_law(候选重量)&#10;比较候选参数与尺度律预测的偏离度" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8E0DA;strokeColor=#B85450;strokeWidth=1;fontSize=10;verticalAlign=middle;align=left;spacingLeft=8;" vertex="1" parent="1">
+      <mxGeometry x="830" y="245" width="320" height="42" as="geometry"/>
+    </mxCell>
+    <mxCell id="rr_step3" value="strouhal_check / reynolds_check&#10;气动机理判别（St ∈ [0.2, 0.4]？）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8E0DA;strokeColor=#B85450;strokeWidth=1;fontSize=10;verticalAlign=middle;align=left;spacingLeft=8;" vertex="1" parent="1">
+      <mxGeometry x="830" y="300" width="320" height="42" as="geometry"/>
+    </mxCell>
+    <mxCell id="rr_step4" value="query_mimics_path(候选, dominant_type)&#10;检查仿生主导维度与任务匹配" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8E0DA;strokeColor=#B85450;strokeWidth=1;fontSize=10;verticalAlign=middle;align=left;spacingLeft=8;" vertex="1" parent="1">
+      <mxGeometry x="830" y="355" width="320" height="42" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="rr_summary" value="LLM 综合校验结果重新排序，淘汰物理不可行候选" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EFD5D0;strokeColor=#B85450;strokeWidth=1.5;fontSize=10;fontStyle=1;verticalAlign=middle;align=center;" vertex="1" parent="1">
+      <mxGeometry x="830" y="410" width="320" height="40" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="rr_perf" value="🕐 LLM 调用次数 ≈ Top-K × 4  ·  比对全图调用降 ~75%" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;fontColor=#B85450;fontStyle=2;" vertex="1" parent="1">
+      <mxGeometry x="800" y="465" width="380" height="22" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="output_box" value="&lt;b&gt;最终输出&lt;/b&gt;&#10;&#10;&lt;b&gt;Top-3 推荐&lt;/b&gt;&#10;1. Nano Hummingbird ✓&#10;2. KUBeetle-S ✓&#10;3. DelFly Nimble ⚠️&#10;&#10;附：&#10;• 物理校验报告 (JSON)&#10;• 推理路径 P&#10;• 4 类相似度通道证据" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8EFF5;strokeColor=#3A6B8A;strokeWidth=2;fontSize=10;verticalAlign=top;align=left;spacingTop=8;spacingLeft=10;" vertex="1" parent="1">
+      <mxGeometry x="1220" y="180" width="160" height="240" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="e1" style="endArrow=classic;html=1;strokeColor=#7E57C2;strokeWidth=2;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="query" target="r_step1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="e_r12" style="endArrow=classic;html=1;strokeColor=#7E57C2;strokeWidth=1.4;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="r_step1" target="r_step2" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="e_r23" style="endArrow=classic;html=1;strokeColor=#7E57C2;strokeWidth=1.4;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="r_step2" target="r_step3" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="e_r34" style="endArrow=classic;html=1;strokeColor=#7E57C2;strokeWidth=1.4;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="r_step3" target="r_step4" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <mxCell id="e_r4_topk" style="endArrow=classic;html=1;strokeColor=#7E57C2;strokeWidth=2;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="r_step4" target="topk_box" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <mxCell id="e_topk_rr" value="逐个进入精排" style="endArrow=classic;html=1;strokeColor=#B85450;strokeWidth=2;fontSize=10;fontColor=#B85450;exitX=1;exitY=0.5;entryX=0;entryY=0.4;" edge="1" source="topk_box" target="rr_step1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <mxCell id="e_rr12" style="endArrow=classic;html=1;strokeColor=#B85450;strokeWidth=1.4;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="rr_step1" target="rr_step2" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="e_rr23" style="endArrow=classic;html=1;strokeColor=#B85450;strokeWidth=1.4;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="rr_step2" target="rr_step3" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="e_rr34" style="endArrow=classic;html=1;strokeColor=#B85450;strokeWidth=1.4;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="rr_step3" target="rr_step4" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="e_rr4s" style="endArrow=classic;html=1;strokeColor=#B85450;strokeWidth=1.4;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="rr_step4" target="rr_summary" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <mxCell id="e_out" style="endArrow=classic;html=1;strokeColor=#3A6B8A;strokeWidth=2;exitX=1;exitY=0.5;entryX=0;entryY=0.6;" edge="1" source="rr_summary" target="output_box" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <mxCell id="footer" value="系统级创新点：将&quot;语义匹配&quot;（粗筛）与&quot;物理可行&quot;（精排）解耦——前者由张量嵌入空间快速 KNN 完成，后者由 LLM 调用领域物理工具完成；&#10;Top-K 限制使精排阶段的工具调用开销可控。该范式是论文实验部分（5.5 + 5.6 节）方案推荐任务的核心评测对象。" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;fontColor=#666;fontStyle=2;" vertex="1" parent="1">
+      <mxGeometry x="40" y="525" width="1340" height="40" as="geometry"/>
+    </mxCell>
+
+  </root>
+</mxGraphModel>

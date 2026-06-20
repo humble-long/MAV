@@ -1,0 +1,757 @@
+{
+  "R_values": [
+    4,
+    6,
+    8,
+    10,
+    12,
+    16,
+    20
+  ],
+  "queries": [
+    {
+      "name": "小型悬停",
+      "args": {
+        "weight_g": 30,
+        "endurance_s": 900,
+        "can_hover": true,
+        "mission": "performance"
+      },
+      "by_R": {
+        "4": {
+          "top10": [
+            "Nano Hummingbird",
+            "凤凰 (Phoenix)",
+            "小隼 (Little Falcon)",
+            "金鹰",
+            "RoboRaven",
+            "Richter (Ornithopter)",
+            "空中仿生机器人",
+            "BionicOpter",
+            "C-GPTR (Mr. Bill)",
+            "DelFly II"
+          ],
+          "spearman_vs_R12": 0.3480392156862745,
+          "top1_match": 1.0,
+          "top3_jaccard": 0.3333333333333333,
+          "top5_jaccard": 0.2
+        },
+        "6": {
+          "top10": [
+            "Nano Hummingbird",
+            "微机械飞行昆虫 (MFI)",
+            "RoboBee (Original)",
+            "蜂鸟机器人 (Purdue Hummingbird)",
+            "Allomyrina dichotoma (仿独角仙)",
+            "Insect-mimicking (仿昆虫无尾翼)",
+            "Mentor",
+            "DelFly Nimble",
+            "Robotic Hummingbird",
+            "KUBeetle-S"
+          ],
+          "spearman_vs_R12": 0.00219780219780219,
+          "top1_match": 1.0,
+          "top3_jaccard": 0.3333333333333333,
+          "top5_jaccard": 0.2
+        },
+        "8": {
+          "top10": [
+            "Nano Hummingbird",
+            "KUBeetle-S",
+            "Allomyrina dichotoma (仿独角仙)",
+            "Insect-mimicking (仿昆虫无尾翼)",
+            "BionicOpter",
+            "DelFly Explorer",
+            "TechJect Dragonfly",
+            "RoboBee (Hybrid Aerial-Aquatic)",
+            "Robotic Hummingbird",
+            "DelFly Nimble"
+          ],
+          "spearman_vs_R12": -0.06363636363636371,
+          "top1_match": 1.0,
+          "top3_jaccard": 0.3333333333333333,
+          "top5_jaccard": 0.2
+        },
+        "10": {
+          "top10": [
+            "Nano Hummingbird",
+            "RoboBee (Original)",
+            "蜂鸟机器人 (Purdue Hummingbird)",
+            "DelFly II",
+            "RoboBee X-Wing",
+            "Colibri",
+            "四动力装置可悬停扑翼飞行器",
+            "Mentor",
+            "空中仿生机器人",
+            "微机械飞行昆虫 (MFI)"
+          ],
+          "spearman_vs_R12": 0.46955624355005154,
+          "top1_match": 1.0,
+          "top3_jaccard": 0.3333333333333333,
+          "top5_jaccard": 0.2
+        },
+        "12": {
+          "top10": [
+            "Nano Hummingbird",
+            "TechJect Dragonfly",
+            "DelFly Nimble",
+            "Robotic Hummingbird",
+            "DelFly Explorer",
+            "BionicOpter",
+            "DelFly II",
+            "KUBeetle-S",
+            "Allomyrina dichotoma (仿独角仙)",
+            "Insect-mimicking (仿昆虫无尾翼)"
+          ],
+          "spearman_vs_R12": 1.0,
+          "top1_match": 1.0,
+          "top3_jaccard": 1.0,
+          "top5_jaccard": 1.0
+        },
+        "16": {
+          "top10": [
+            "Nano Hummingbird",
+            "RoboBee (Hybrid Aerial-Aquatic)",
+            "KUBeetle-S",
+            "TechJect Dragonfly",
+            "DelFly Nimble",
+            "微机械飞行昆虫 (MFI)",
+            "DelFly Explorer",
+            "Insect-mimicking (仿昆虫无尾翼)",
+            "Colibri",
+            "四动力装置可悬停扑翼飞行器"
+          ],
+          "spearman_vs_R12": 0.4593406593406594,
+          "top1_match": 1.0,
+          "top3_jaccard": 0.3333333333333333,
+          "top5_jaccard": 0.6
+        },
+        "20": {
+          "top10": [
+            "Nano Hummingbird",
+            "凤凰 (Phoenix)",
+            "Allomyrina dichotoma (仿独角仙)",
+            "信鸽",
+            "Robotic Hummingbird",
+            "TechJect Dragonfly",
+            "Insect-mimicking (仿昆虫无尾翼)",
+            "蜂鸟机器人 (Purdue Hummingbird)",
+            "DelFly II",
+            "机器海鸥"
+          ],
+          "spearman_vs_R12": 0.25274725274725274,
+          "top1_match": 1.0,
+          "top3_jaccard": 0.3333333333333333,
+          "top5_jaccard": 0.4
+        }
+      }
+    },
+    {
+      "name": "中型长航时巡航",
+      "args": {
+        "weight_g": 300,
+        "endurance_s": 1800,
+        "can_hover": false,
+        "mission": "task"
+      },
+      "by_R": {
+        "4": {
+          "top10": [
+            "金鹰",
+            "凤凰 (Phoenix)",
+            "小隼 (Little Falcon)",
+            "DelFly I",
+            "空中仿生机器人",
+            "RoboRaven",
+            "云鸮",
+            "信鸽",
+            "SmartBird",
+            "USTBird"
+          ],
+          "spearman_vs_R12": -0.3571428571428572,
+          "top1_match": 0.0,
+          "top3_jaccard": 0.0,
+          "top5_jaccard": 0.0
+        },
+        "6": {
+          "top10": [
+            "金鹰",
+            "凤凰 (Phoenix)",
+            "USTBird",
+            "信鸽",
+            "云鸮",
+            "SmartBird",
+            "DelFly I",
+            "Microbat",
+            "小隼 (Little Falcon)",
+            "空中仿生机器人"
+          ],
+          "spearman_vs_R12": 0.35664335664335667,
+          "top1_match": 0.0,
+          "top3_jaccard": 0.3333333333333333,
+          "top5_jaccard": 0.6
+        },
+        "8": {
+          "top10": [
+            "信鸽",
+            "云鸮",
+            "Microbat",
+            "机器海鸥",
+            "SmartBird",
+            "USTBird",
+            "DelFly I",
+            "大中型仿鸟扑翼飞行器 (Large-Scale Ornithopter)",
+            "Entomopter",
+            "Bionic Flying Fox"
+          ],
+          "spearman_vs_R12": 0.7582417582417582,
+          "top1_match": 0.0,
+          "top3_jaccard": 0.6666666666666666,
+          "top5_jaccard": 0.8
+        },
+        "10": {
+          "top10": [
+            "信鸽",
+            "云鸮",
+            "USTBird",
+            "Microbat",
+            "SmartBird",
+            "机器海鸥",
+            "金鹰",
+            "PigeonBot",
+            "DelFly I",
+            "小隼 (Little Falcon)"
+          ],
+          "spearman_vs_R12": 0.8251748251748252,
+          "top1_match": 0.0,
+          "top3_jaccard": 1.0,
+          "top5_jaccard": 1.0
+        },
+        "12": {
+          "top10": [
+            "USTBird",
+            "信鸽",
+            "云鸮",
+            "SmartBird",
+            "Microbat",
+            "机器海鸥",
+            "Bionic Flying Fox",
+            "凤凰 (Phoenix)",
+            "金鹰",
+            "小隼 (Little Falcon)"
+          ],
+          "spearman_vs_R12": 1.0,
+          "top1_match": 1.0,
+          "top3_jaccard": 1.0,
+          "top5_jaccard": 1.0
+        },
+        "16": {
+          "top10": [
+            "信鸽",
+            "金鹰",
+            "云鸮",
+            "SmartBird",
+            "Microbat",
+            "机器海鸥",
+            "DelFly I",
+            "小隼 (Little Falcon)",
+            "凤凰 (Phoenix)",
+            "空中仿生机器人"
+          ],
+          "spearman_vs_R12": 0.3426573426573427,
+          "top1_match": 0.0,
+          "top3_jaccard": 0.6666666666666666,
+          "top5_jaccard": 0.8
+        },
+        "20": {
+          "top10": [
+            "金鹰",
+            "凤凰 (Phoenix)",
+            "USTBird",
+            "云鸮",
+            "信鸽",
+            "SmartBird",
+            "Microbat",
+            "机器海鸥",
+            "DelFly I",
+            "小隼 (Little Falcon)"
+          ],
+          "spearman_vs_R12": 0.3363636363636363,
+          "top1_match": 0.0,
+          "top3_jaccard": 0.3333333333333333,
+          "top5_jaccard": 0.6
+        }
+      }
+    },
+    {
+      "name": "昆虫尺度极致小型化",
+      "args": {
+        "weight_g": 0.5,
+        "wingspan_mm": 35,
+        "frequency_hz": 170,
+        "mission": "research"
+      },
+      "by_R": {
+        "4": {
+          "top10": [
+            "Entomopter",
+            "KUBeetle-S",
+            "MAV (University of Arizona)",
+            "Colibri",
+            "蜂鸟机器人 (Purdue Hummingbird)",
+            "RoboBee (Hybrid Aerial-Aquatic)",
+            "Insect-mimicking (仿昆虫无尾翼)",
+            "DelFly Micro",
+            "四动力装置可悬停扑翼飞行器",
+            "DelFly II"
+          ],
+          "spearman_vs_R12": 0.1428571428571429,
+          "top1_match": 0.0,
+          "top3_jaccard": 0.0,
+          "top5_jaccard": 0.4
+        },
+        "6": {
+          "top10": [
+            "DelFly Micro",
+            "Microbat",
+            "微机械飞行昆虫 (MFI)",
+            "Entomopter",
+            "RoboBee X-Wing",
+            "RoboBee (Original)",
+            "蜂鸟机器人 (Purdue Hummingbird)",
+            "Insect-mimicking (仿昆虫无尾翼)",
+            "RoboBee (Hybrid Aerial-Aquatic)",
+            "KUBeetle-S"
+          ],
+          "spearman_vs_R12": 0.1428571428571429,
+          "top1_match": 0.0,
+          "top3_jaccard": 0.0,
+          "top5_jaccard": 0.4
+        },
+        "8": {
+          "top10": [
+            "Entomopter",
+            "DelFly Micro",
+            "RoboBee (Original)",
+            "MAV (University of Arizona)",
+            "RoboBee X-Wing",
+            "Microbat",
+            "KUBeetle-S",
+            "Colibri",
+            "微机械飞行昆虫 (MFI)",
+            "蜂鸟机器人 (Purdue Hummingbird)"
+          ],
+          "spearman_vs_R12": 0.2692307692307693,
+          "top1_match": 0.0,
+          "top3_jaccard": 0.3333333333333333,
+          "top5_jaccard": 0.6
+        },
+        "10": {
+          "top10": [
+            "RoboBee (Hybrid Aerial-Aquatic)",
+            "KUBeetle-S",
+            "Entomopter",
+            "Microbat",
+            "微机械飞行昆虫 (MFI)",
+            "DelFly Micro",
+            "Robotic Hummingbird",
+            "TechJect Dragonfly",
+            "Nano Hummingbird",
+            "RoboBee X-Wing"
+          ],
+          "spearman_vs_R12": -0.04285714285714293,
+          "top1_match": 0.0,
+          "top3_jaccard": 0.0,
+          "top5_jaccard": 0.2
+        },
+        "12": {
+          "top10": [
+            "RoboBee (Original)",
+            "RoboBee X-Wing",
+            "蜂鸟机器人 (Purdue Hummingbird)",
+            "MAV (University of Arizona)",
+            "微机械飞行昆虫 (MFI)",
+            "Insect-mimicking (仿昆虫无尾翼)",
+            "Entomopter",
+            "Colibri",
+            "TechJect Dragonfly",
+            "RoboBee (Hybrid Aerial-Aquatic)"
+          ],
+          "spearman_vs_R12": 1.0,
+          "top1_match": 1.0,
+          "top3_jaccard": 1.0,
+          "top5_jaccard": 1.0
+        },
+        "16": {
+          "top10": [
+            "Nano Hummingbird",
+            "Entomopter",
+            "RoboBee X-Wing",
+            "RoboBee (Original)",
+            "RoboBee (Hybrid Aerial-Aquatic)",
+            "微机械飞行昆虫 (MFI)",
+            "TechJect Dragonfly",
+            "蜂鸟机器人 (Purdue Hummingbird)",
+            "KUBeetle-S",
+            "Insect-mimicking (仿昆虫无尾翼)"
+          ],
+          "spearman_vs_R12": 0.06293706293706292,
+          "top1_match": 0.0,
+          "top3_jaccard": 0.3333333333333333,
+          "top5_jaccard": 0.4
+        },
+        "20": {
+          "top10": [
+            "TechJect Dragonfly",
+            "微机械飞行昆虫 (MFI)",
+            "RoboBee X-Wing",
+            "RoboBee (Original)",
+            "RoboBee (Hybrid Aerial-Aquatic)",
+            "MAV (University of Arizona)",
+            "Entomopter",
+            "DelFly Micro",
+            "Colibri",
+            "蜂鸟机器人 (Purdue Hummingbird)"
+          ],
+          "spearman_vs_R12": 0.10909090909090913,
+          "top1_match": 0.0,
+          "top3_jaccard": 0.3333333333333333,
+          "top5_jaccard": 0.6
+        }
+      }
+    },
+    {
+      "name": "仿鸟侦察",
+      "args": {
+        "weight_g": 100,
+        "wingspan_mm": 400,
+        "speed_max_m_s": 12,
+        "mission": "task"
+      },
+      "by_R": {
+        "4": {
+          "top10": [
+            "金鹰",
+            "小隼 (Little Falcon)",
+            "DelFly II",
+            "RoboRaven",
+            "DelFly I",
+            "PigeonBot",
+            "C-GPTR (Mr. Bill)",
+            "主动折叠变形扑翼飞行器",
+            "Robotic Hummingbird",
+            "Entomopter"
+          ],
+          "spearman_vs_R12": 0.11764705882352944,
+          "top1_match": 0.0,
+          "top3_jaccard": 0.0,
+          "top5_jaccard": 0.0
+        },
+        "6": {
+          "top10": [
+            "金鹰",
+            "Entomopter",
+            "Microbat",
+            "Robotic Hummingbird",
+            "DelFly II",
+            "PigeonBot",
+            "USTBird",
+            "DelFly I",
+            "DelFly Micro",
+            "信鸽"
+          ],
+          "spearman_vs_R12": 0.2879120879120879,
+          "top1_match": 0.0,
+          "top3_jaccard": 0.0,
+          "top5_jaccard": 0.4
+        },
+        "8": {
+          "top10": [
+            "Entomopter",
+            "Mentor",
+            "Microbat",
+            "Colibri",
+            "USTBird",
+            "PigeonBot",
+            "MAV (University of Arizona)",
+            "DelFly Micro",
+            "DelFly II",
+            "信鸽"
+          ],
+          "spearman_vs_R12": 0.5164835164835164,
+          "top1_match": 0.0,
+          "top3_jaccard": 0.3333333333333333,
+          "top5_jaccard": 0.6
+        },
+        "10": {
+          "top10": [
+            "Mentor",
+            "Entomopter",
+            "PigeonBot",
+            "DelFly Explorer",
+            "USTBird",
+            "Microbat",
+            "DelFly Nimble",
+            "Colibri",
+            "MAV (University of Arizona)",
+            "TechJect Dragonfly"
+          ],
+          "spearman_vs_R12": 0.6713286713286714,
+          "top1_match": 0.0,
+          "top3_jaccard": 0.6666666666666666,
+          "top5_jaccard": 0.8
+        },
+        "12": {
+          "top10": [
+            "PigeonBot",
+            "Mentor",
+            "USTBird",
+            "Entomopter",
+            "Robotic Hummingbird",
+            "MAV (University of Arizona)",
+            "DelFly Explorer",
+            "Microbat",
+            "DelFly II",
+            "DelFly Nimble"
+          ],
+          "spearman_vs_R12": 1.0,
+          "top1_match": 1.0,
+          "top3_jaccard": 1.0,
+          "top5_jaccard": 1.0
+        },
+        "16": {
+          "top10": [
+            "Mentor",
+            "Microbat",
+            "Entomopter",
+            "PigeonBot",
+            "Nano Hummingbird",
+            "DelFly Explorer",
+            "TechJect Dragonfly",
+            "蜂鸟机器人 (Purdue Hummingbird)",
+            "Robotic Hummingbird",
+            "DelFly Nimble"
+          ],
+          "spearman_vs_R12": 0.4010989010989011,
+          "top1_match": 0.0,
+          "top3_jaccard": 0.3333333333333333,
+          "top5_jaccard": 0.6
+        },
+        "20": {
+          "top10": [
+            "金鹰",
+            "TechJect Dragonfly",
+            "USTBird",
+            "DelFly II",
+            "Mentor",
+            "DelFly Nimble",
+            "Entomopter",
+            "蜂鸟机器人 (Purdue Hummingbird)",
+            "Microbat",
+            "凤凰 (Phoenix)"
+          ],
+          "spearman_vs_R12": 0.05934065934065935,
+          "top1_match": 0.0,
+          "top3_jaccard": 0.3333333333333333,
+          "top5_jaccard": 0.4
+        }
+      }
+    },
+    {
+      "name": "多约束概念探索",
+      "args": {
+        "weight_g": 50,
+        "wingspan_mm": 250,
+        "endurance_s": 600,
+        "can_hover": false,
+        "mission": "performance"
+      },
+      "by_R": {
+        "4": {
+          "top10": [
+            "Microbat",
+            "Entomopter",
+            "信鸽",
+            "云鸮",
+            "DelFly I",
+            "USTBird",
+            "MAV (University of Arizona)",
+            "机器海鸥",
+            "SmartBird",
+            "金鹰"
+          ],
+          "spearman_vs_R12": 0.2545454545454545,
+          "top1_match": 0.0,
+          "top3_jaccard": 0.3333333333333333,
+          "top5_jaccard": 0.6
+        },
+        "6": {
+          "top10": [
+            "金鹰",
+            "DelFly I",
+            "USTBird",
+            "Microbat",
+            "信鸽",
+            "凤凰 (Phoenix)",
+            "云鸮",
+            "Entomopter",
+            "主动折叠变形扑翼飞行器",
+            "小隼 (Little Falcon)"
+          ],
+          "spearman_vs_R12": 0.7342657342657343,
+          "top1_match": 0.0,
+          "top3_jaccard": 0.6666666666666666,
+          "top5_jaccard": 0.8
+        },
+        "8": {
+          "top10": [
+            "金鹰",
+            "云鸮",
+            "信鸽",
+            "Microbat",
+            "DelFly I",
+            "Entomopter",
+            "USTBird",
+            "凤凰 (Phoenix)",
+            "机器海鸥",
+            "DelFly Micro"
+          ],
+          "spearman_vs_R12": 0.6098901098901099,
+          "top1_match": 0.0,
+          "top3_jaccard": 0.3333333333333333,
+          "top5_jaccard": 0.6
+        },
+        "10": {
+          "top10": [
+            "Microbat",
+            "USTBird",
+            "信鸽",
+            "Entomopter",
+            "云鸮",
+            "金鹰",
+            "凤凰 (Phoenix)",
+            "DelFly I",
+            "PigeonBot",
+            "小隼 (Little Falcon)"
+          ],
+          "spearman_vs_R12": 0.554945054945055,
+          "top1_match": 0.0,
+          "top3_jaccard": 0.3333333333333333,
+          "top5_jaccard": 0.6
+        },
+        "12": {
+          "top10": [
+            "DelFly I",
+            "金鹰",
+            "Microbat",
+            "Entomopter",
+            "USTBird",
+            "信鸽",
+            "主动折叠变形扑翼飞行器",
+            "SmartBird",
+            "MAV (University of Arizona)",
+            "云鸮"
+          ],
+          "spearman_vs_R12": 1.0,
+          "top1_match": 1.0,
+          "top3_jaccard": 1.0,
+          "top5_jaccard": 1.0
+        },
+        "16": {
+          "top10": [
+            "Microbat",
+            "DelFly I",
+            "信鸽",
+            "Entomopter",
+            "金鹰",
+            "USTBird",
+            "机器海鸥",
+            "MAV (University of Arizona)",
+            "云鸮",
+            "主动折叠变形扑翼飞行器"
+          ],
+          "spearman_vs_R12": 0.7272727272727273,
+          "top1_match": 0.0,
+          "top3_jaccard": 0.6666666666666666,
+          "top5_jaccard": 0.8
+        },
+        "20": {
+          "top10": [
+            "Microbat",
+            "DelFly I",
+            "Entomopter",
+            "USTBird",
+            "云鸮",
+            "MAV (University of Arizona)",
+            "金鹰",
+            "信鸽",
+            "主动折叠变形扑翼飞行器",
+            "SmartBird"
+          ],
+          "spearman_vs_R12": 0.5272727272727273,
+          "top1_match": 0.0,
+          "top3_jaccard": 0.6666666666666666,
+          "top5_jaccard": 0.8
+        }
+      }
+    }
+  ],
+  "summary": {
+    "4": {
+      "rec_err": 0.7143045663833618,
+      "spearman_mean_vs_R12": 0.10118920295390883,
+      "spearman_std_vs_R12": 0.2435275853928375,
+      "top1_match_rate_vs_R12": 0.2,
+      "top3_jaccard_mean": 0.13333333333333333,
+      "top5_jaccard_mean": 0.24000000000000005
+    },
+    "6": {
+      "rec_err": 0.6093143224716187,
+      "spearman_mean_vs_R12": 0.3047752247752248,
+      "spearman_std_vs_R12": 0.24706571115247825,
+      "top1_match_rate_vs_R12": 0.2,
+      "top3_jaccard_mean": 0.26666666666666666,
+      "top5_jaccard_mean": 0.4800000000000001
+    },
+    "8": {
+      "rec_err": 0.5120638608932495,
+      "spearman_mean_vs_R12": 0.41804195804195804,
+      "spearman_std_vs_R12": 0.288579671266769,
+      "top1_match_rate_vs_R12": 0.2,
+      "top3_jaccard_mean": 0.39999999999999997,
+      "top5_jaccard_mean": 0.56
+    },
+    "10": {
+      "rec_err": 0.44609808921813965,
+      "spearman_mean_vs_R12": 0.49562953042829194,
+      "spearman_std_vs_R12": 0.2944949352522244,
+      "top1_match_rate_vs_R12": 0.2,
+      "top3_jaccard_mean": 0.4666666666666667,
+      "top5_jaccard_mean": 0.56
+    },
+    "12": {
+      "rec_err": 0.38992682099342346,
+      "spearman_mean_vs_R12": 1.0,
+      "spearman_std_vs_R12": 0.0,
+      "top1_match_rate_vs_R12": 1.0,
+      "top3_jaccard_mean": 1.0,
+      "top5_jaccard_mean": 1.0
+    },
+    "16": {
+      "rec_err": 0.30048903822898865,
+      "spearman_mean_vs_R12": 0.3986613386613387,
+      "spearman_std_vs_R12": 0.21331694882163071,
+      "top1_match_rate_vs_R12": 0.2,
+      "top3_jaccard_mean": 0.4666666666666666,
+      "top5_jaccard_mean": 0.64
+    },
+    "20": {
+      "rec_err": 0.22877800464630127,
+      "spearman_mean_vs_R12": 0.256963036963037,
+      "spearman_std_vs_R12": 0.167517358524782,
+      "top1_match_rate_vs_R12": 0.2,
+      "top3_jaccard_mean": 0.4,
+      "top5_jaccard_mean": 0.5599999999999999
+    }
+  }
+}

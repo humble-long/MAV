@@ -1,0 +1,94 @@
+<mxGraphModel dx="1400" dy="900" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="650" math="0" shadow="0">
+  <root>
+    <mxCell id="0"/>
+    <mxCell id="1" parent="0"/>
+
+    <mxCell id="title" value="工具增强的 ReAct 路径推理流程" style="text;html=1;align=center;verticalAlign=middle;fontSize=16;fontStyle=1;fontColor=#1F2A36;" vertex="1" parent="1">
+      <mxGeometry x="100" y="20" width="1000" height="30" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="query" value="&lt;b&gt;用户查询 Q&lt;/b&gt;&#10;(自然语言)&#10;&#10;&lt;i style='color:#777;font-size:10px'&gt;例：30g 续航 15min&#10;微型扑翼机推荐&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;strokeWidth=1.5;fontSize=12;verticalAlign=middle;" vertex="1" parent="1">
+      <mxGeometry x="40" y="280" width="160" height="110" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="loop_box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F4F8FB;strokeColor=#3A6B8A;strokeWidth=1.5;dashed=1;dashPattern=8 4;" vertex="1" parent="1">
+      <mxGeometry x="240" y="80" width="700" height="500" as="geometry"/>
+    </mxCell>
+    <mxCell id="loop_label" value="ReAct 迭代循环（最多 D = 6 步）" style="text;html=1;align=left;verticalAlign=top;fontSize=12;fontStyle=1;fontColor=#3A6B8A;" vertex="1" parent="1">
+      <mxGeometry x="260" y="92" width="280" height="20" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="thought" value="&lt;b&gt;① 思考 (Thought)&lt;/b&gt;&#10;LLM 控制器 M 接收 messages + 工具规格&#10;输出 tool_calls（工具调用）或 content（最终答案）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8EFF5;strokeColor=#3A6B8A;strokeWidth=2;fontSize=12;verticalAlign=middle;align=center;" vertex="1" parent="1">
+      <mxGeometry x="290" y="130" width="320" height="80" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="tool_pool" value="&lt;b&gt;工具集 T (4+3+1=8)&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F0;strokeColor=#999988;strokeWidth=1;fontSize=10;fontStyle=1;align=left;verticalAlign=top;spacingTop=8;spacingLeft=10;" vertex="1" parent="1">
+      <mxGeometry x="640" y="130" width="280" height="80" as="geometry"/>
+    </mxCell>
+    <mxCell id="tool_list" value="&lt;b style='color:#3A6B8A'&gt;物理 (4):&lt;/b&gt; hassanalian / shyy / strouhal / reynolds&#10;&lt;b style='color:#587A4A'&gt;KG 检索 (3):&lt;/b&gt; search_fwmav / search_organism / mimics_path&#10;&lt;b style='color:#7E57C2'&gt;张量分解 (1):&lt;/b&gt; tensor_recall（创新点 3）" style="text;html=1;align=left;verticalAlign=top;fontSize=9;" vertex="1" parent="1">
+      <mxGeometry x="650" y="152" width="270" height="55" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="branch" value="response&#10;类型？" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF8DC;strokeColor=#B8860B;strokeWidth=1.5;fontSize=11;fontStyle=1;verticalAlign=middle;align=center;" vertex="1" parent="1">
+      <mxGeometry x="410" y="245" width="80" height="60" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="action_tool" value="&lt;b&gt;② 行动: 调用工具&lt;/b&gt;&#10;tname, args = response.tool_calls&#10;result = T.call(tname, **args)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;strokeWidth=1.5;fontSize=11;verticalAlign=middle;align=center;" vertex="1" parent="1">
+      <mxGeometry x="290" y="340" width="280" height="65" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="obs" value="&lt;b&gt;③ 观察 (Observation)&lt;/b&gt;&#10;工具结果 (JSON) 追加到 messages&#10;trace.append({step, tool, args, result})" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#9673A6;strokeWidth=1.5;fontSize=11;verticalAlign=middle;align=center;" vertex="1" parent="1">
+      <mxGeometry x="290" y="430" width="280" height="65" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="action_answer" value="&lt;b&gt;② 行动: 给出答案&lt;/b&gt;&#10;A = response.content&#10;trace.append(final_answer)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE8E2;strokeColor=#B85450;strokeWidth=1.5;fontSize=11;verticalAlign=middle;align=center;" vertex="1" parent="1">
+      <mxGeometry x="640" y="340" width="260" height="65" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="answer_out" value="&lt;b&gt;最终答案 A&lt;/b&gt;&#10;+ 推理轨迹 P&#10;&#10;&lt;i style='color:#777;font-size:10px'&gt;含每步 思考-行动-观察&#10;可作为可解释推理链交付&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8CECC;strokeColor=#B85450;strokeWidth=2;fontSize=12;verticalAlign=middle;align=center;" vertex="1" parent="1">
+      <mxGeometry x="990" y="305" width="170" height="135" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="e1" style="endArrow=classic;html=1;strokeColor=#3A6B8A;strokeWidth=2;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="query" target="thought" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <mxCell id="e2" style="endArrow=classic;html=1;strokeColor=#999988;strokeWidth=1.2;dashed=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="thought" target="tool_pool" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="e3" style="endArrow=classic;html=1;strokeColor=#3A6B8A;strokeWidth=1.6;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="thought" target="branch" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <mxCell id="e4" value="tool_calls 非空" style="endArrow=classic;html=1;strokeColor=#82B366;strokeWidth=1.6;fontSize=10;fontColor=#82B366;exitX=0;exitY=0.5;entryX=0.5;entryY=0;" edge="1" source="branch" target="action_tool" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="380" y="275"/>
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="e5" value="content 非空" style="endArrow=classic;html=1;strokeColor=#B85450;strokeWidth=1.6;fontSize=10;fontColor=#B85450;exitX=1;exitY=0.5;entryX=0.5;entryY=0;" edge="1" source="branch" target="action_answer" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="540" y="275"/>
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="e6" value="工具执行" style="endArrow=classic;html=1;strokeColor=#9673A6;strokeWidth=1.6;fontSize=10;fontColor=#9673A6;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="action_tool" target="obs" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <mxCell id="e7" value="下一轮 思考" style="endArrow=classic;html=1;strokeColor=#9673A6;strokeWidth=1.8;fontSize=10;fontColor=#9673A6;exitX=0;exitY=0.5;entryX=0;entryY=1;" edge="1" source="obs" target="thought" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="260" y="462"/>
+          <mxPoint x="260" y="170"/>
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <mxCell id="e8" style="endArrow=classic;html=1;strokeColor=#B85450;strokeWidth=2;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="action_answer" target="answer_out" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <mxCell id="footer" value="对应算法 1：第 5 行 response.tool_calls 非空 → 行动 ② 调用工具 → 观察 ③ → 下一轮思考；&#10;第 12 行 response.content 非空 → 行动 ② 输出答案 → 终止；达到最大迭代 D = 6 → 直接终止" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;fontColor=#666;fontStyle=2;" vertex="1" parent="1">
+      <mxGeometry x="60" y="600" width="1080" height="40" as="geometry"/>
+    </mxCell>
+
+  </root>
+</mxGraphModel>

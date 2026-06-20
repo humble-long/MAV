@@ -1,0 +1,177 @@
+<mxGraphModel dx="1800" dy="1200" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="980" math="0" shadow="0">
+  <root>
+    <mxCell id="0"/>
+    <mxCell id="1" parent="0"/>
+
+    <mxCell id="title" value="Fig. 9  三个案例的推理路径可视化（节点—工具—结果链）" style="text;html=1;align=center;verticalAlign=middle;fontSize=16;fontStyle=1;fontColor=#1F2A36;" vertex="1" parent="1">
+      <mxGeometry x="100" y="20" width="1600" height="30" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="legend" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CCCCCC;strokeWidth=1;" vertex="1" parent="1">
+      <mxGeometry x="40" y="60" width="1720" height="38" as="geometry"/>
+    </mxCell>
+    <mxCell id="lg_q" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;strokeWidth=1.2;" vertex="1" parent="1">
+      <mxGeometry x="60" y="72" width="14" height="14" as="geometry"/>
+    </mxCell>
+    <mxCell id="lg_q_t" value="用户查询 Q" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="80" y="68" width="100" height="22" as="geometry"/>
+    </mxCell>
+    <mxCell id="lg_kg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F0;strokeColor=#999988;strokeWidth=1.2;" vertex="1" parent="1">
+      <mxGeometry x="180" y="72" width="14" height="14" as="geometry"/>
+    </mxCell>
+    <mxCell id="lg_kg_t" value="KG 检索工具" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="200" y="68" width="100" height="22" as="geometry"/>
+    </mxCell>
+    <mxCell id="lg_phys" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;strokeWidth=1.2;" vertex="1" parent="1">
+      <mxGeometry x="300" y="72" width="14" height="14" as="geometry"/>
+    </mxCell>
+    <mxCell id="lg_phys_t" value="物理工具（创新 2）" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="320" y="68" width="130" height="22" as="geometry"/>
+    </mxCell>
+    <mxCell id="lg_tn" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#9673A6;strokeWidth=1.2;" vertex="1" parent="1">
+      <mxGeometry x="450" y="72" width="14" height="14" as="geometry"/>
+    </mxCell>
+    <mxCell id="lg_tn_t" value="张量分解（创新 3）" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="470" y="68" width="120" height="22" as="geometry"/>
+    </mxCell>
+    <mxCell id="lg_org" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EAF2E5;strokeColor=#587A4A;strokeWidth=1.2;" vertex="1" parent="1">
+      <mxGeometry x="590" y="72" width="14" height="14" as="geometry"/>
+    </mxCell>
+    <mxCell id="lg_org_t" value="生物原型节点" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="610" y="68" width="100" height="22" as="geometry"/>
+    </mxCell>
+    <mxCell id="lg_ans" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8CECC;strokeColor=#B85450;strokeWidth=1.2;" vertex="1" parent="1">
+      <mxGeometry x="710" y="72" width="14" height="14" as="geometry"/>
+    </mxCell>
+    <mxCell id="lg_ans_t" value="最终答案 / 结论" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="730" y="68" width="120" height="22" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="caseA_box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F4F8FB;strokeColor=#3A6B8A;strokeWidth=1.5;dashed=1;dashPattern=8 4;" vertex="1" parent="1">
+      <mxGeometry x="40" y="118" width="555" height="840" as="geometry"/>
+    </mxCell>
+    <mxCell id="caseA_title" value="案例 1：Strouhal 数知识查询（含数值校验）" style="text;html=1;align=center;verticalAlign=middle;fontSize=13;fontStyle=1;fontColor=#3A6B8A;" vertex="1" parent="1">
+      <mxGeometry x="40" y="130" width="555" height="22" as="geometry"/>
+    </mxCell>
+    <mxCell id="caseA_meta" value="D = 2 步  ·  工具调用 2 次  ·  类型 A1（知识查询·定义）" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;fontColor=#5C7894;fontStyle=2;" vertex="1" parent="1">
+      <mxGeometry x="40" y="154" width="555" height="18" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="A_q" value="&lt;b&gt;用户查询：&lt;/b&gt;&#10;&quot;什么是 Strouhal 数？验证一下 DelFly Nimble&#10;（扑频 17 Hz、翼展 330 mm、速度 7 m/s）&#10;的 Strouhal 数是否在最优区间。&quot;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;strokeWidth=1.5;fontSize=10;verticalAlign=middle;align=left;spacingLeft=10;" vertex="1" parent="1">
+      <mxGeometry x="65" y="190" width="505" height="80" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="A_step1" value="&lt;b&gt;步骤 ①  strouhal_check&lt;/b&gt;&#10;输入: flap_freq_hz=17, wingspan_mm=330, speed=7&#10;计算: A = 330/4 = 82.5 mm; St = fA/U = 17×0.0825/7&#10;&lt;b style='color:#82B366'&gt;输出: St ≈ 0.20  ✓ 落在 [0.2, 0.4] 下边界&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;strokeWidth=1.5;fontSize=10;verticalAlign=middle;align=left;spacingLeft=10;" vertex="1" parent="1">
+      <mxGeometry x="65" y="295" width="505" height="80" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="A_step2" value="&lt;b&gt;步骤 ②  search_fwmav(name=&quot;DelFly Nimble&quot;)&lt;/b&gt;&#10;查询 KG 工程层节点&#10;&lt;b style='color:#666'&gt;输出: 重量 28.2 g · 单驱动机构 · 可悬停&#10;研制单位 TU Delft · 文献 [Karasek2018]&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F0;strokeColor=#999988;strokeWidth=1.5;fontSize=10;verticalAlign=middle;align=left;spacingLeft=10;" vertex="1" parent="1">
+      <mxGeometry x="65" y="400" width="505" height="80" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="A_synth" value="&lt;b&gt;LLM 综合答案要点：&lt;/b&gt;&#10;&#10;1. &lt;b&gt;Strouhal 数定义：&lt;/b&gt;St = fA/U&#10;   描述非定常流动周期性的无量纲数（含公式 + 文献来源）&#10;&#10;2. &lt;b&gt;DelFly Nimble 校验：&lt;/b&gt;St ≈ 0.20，&#10;   位于最优区间 [0.2, 0.4] 下边界&#10;&#10;3. &lt;b&gt;结论：&lt;/b&gt;推进效率良好，但下沿位置&#10;   提示有进一步优化空间（增大扑动幅值或降低速度）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8CECC;strokeColor=#B85450;strokeWidth=2;fontSize=10;verticalAlign=top;align=left;spacingLeft=10;spacingTop=8;" vertex="1" parent="1">
+      <mxGeometry x="65" y="510" width="505" height="180" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="A_kp" value="&lt;b style='color:#3A6B8A'&gt;关键价值（vs 纯 LLM）：&lt;/b&gt;&#10;纯 LLM 报告 St ≈ 0.18–0.25 等近似值，&#10;BioBridge 给出 0.20 的可验证计算依据；&#10;并对接 KG 给出可追溯的文献溯源。" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#3A6B8A;strokeWidth=1;dashed=1;dashPattern=4 4;fontSize=9;verticalAlign=middle;align=left;spacingLeft=10;fontColor=#444;" vertex="1" parent="1">
+      <mxGeometry x="65" y="710" width="505" height="80" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="A_e1" style="endArrow=classic;html=1;strokeColor=#3A6B8A;strokeWidth=1.6;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="A_q" target="A_step1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="A_e2" style="endArrow=classic;html=1;strokeColor=#3A6B8A;strokeWidth=1.4;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="A_step1" target="A_step2" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="A_e3" style="endArrow=classic;html=1;strokeColor=#B85450;strokeWidth=1.6;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="A_step2" target="A_synth" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <mxCell id="caseB_box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FBF1EE;strokeColor=#B85450;strokeWidth=1.5;dashed=1;dashPattern=8 4;" vertex="1" parent="1">
+      <mxGeometry x="615" y="118" width="595" height="840" as="geometry"/>
+    </mxCell>
+    <mxCell id="caseB_title" value="案例 2：粗筛—精排两阶段方案推荐" style="text;html=1;align=center;verticalAlign=middle;fontSize=13;fontStyle=1;fontColor=#B85450;" vertex="1" parent="1">
+      <mxGeometry x="615" y="130" width="595" height="22" as="geometry"/>
+    </mxCell>
+    <mxCell id="caseB_meta" value="D = 5 步  ·  工具调用 10 次  ·  类型 B2（方案推荐·复杂约束）" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;fontColor=#9C5048;fontStyle=2;" vertex="1" parent="1">
+      <mxGeometry x="615" y="154" width="595" height="18" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="B_q" value="&lt;b&gt;用户查询：&lt;/b&gt;&#10;&quot;推荐一架重量 300 g 左右、续航 30 分钟以上、&#10;用于户外巡航侦察的扑翼机。&quot;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;strokeWidth=1.5;fontSize=10;verticalAlign=middle;align=left;spacingLeft=10;" vertex="1" parent="1">
+      <mxGeometry x="640" y="190" width="545" height="60" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="B_step1" value="&lt;b&gt;步骤 ① 张量分解粗筛  tensor_recall&lt;/b&gt;&#10;输入: weight=300, endurance=1800s, can_hover=False, mission=task&#10;&lt;b style='color:#7E57C2'&gt;Top-10 候选（毫秒级）: Festo SmartBird, AVITRON, Robird, ...&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#9673A6;strokeWidth=1.5;fontSize=10;verticalAlign=middle;align=left;spacingLeft=10;" vertex="1" parent="1">
+      <mxGeometry x="640" y="270" width="545" height="60" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="B_rerank_label" value="精排阶段（对每个候选执行 4 类工具校验）" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;fontStyle=1;fontColor=#B85450;" vertex="1" parent="1">
+      <mxGeometry x="640" y="345" width="545" height="20" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="B_step2" value="&lt;b&gt;步骤 ②  hassanalian_weight&lt;/b&gt;(endurance=30min, payload=0)&#10;&lt;b style='color:#82B366'&gt;输出: 物理可行重量 ≈ 320 g  ✓ 与 300 g 目标匹配&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;strokeWidth=1.5;fontSize=10;verticalAlign=middle;align=left;spacingLeft=10;" vertex="1" parent="1">
+      <mxGeometry x="640" y="370" width="545" height="50" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="B_step3" value="&lt;b&gt;步骤 ③  shyy_scaling_law&lt;/b&gt;(weight=300)&#10;预测: 翼展 ≈ 690 mm, 扑频 ≈ 6.5 Hz&#10;&lt;b style='color:#82B366'&gt;偏离度: SmartBird (2000 mm)  ✗ 大;  AVITRON (1300 mm)  ✓;  Robird (1200 mm)  ✓&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;strokeWidth=1.5;fontSize=10;verticalAlign=middle;align=left;spacingLeft=10;" vertex="1" parent="1">
+      <mxGeometry x="640" y="430" width="545" height="60" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="B_step4" value="&lt;b&gt;步骤 ④–⑤  search_fwmav + query_mimics_path&lt;/b&gt;&#10;检查 dominant_type 与任务匹配:&#10;AVITRON: morphology+scale 仿燕鸥 ✓;  Robird: morphology+scale 仿游隼 ✓;&#10;SmartBird: 仿海鸥滑翔特化（不利于巡航侦察）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F0;strokeColor=#999988;strokeWidth=1.5;fontSize=10;verticalAlign=middle;align=left;spacingLeft=10;" vertex="1" parent="1">
+      <mxGeometry x="640" y="500" width="545" height="80" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="B_synth" value="&lt;b&gt;LLM 综合答案：Top-3 推荐&lt;/b&gt;&#10;&#10;&lt;b&gt;1. Robird&lt;/b&gt; ✓推荐  仿游隼，尺度律匹配优&#10;&lt;b&gt;2. AVITRON&lt;/b&gt; ✓推荐  仿燕鸥，载荷适配良好&#10;&lt;b&gt;3. Festo SmartBird&lt;/b&gt; ⚠ 备选  尺度偏差大，更适合表演场景&#10;&#10;附：JSON 物理校验报告 + 推理路径 P&#10;（详见 demo_results.json）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8CECC;strokeColor=#B85450;strokeWidth=2;fontSize=10;verticalAlign=top;align=left;spacingLeft=10;spacingTop=8;" vertex="1" parent="1">
+      <mxGeometry x="640" y="600" width="545" height="160" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="B_kp" value="&lt;b style='color:#B85450'&gt;系统级价值（创新 4.5 节）：&lt;/b&gt;&#10;粗筛覆盖 SmartBird 这类有领域代表性但物理偏离的样机，&#10;再由精排基于物理可行性 + 仿生主导维度重新排序，&#10;避免单一指标主导的偏差。LLM 调用次数比对全图调用降 75%。" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B85450;strokeWidth=1;dashed=1;dashPattern=4 4;fontSize=9;verticalAlign=middle;align=left;spacingLeft=10;fontColor=#444;" vertex="1" parent="1">
+      <mxGeometry x="640" y="780" width="545" height="80" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="B_e1" style="endArrow=classic;html=1;strokeColor=#B85450;strokeWidth=1.6;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="B_q" target="B_step1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="B_e2" style="endArrow=classic;html=1;strokeColor=#B85450;strokeWidth=1.4;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="B_step1" target="B_step2" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="B_e3" style="endArrow=classic;html=1;strokeColor=#B85450;strokeWidth=1.4;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="B_step2" target="B_step3" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="B_e4" style="endArrow=classic;html=1;strokeColor=#B85450;strokeWidth=1.4;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="B_step3" target="B_step4" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="B_e5" style="endArrow=classic;html=1;strokeColor=#B85450;strokeWidth=1.6;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="B_step4" target="B_synth" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <mxCell id="caseC_box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F9F1;strokeColor=#587A4A;strokeWidth=1.5;dashed=1;dashPattern=8 4;" vertex="1" parent="1">
+      <mxGeometry x="1230" y="118" width="555" height="840" as="geometry"/>
+    </mxCell>
+    <mxCell id="caseC_title" value="案例 3：跨域可行性推理（生物原型 → 工程方案）" style="text;html=1;align=center;verticalAlign=middle;fontSize=13;fontStyle=1;fontColor=#587A4A;" vertex="1" parent="1">
+      <mxGeometry x="1230" y="130" width="555" height="22" as="geometry"/>
+    </mxCell>
+    <mxCell id="caseC_meta" value="D = 6 步  ·  工具调用 8 次  ·  类型 A4（多跳推理 + 跨域）" style="text;html=1;align=center;verticalAlign=middle;fontSize=10;fontColor=#3F5C32;fontStyle=2;" vertex="1" parent="1">
+      <mxGeometry x="1230" y="154" width="555" height="18" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="C_q" value="&lt;b&gt;用户查询：&lt;/b&gt;&#10;&quot;想做一架续航 30 分钟、载重 50 g 的扑翼机，&#10;参考蜂鸟原型可行吗？&quot;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;strokeWidth=1.5;fontSize=10;verticalAlign=middle;align=left;spacingLeft=10;" vertex="1" parent="1">
+      <mxGeometry x="1255" y="190" width="505" height="60" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="C_step1" value="&lt;b&gt;步骤 ①  search_organism(name=&quot;蜂鸟&quot;)&lt;/b&gt;  &lt;i&gt;[生物层]&lt;/i&gt;&#10;&lt;b style='color:#587A4A'&gt;蜂鸟参数: 体重 2–10 g, 翼展 75–110 mm, 扑频 50–80 Hz, 悬停 ✓&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EAF2E5;strokeColor=#587A4A;strokeWidth=1.5;fontSize=10;verticalAlign=middle;align=left;spacingLeft=10;" vertex="1" parent="1">
+      <mxGeometry x="1255" y="270" width="505" height="50" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="C_step2" value="&lt;b&gt;步骤 ②  hassanalian_weight&lt;/b&gt;(endurance=30min, payload=50g)&#10;&lt;b style='color:#82B366'&gt;输出: 任务起飞重量 ≈ 320 g  &lt;/b&gt;&#10;&lt;b style='color:#B85450'&gt;⚠ 与蜂鸟体重 2–10 g 相差 40–160 倍&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;strokeWidth=1.5;fontSize=10;verticalAlign=middle;align=left;spacingLeft=10;" vertex="1" parent="1">
+      <mxGeometry x="1255" y="335" width="505" height="60" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="C_step3" value="&lt;b&gt;步骤 ③–④  shyy_scaling_law(weight=320) + reynolds_check&lt;/b&gt;&#10;尺度律预测: 翼展 ≈ 700 mm, 扑频 ≈ 6.5 Hz&#10;&lt;b style='color:#B85450'&gt;✗ 与蜂鸟 75–110 mm / 50–80 Hz 量级悬殊&lt;/b&gt;&#10;Re ~ 10^4 鸟类区  vs  蜂鸟 Re ~ 10^3 中小昆虫区（前缘涡 vs 准定常）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;strokeWidth=1.5;fontSize=10;verticalAlign=middle;align=left;spacingLeft=10;" vertex="1" parent="1">
+      <mxGeometry x="1255" y="410" width="505" height="80" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="C_step4" value="&lt;b&gt;步骤 ⑤–⑥  query_mimics_path&lt;/b&gt;  &lt;i&gt;[双层本体跨域查询]&lt;/i&gt;&#10;在 KG 中检索: &quot;蜂鸟原型 + 320 g 任务&quot; 是否可达?&#10;&lt;b style='color:#B85450'&gt;✗ 双层本体上无可达高 morphology / scale 匹配样机&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F0;strokeColor=#999988;strokeWidth=1.5;fontSize=10;verticalAlign=middle;align=left;spacingLeft=10;" vertex="1" parent="1">
+      <mxGeometry x="1255" y="510" width="505" height="70" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="C_synth" value="&lt;b&gt;LLM 综合结论：&lt;/b&gt;&#10;&#10;&lt;b style='color:#B85450'&gt;✗ 不可行&lt;/b&gt;  三方面依据：&#10;  • 尺度律量级不符（重量差 40–160 倍）&#10;  • 气动机理不同（前缘涡 vs 准定常翼型理论）&#10;  • KG 双层本体中无类似先例&#10;&#10;&lt;b style='color:#587A4A'&gt;✓ 替代建议：&lt;/b&gt;&#10;参考海鸥 / 鸽子原型（尺度更接近 320 g 任务约束）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8CECC;strokeColor=#B85450;strokeWidth=2;fontSize=10;verticalAlign=top;align=left;spacingLeft=10;spacingTop=8;" vertex="1" parent="1">
+      <mxGeometry x="1255" y="600" width="505" height="160" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="C_kp" value="&lt;b style='color:#587A4A'&gt;关键价值（双层本体 + 4 类相似度通道）：&lt;/b&gt;&#10;只有在生物层与工程层之间建立 4 类相似度通道的双向映射，&#10;跨域可行性论证才能被 LLM 自动展开；&#10;纯 LLM 直答此类问题时往往给出&quot;可参考蜂鸟扑动模式&quot;这类既正确又不落地的回答。" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#587A4A;strokeWidth=1;dashed=1;dashPattern=4 4;fontSize=9;verticalAlign=middle;align=left;spacingLeft=10;fontColor=#444;" vertex="1" parent="1">
+      <mxGeometry x="1255" y="780" width="505" height="80" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="C_e1" style="endArrow=classic;html=1;strokeColor=#587A4A;strokeWidth=1.6;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="C_q" target="C_step1" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="C_e2" style="endArrow=classic;html=1;strokeColor=#587A4A;strokeWidth=1.4;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="C_step1" target="C_step2" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="C_e3" style="endArrow=classic;html=1;strokeColor=#587A4A;strokeWidth=1.4;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="C_step2" target="C_step3" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="C_e4" style="endArrow=classic;html=1;strokeColor=#587A4A;strokeWidth=1.4;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="C_step3" target="C_step4" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="C_e5" style="endArrow=classic;html=1;strokeColor=#587A4A;strokeWidth=1.6;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" source="C_step4" target="C_synth" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+  </root>
+</mxGraphModel>

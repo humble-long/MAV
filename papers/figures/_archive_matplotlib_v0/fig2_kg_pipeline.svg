@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="516.96pt" height="190.8pt" viewBox="0 0 516.96 190.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-06-17T15:45:42.403201</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.0, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 190.8 
+L 516.96 190.8 
+L 516.96 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 19.91232 116.514 
+L 82.188 116.514 
+Q 88.30512 116.514 88.30512 114.3108 
+L 88.30512 58.1292 
+Q 88.30512 55.926 82.188 55.926 
+L 19.91232 55.926 
+Q 13.7952 55.926 13.7952 58.1292 
+L 13.7952 114.3108 
+Q 13.7952 116.514 19.91232 116.514 
+z
+" clip-path="url(#p90d8f607c9)" style="fill: #e8eff5; stroke: #3a6b8a; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 102.884256 116.514 
+L 165.159936 116.514 
+Q 171.277056 116.514 171.277056 114.3108 
+L 171.277056 58.1292 
+Q 171.277056 55.926 165.159936 55.926 
+L 102.884256 55.926 
+Q 96.767136 55.926 96.767136 58.1292 
+L 96.767136 114.3108 
+Q 96.767136 116.514 102.884256 116.514 
+z
+" clip-path="url(#p90d8f607c9)" style="fill: #e8eff5; stroke: #3a6b8a; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 185.856192 116.514 
+L 248.131872 116.514 
+Q 254.248992 116.514 254.248992 114.3108 
+L 254.248992 58.1292 
+Q 254.248992 55.926 248.131872 55.926 
+L 185.856192 55.926 
+Q 179.739072 55.926 179.739072 58.1292 
+L 179.739072 114.3108 
+Q 179.739072 116.514 185.856192 116.514 
+z
+" clip-path="url(#p90d8f607c9)" style="fill: #e8eff5; stroke: #3a6b8a; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 268.828128 116.514 
+L 331.103808 116.514 
+Q 337.220928 116.514 337.220928 114.3108 
+L 337.220928 58.1292 
+Q 337.220928 55.926 331.103808 55.926 
+L 268.828128 55.926 
+Q 262.711008 55.926 262.711008 58.1292 
+L 262.711008 114.3108 
+Q 262.711008 116.514 268.828128 116.514 
+z
+" clip-path="url(#p90d8f607c9)" style="fill: #e8eff5; stroke: #3a6b8a; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 351.800064 116.514 
+L 414.075744 116.514 
+Q 420.192864 116.514 420.192864 114.3108 
+L 420.192864 58.1292 
+Q 420.192864 55.926 414.075744 55.926 
+L 351.800064 55.926 
+Q 345.682944 55.926 345.682944 58.1292 
+L 345.682944 114.3108 
+Q 345.682944 116.514 351.800064 116.514 
+z
+" clip-path="url(#p90d8f607c9)" style="fill: #e8eff5; stroke: #3a6b8a; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 434.772 116.514 
+L 497.04768 116.514 
+Q 503.1648 116.514 503.1648 114.3108 
+L 503.1648 58.1292 
+Q 503.1648 55.926 497.04768 55.926 
+L 434.772 55.926 
+Q 428.65488 55.926 428.65488 58.1292 
+L 428.65488 114.3108 
+Q 428.65488 116.514 434.772 116.514 
+z
+" clip-path="url(#p90d8f607c9)" style="fill: #e8eff5; stroke: #3a6b8a; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 90.309064 86.22 
+Q 92.53691 86.22 93.646721 86.22 
+" clip-path="url(#p90d8f607c9)" style="fill: none; stroke: #3a6b8a; stroke-linecap: round"/>
+    <path d="M 90.446721 84.62 
+L 93.646721 86.22 
+L 90.446721 87.82 
+" clip-path="url(#p90d8f607c9)" style="fill: none; stroke: #3a6b8a; stroke-linecap: round"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 173.281 86.22 
+Q 175.508846 86.22 176.618657 86.22 
+" clip-path="url(#p90d8f607c9)" style="fill: none; stroke: #3a6b8a; stroke-linecap: round"/>
+    <path d="M 173.418657 84.62 
+L 176.618657 86.22 
+L 173.418657 87.82 
+" clip-path="url(#p90d8f607c9)" style="fill: none; stroke: #3a6b8a; stroke-linecap: round"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 256.252936 86.22 
+Q 258.480782 86.22 259.590593 86.22 
+" clip-path="url(#p90d8f607c9)" style="fill: none; stroke: #3a6b8a; stroke-linecap: round"/>
+    <path d="M 256.390593 84.62 
+L 259.590593 86.22 
+L 256.390593 87.82 
+" clip-path="url(#p90d8f607c9)" style="fill: none; stroke: #3a6b8a; stroke-linecap: round"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 339.224872 86.22 
+Q 341.452718 86.22 342.562529 86.22 
+" clip-path="url(#p90d8f607c9)" style="fill: none; stroke: #3a6b8a; stroke-linecap: round"/>
+    <path d="M 339.362529 84.62 
+L 342.562529 86.22 
+L 339.362529 87.82 
+" clip-path="url(#p90d8f607c9)" style="fill: none; stroke: #3a6b8a; stroke-linecap: round"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 422.196808 86.22 
+Q 424.424654 86.22 425.534465 86.22 
+" clip-path="url(#p90d8f607c9)" style="fill: none; stroke: #3a6b8a; stroke-linecap: round"/>
+    <path d="M 422.334465 84.62 
+L 425.534465 86.22 
+L 422.334465 87.82 
+" clip-path="url(#p90d8f607c9)" style="fill: none; stroke: #3a6b8a; stroke-linecap: round"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 8.5px; font-family: 'Heiti SC', 'Helvetica', 'Arial', 'DejaVu Sans'; fill: #1f2a36" transform="translate(46.80016 84.9025)">①</text>
+    <text style="font-weight: 700; font-size: 8.5px; font-family: 'Heiti SC', 'Helvetica', 'Arial', 'DejaVu Sans'; fill: #1f2a36" transform="translate(38.30016 93.6575)">预处理</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 7px; font-family: 'Heiti SC', 'Helvetica', 'Arial', 'DejaVu Sans'; fill: #1f2a36" transform="translate(36.801332 131.859281)">PDF 解析</text>
+    <text style="font-size: 7px; font-family: 'Heiti SC', 'Helvetica', 'Arial', 'DejaVu Sans'; fill: #1f2a36" transform="translate(37.05016 140.945062)">段落分块</text>
+   </g>
+   <g id="text_3">
+    <text style="font-weight: 700; font-size: 8.5px; font-family: 'Heiti SC', 'Helvetica', 'Arial', 'DejaVu Sans'; fill: #1f2a36" transform="translate(129.772096 84.9025)">②</text>
+    <text style="font-weight: 700; font-size: 8.5px; font-family: 'Heiti SC', 'Helvetica', 'Arial', 'DejaVu Sans'; fill: #1f2a36" transform="translate(117.022096 93.6575)">实体识别</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 7px; font-family: 'Heiti SC', 'Helvetica', 'Arial', 'DejaVu Sans'; fill: #1f2a36" transform="translate(111.20483 131.775609)">DeepSeek-R1</text>
+    <text style="font-size: 7px; font-family: 'Heiti SC', 'Helvetica', 'Arial', 'DejaVu Sans'; fill: #1f2a36" transform="translate(116.609596 141.341)">+ few-shot</text>
+   </g>
+   <g id="text_5">
+    <text style="font-weight: 700; font-size: 8.5px; font-family: 'Heiti SC', 'Helvetica', 'Arial', 'DejaVu Sans'; fill: #1f2a36" transform="translate(212.744032 84.9025)">③</text>
+    <text style="font-weight: 700; font-size: 8.5px; font-family: 'Heiti SC', 'Helvetica', 'Arial', 'DejaVu Sans'; fill: #1f2a36" transform="translate(199.994032 93.6575)">关系抽取</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 7px; font-family: 'Heiti SC', 'Helvetica', 'Arial', 'DejaVu Sans'; fill: #1f2a36" transform="translate(202.668094 131.831937)">LLM 关系</text>
+    <text style="font-size: 7px; font-family: 'Heiti SC', 'Helvetica', 'Arial', 'DejaVu Sans'; fill: #1f2a36" transform="translate(209.994032 140.956)">分类</text>
+   </g>
+   <g id="text_7">
+    <text style="font-weight: 700; font-size: 8.5px; font-family: 'Heiti SC', 'Helvetica', 'Arial', 'DejaVu Sans'; fill: #1f2a36" transform="translate(295.715968 84.9025)">④</text>
+    <text style="font-weight: 700; font-size: 8.5px; font-family: 'Heiti SC', 'Helvetica', 'Arial', 'DejaVu Sans'; fill: #1f2a36" transform="translate(282.965968 93.6575)">量纲归一</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 7px; font-family: 'Heiti SC', 'Helvetica', 'Arial', 'DejaVu Sans'; fill: #1f2a36" transform="translate(282.644249 131.8735)">规则 + LLM</text>
+    <text style="font-size: 7px; font-family: 'Heiti SC', 'Helvetica', 'Arial', 'DejaVu Sans'; fill: #1f2a36" transform="translate(285.965968 140.879437)">单位转换</text>
+   </g>
+   <g id="text_9">
+    <text style="font-weight: 700; font-size: 8.5px; font-family: 'Heiti SC', 'Helvetica', 'Arial', 'DejaVu Sans'; fill: #1f2a36" transform="translate(378.687904 84.9025)">⑤</text>
+    <text style="font-weight: 700; font-size: 8.5px; font-family: 'Heiti SC', 'Helvetica', 'Arial', 'DejaVu Sans'; fill: #1f2a36" transform="translate(365.937904 93.6575)">人工校验</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 7px; font-family: 'Heiti SC', 'Helvetica', 'Arial', 'DejaVu Sans'; fill: #1f2a36" transform="translate(368.471967 132.087328)">10% 抽样</text>
+    <text style="font-size: 7px; font-family: 'Heiti SC', 'Helvetica', 'Arial', 'DejaVu Sans'; fill: #1f2a36" transform="translate(368.937904 140.942328)">专家复核</text>
+   </g>
+   <g id="text_11">
+    <text style="font-weight: 700; font-size: 8.5px; font-family: 'Heiti SC', 'Helvetica', 'Arial', 'DejaVu Sans'; fill: #1f2a36" transform="translate(461.65984 84.9025)">⑥</text>
+    <text style="font-weight: 700; font-size: 8.5px; font-family: 'Heiti SC', 'Helvetica', 'Arial', 'DejaVu Sans'; fill: #1f2a36" transform="translate(444.438707 93.6575)">Neo4j 入库</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 7px; font-family: 'Heiti SC', 'Helvetica', 'Arial', 'DejaVu Sans'; fill: #1f2a36" transform="translate(451.90984 131.849437)">图数据库</text>
+    <text style="font-size: 7px; font-family: 'Heiti SC', 'Helvetica', 'Arial', 'DejaVu Sans'; fill: #1f2a36" transform="translate(441.766949 140.5885)">+ provenance</text>
+   </g>
+   <g id="text_13">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'Heiti SC', 'Helvetica', 'Arial', 'DejaVu Sans'; text-anchor: middle; fill: #1f2a36" x="258.48" y="18.684" transform="rotate(-0 258.48 18.684)">BioBridge-KG 构建流水线 — 6 阶段</text>
+   </g>
+   <g id="text_14">
+    <text style="font-style: italic; font-size: 7px; font-family: 'Heiti SC', 'Helvetica', 'Arial', 'DejaVu Sans'; text-anchor: middle; fill: #555555" x="258.48" y="177.04" transform="rotate(-0 258.48 177.04)">输入：PDF 论文 + 课题组样机台账 + 飞行生物学手册   →   输出：双层 KG (Neo4j, 612 节点 / 625 关系)</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p90d8f607c9">
+   <rect x="3.6" y="3.6" width="509.76" height="183.6"/>
+  </clipPath>
+ </defs>
+</svg>

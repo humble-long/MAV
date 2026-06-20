@@ -1,0 +1,72 @@
+<mxGraphModel dx="1400" dy="900" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="400" math="0" shadow="0">
+  <root>
+    <mxCell id="0"/>
+    <mxCell id="1" parent="0"/>
+
+    <mxCell id="title" value="BioBridge-KG 构建流水线 — 6 阶段" style="text;html=1;align=center;verticalAlign=middle;fontSize=16;fontStyle=1;fontColor=#1F2A36;" vertex="1" parent="1">
+      <mxGeometry x="100" y="20" width="1000" height="30" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="s1" value="&lt;b style='font-size:18px;color:#3A6B8A'&gt;①&lt;/b&gt;&#10;&lt;b&gt;预处理&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8EFF5;strokeColor=#3A6B8A;strokeWidth=1.5;fontSize=13;fontColor=#1F2A36;verticalAlign=middle;" vertex="1" parent="1">
+      <mxGeometry x="60" y="100" width="160" height="80" as="geometry"/>
+    </mxCell>
+    <mxCell id="s1_sub" value="PDF 解析&#10;段落分块&#10;&lt;i style='color:#777'&gt;原始文献语料&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=top;fontSize=11;fontColor=#444;" vertex="1" parent="1">
+      <mxGeometry x="60" y="195" width="160" height="60" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="s2" value="&lt;b style='font-size:18px;color:#3A6B8A'&gt;②&lt;/b&gt;&#10;&lt;b&gt;实体识别&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8EFF5;strokeColor=#3A6B8A;strokeWidth=1.5;fontSize=13;fontColor=#1F2A36;verticalAlign=middle;" vertex="1" parent="1">
+      <mxGeometry x="240" y="100" width="160" height="80" as="geometry"/>
+    </mxCell>
+    <mxCell id="s2_sub" value="DeepSeek-R1&#10;+ few-shot prompting&#10;&lt;i style='color:#777'&gt;6 类节点候选&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=top;fontSize=11;fontColor=#444;" vertex="1" parent="1">
+      <mxGeometry x="240" y="195" width="160" height="60" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="s3" value="&lt;b style='font-size:18px;color:#3A6B8A'&gt;③&lt;/b&gt;&#10;&lt;b&gt;关系抽取&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8EFF5;strokeColor=#3A6B8A;strokeWidth=1.5;fontSize=13;fontColor=#1F2A36;verticalAlign=middle;" vertex="1" parent="1">
+      <mxGeometry x="420" y="100" width="160" height="80" as="geometry"/>
+    </mxCell>
+    <mxCell id="s3_sub" value="LLM 关系分类&#10;含 MIMICS 4 类细分&#10;&lt;i style='color:#777'&gt;三元组草稿&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=top;fontSize=11;fontColor=#444;" vertex="1" parent="1">
+      <mxGeometry x="420" y="195" width="160" height="60" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="s4" value="&lt;b style='font-size:18px;color:#3A6B8A'&gt;④&lt;/b&gt;&#10;&lt;b&gt;量纲归一&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8EFF5;strokeColor=#3A6B8A;strokeWidth=1.5;fontSize=13;fontColor=#1F2A36;verticalAlign=middle;" vertex="1" parent="1">
+      <mxGeometry x="600" y="100" width="160" height="80" as="geometry"/>
+    </mxCell>
+    <mxCell id="s4_sub" value="规则 + LLM&#10;单位识别与转换&#10;&lt;i style='color:#777'&gt;_std 标准字段&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=top;fontSize=11;fontColor=#444;" vertex="1" parent="1">
+      <mxGeometry x="600" y="195" width="160" height="60" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="s5" value="&lt;b style='font-size:18px;color:#3A6B8A'&gt;⑤&lt;/b&gt;&#10;&lt;b&gt;人工校验&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8EFF5;strokeColor=#3A6B8A;strokeWidth=1.5;fontSize=13;fontColor=#1F2A36;verticalAlign=middle;" vertex="1" parent="1">
+      <mxGeometry x="780" y="100" width="160" height="80" as="geometry"/>
+    </mxCell>
+    <mxCell id="s5_sub" value="10% 抽样&#10;专家复核&#10;&lt;i style='color:#777'&gt;质量过滤&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=top;fontSize=11;fontColor=#444;" vertex="1" parent="1">
+      <mxGeometry x="780" y="195" width="160" height="60" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="s6" value="&lt;b style='font-size:18px;color:#3A6B8A'&gt;⑥&lt;/b&gt;&#10;&lt;b&gt;Neo4j 入库&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E5DC;strokeColor=#587A4A;strokeWidth=1.5;fontSize=13;fontColor=#1F2A36;verticalAlign=middle;" vertex="1" parent="1">
+      <mxGeometry x="960" y="100" width="160" height="80" as="geometry"/>
+    </mxCell>
+    <mxCell id="s6_sub" value="图数据库&#10;+ provenance&#10;&lt;i style='color:#587A4A'&gt;BioBridge-KG&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=top;fontSize=11;fontColor=#444;" vertex="1" parent="1">
+      <mxGeometry x="960" y="195" width="160" height="60" as="geometry"/>
+    </mxCell>
+
+    <mxCell id="e12" style="endArrow=classic;html=1;strokeColor=#3A6B8A;strokeWidth=1.6;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="s1" target="s2" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="e23" style="endArrow=classic;html=1;strokeColor=#3A6B8A;strokeWidth=1.6;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="s2" target="s3" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="e34" style="endArrow=classic;html=1;strokeColor=#3A6B8A;strokeWidth=1.6;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="s3" target="s4" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="e45" style="endArrow=classic;html=1;strokeColor=#3A6B8A;strokeWidth=1.6;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="s4" target="s5" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="e56" style="endArrow=classic;html=1;strokeColor=#3A6B8A;strokeWidth=1.6;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="s5" target="s6" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+    <mxCell id="footer_box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAF7;strokeColor=#CCCCCC;strokeWidth=0.8;dashed=1;dashPattern=4 4;" vertex="1" parent="1">
+      <mxGeometry x="60" y="290" width="1060" height="60" as="geometry"/>
+    </mxCell>
+    <mxCell id="footer_in" value="&lt;b&gt;输入&lt;/b&gt;：PDF 论文 + 课题组样机台账 + 飞行生物学手册" style="text;html=1;align=left;verticalAlign=middle;fontSize=12;fontColor=#444;spacingLeft=12;" vertex="1" parent="1">
+      <mxGeometry x="80" y="295" width="500" height="50" as="geometry"/>
+    </mxCell>
+    <mxCell id="footer_arrow" value="→" style="text;html=1;align=center;verticalAlign=middle;fontSize=18;fontColor=#3A6B8A;fontStyle=1;" vertex="1" parent="1">
+      <mxGeometry x="580" y="295" width="40" height="50" as="geometry"/>
+    </mxCell>
+    <mxCell id="footer_out" value="&lt;b&gt;输出&lt;/b&gt;：双层 KG (Neo4j, &lt;b style='color:#3A6B8A'&gt;612 节点&lt;/b&gt; / &lt;b style='color:#3A6B8A'&gt;625 关系&lt;/b&gt;)" style="text;html=1;align=left;verticalAlign=middle;fontSize=12;fontColor=#444;spacingLeft=12;" vertex="1" parent="1">
+      <mxGeometry x="620" y="295" width="500" height="50" as="geometry"/>
+    </mxCell>
+
+  </root>
+</mxGraphModel>

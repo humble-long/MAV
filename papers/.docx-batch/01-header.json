@@ -1,0 +1,100 @@
+[
+  {
+    "command": "set",
+    "path": "/body/p[@paraId=3C7ACC80]",
+    "props": {
+      "text": "引用格式：\t王嘉龙, 等．基于知识图谱与大语言模型的仿生扑翼飞行器智能问答与方案推荐方法[J]．航空学报, 2026, 47(X): XXXXX．WANG J L, et al. A knowledge graph and large language model based method for intelligent question answering and design recommendation of bionic flapping-wing micro air vehicles[J]. Acta Aeronautica et Astronautica Sinica, 2026, 47(X): XXXXX (in Chinese)."
+    }
+  },
+  {
+    "command": "set",
+    "path": "/body/p[@paraId=1AEC4289]",
+    "props": {
+      "text": "基于知识图谱与大语言模型的仿生扑翼飞行器智能问答与方案推荐方法"
+    }
+  },
+  {
+    "command": "set",
+    "path": "/body/p[@paraId=6E95C902]",
+    "props": {
+      "text": "王嘉龙*"
+    }
+  },
+  {
+    "command": "set",
+    "path": "/body/p[@paraId=6D0802B5]",
+    "props": {
+      "text": "西北工业大学 航空学院，西安  710072"
+    }
+  },
+  {
+    "command": "set",
+    "path": "/body/p[@paraId=501BF815]",
+    "props": {
+      "text": "(投稿时请将作者姓名和单位删掉)"
+    }
+  },
+  {
+    "command": "set",
+    "path": "/body/p[@paraId=12BC0636]",
+    "props": {
+      "text": "摘  要：针对仿生扑翼飞行器概念设计阶段领域知识高度分散、设计经验难以复用以及任务驱动方案生成缺乏系统化方法等问题，提出了一种基于知识图谱（KG）与大语言模型（LLM）的智能问答与方案推荐方法 BioBridge-GraphRAG。首先，构建了由生物原型层和工程样机层组成的双层知识图谱（612 节点、625 关系），并定义了气动相似、运动学相似、形态相似、尺度相似 4 类仿生映射关系，实现了生物-工程跨域知识的统一表达；其次，提出了尺度律工具增强的图路径推理框架，将 4 个领域物理工具（重量模型、尺度律预测、Strouhal 数与雷诺数判别）以 OpenAI Function Calling 协议封装为 LLM 可调用接口，使模型在 ReAct 范式下完成知识检索与数值校验的协同推理；进一步，引入基于 3 阶张量 CP 分解的方案候选粗筛方法，结合原始特征与 CP 嵌入空间的混合相似度（α=0.4）实现毫秒级 Top-K 召回，并与图路径推理协同形成“粗筛—精排”两阶段范式。在自构建的 FWMAV-QA 测评数据集（覆盖 6 类共 754 题）上的实验结果表明，所提方法相较于纯 LLM 基线在多跳推理类问题上的实体召回率由 14% 提升至 62%，整体实体召回率由 0.39 提升至 0.53；时延仅增加约 6%。所提方法可为仿生扑翼飞行器概念设计阶段的快速方案推荐与可解释决策支持提供有效手段。"
+    }
+  },
+  {
+    "command": "set",
+    "path": "/body/p[@paraId=04A38FFA]",
+    "props": {
+      "text": "关键词：知识图谱；大语言模型；仿生扑翼飞行器；图检索增强生成；张量分解；案例推理；概念设计"
+    }
+  },
+  {
+    "command": "set",
+    "path": "/body/p[@paraId=78D7ACC3]",
+    "props": {
+      "text": "中图分类号：V279；TP391     文献标识码：A     文章编号：1000-6893(2026)XX-XXXXX-XX"
+    }
+  },
+  {
+    "command": "set",
+    "path": "/body/p[@paraId=1F001614]",
+    "props": {
+      "text": "A knowledge graph and large language model based method for intelligent question answering and design recommendation of bionic flapping-wing micro air vehicles"
+    }
+  },
+  {
+    "command": "set",
+    "path": "/body/p[@paraId=2852C6E0]",
+    "props": {
+      "text": "WANG Jialong*"
+    }
+  },
+  {
+    "command": "set",
+    "path": "/body/p[@paraId=1B0630AC]",
+    "props": {
+      "text": "School of Aeronautics, Northwestern Polytechnical University, Xi'an  710072, China"
+    }
+  },
+  {
+    "command": "set",
+    "path": "/body/p[@paraId=37FEF254]",
+    "props": {
+      "text": ""
+    }
+  },
+  {
+    "command": "set",
+    "path": "/body/p[@paraId=636F20E7]",
+    "props": {
+      "text": "Abstract: To address the problems of highly fragmented domain knowledge, the difficulty of reusing design experience, and the lack of a systematic methodology for task-driven design generation in the conceptual design stage of bionic flapping-wing micro air vehicles (FWMAVs), a knowledge graph (KG) and large language model (LLM) based method for intelligent question answering and design recommendation, named BioBridge-GraphRAG, is proposed. First, a bilayer knowledge graph consisting of a biological-prototype layer and an engineering-vehicle layer (612 nodes and 625 edges) is constructed, in which four classes of bionic mapping relations—aerodynamic similarity, kinematic similarity, morphological similarity, and scale similarity—are defined to enable a unified expression of biology-engineering cross-domain knowledge. Second, a scaling-law tool-augmented graph path reasoning framework is proposed: four domain-specific physical tools (a takeoff-weight model, scaling-law prediction, Strouhal-number and Reynolds-number diagnostics) are encapsulated as LLM-callable interfaces under the OpenAI Function Calling protocol, so that the LLM, operating in the ReAct paradigm, performs the joint reasoning of KG retrieval and numerical verification. Third, a CP-decomposition based candidate-recall method on a 3-mode tensor is introduced, in which a hybrid similarity (alpha=0.4) of raw-feature cosine and CP-embedding cosine returns Top-K candidates within milliseconds, working together with the path reasoner to form a recall-rerank two-stage paradigm for design recommendation. On the self-built FWMAV-QA benchmark, which covers six categories with 754 questions in total, experimental results show that the proposed method improves entity recall on multi-hop reasoning questions from 14% to 62% relative to a pure-LLM baseline, raises overall entity recall from 0.39 to 0.53, while the per-question latency increases by only about 6%. The proposed method provides an effective tool for fast design recommendation and explainable decision support in the conceptual design stage of bionic FWMAVs."
+    }
+  },
+  {
+    "command": "set",
+    "path": "/body/p[@paraId=55873BDE]",
+    "props": {
+      "text": "Keywords: knowledge graph; large language model; bionic flapping-wing micro air vehicle; graph retrieval-augmented generation; tensor decomposition; case-based reasoning; conceptual design"
+    }
+  }
+]

@@ -1,0 +1,204 @@
+{
+  "queries": [
+    {
+      "name": "小型悬停",
+      "args": {
+        "weight_g": 30,
+        "endurance_s": 900,
+        "can_hover": true,
+        "mission": "performance"
+      },
+      "top_per_feature": [
+        "Nano Hummingbird",
+        "TechJect Dragonfly",
+        "DelFly Nimble",
+        "Robotic Hummingbird",
+        "DelFly Explorer",
+        "BionicOpter",
+        "DelFly II",
+        "KUBeetle-S",
+        "Allomyrina dichotoma (仿独角仙)",
+        "Insect-mimicking (仿昆虫无尾翼)"
+      ],
+      "top_global": [
+        "Nano Hummingbird",
+        "DelFly II",
+        "Insect-mimicking (仿昆虫无尾翼)",
+        "DelFly Explorer",
+        "四动力装置可悬停扑翼飞行器",
+        "微机械飞行昆虫 (MFI)",
+        "RoboBee (Hybrid Aerial-Aquatic)",
+        "RoboBee (Original)",
+        "DelFly Nimble",
+        "BionicOpter"
+      ],
+      "spearman": 0.2175824175824176,
+      "top1_agree": 1.0,
+      "top3_jaccard": 0.3333333333333333,
+      "top5_jaccard": 0.4
+    },
+    {
+      "name": "中型长航时巡航",
+      "args": {
+        "weight_g": 300,
+        "endurance_s": 1800,
+        "can_hover": false,
+        "mission": "task"
+      },
+      "top_per_feature": [
+        "USTBird",
+        "信鸽",
+        "云鸮",
+        "SmartBird",
+        "Microbat",
+        "机器海鸥",
+        "Bionic Flying Fox",
+        "凤凰 (Phoenix)",
+        "金鹰",
+        "小隼 (Little Falcon)"
+      ],
+      "top_global": [
+        "云鸮",
+        "信鸽",
+        "金鹰",
+        "USTBird",
+        "凤凰 (Phoenix)",
+        "Microbat",
+        "SmartBird",
+        "DelFly I",
+        "机器海鸥",
+        "小隼 (Little Falcon)"
+      ],
+      "spearman": 0.5363636363636364,
+      "top1_agree": 0.0,
+      "top3_jaccard": 0.6666666666666666,
+      "top5_jaccard": 0.6
+    },
+    {
+      "name": "昆虫尺度极致小型化",
+      "args": {
+        "weight_g": 0.5,
+        "wingspan_mm": 35,
+        "frequency_hz": 170,
+        "mission": "research"
+      },
+      "top_per_feature": [
+        "RoboBee (Original)",
+        "RoboBee X-Wing",
+        "蜂鸟机器人 (Purdue Hummingbird)",
+        "MAV (University of Arizona)",
+        "微机械飞行昆虫 (MFI)",
+        "Insect-mimicking (仿昆虫无尾翼)",
+        "Entomopter",
+        "Colibri",
+        "TechJect Dragonfly",
+        "RoboBee (Hybrid Aerial-Aquatic)"
+      ],
+      "top_global": [
+        "Microbat",
+        "Nano Hummingbird",
+        "DelFly Micro",
+        "Entomopter",
+        "微机械飞行昆虫 (MFI)",
+        "RoboBee (Hybrid Aerial-Aquatic)",
+        "MAV (University of Arizona)",
+        "RoboBee (Original)",
+        "RoboBee X-Wing",
+        "KUBeetle-S"
+      ],
+      "spearman": -0.05494505494505497,
+      "top1_agree": 0.0,
+      "top3_jaccard": 0.0,
+      "top5_jaccard": 0.2
+    },
+    {
+      "name": "仿鸟侦察",
+      "args": {
+        "weight_g": 100,
+        "wingspan_mm": 400,
+        "speed_max_m_s": 12,
+        "mission": "task"
+      },
+      "top_per_feature": [
+        "PigeonBot",
+        "Mentor",
+        "USTBird",
+        "Entomopter",
+        "Robotic Hummingbird",
+        "MAV (University of Arizona)",
+        "DelFly Explorer",
+        "Microbat",
+        "DelFly II",
+        "DelFly Nimble"
+      ],
+      "top_global": [
+        "DelFly Explorer",
+        "DelFly II",
+        "USTBird",
+        "DelFly Nimble",
+        "金鹰",
+        "Nano Hummingbird",
+        "Mentor",
+        "Colibri",
+        "Entomopter",
+        "TechJect Dragonfly"
+      ],
+      "spearman": 0.0945054945054945,
+      "top1_agree": 0.0,
+      "top3_jaccard": 0.3333333333333333,
+      "top5_jaccard": 0.2
+    },
+    {
+      "name": "多约束概念探索",
+      "args": {
+        "weight_g": 50,
+        "wingspan_mm": 250,
+        "endurance_s": 600,
+        "can_hover": false,
+        "mission": "performance"
+      },
+      "top_per_feature": [
+        "DelFly I",
+        "金鹰",
+        "Microbat",
+        "Entomopter",
+        "USTBird",
+        "信鸽",
+        "主动折叠变形扑翼飞行器",
+        "SmartBird",
+        "MAV (University of Arizona)",
+        "云鸮"
+      ],
+      "top_global": [
+        "云鸮",
+        "Microbat",
+        "DelFly I",
+        "信鸽",
+        "金鹰",
+        "USTBird",
+        "Entomopter",
+        "凤凰 (Phoenix)",
+        "机器海鸥",
+        "MAV (University of Arizona)"
+      ],
+      "spearman": 0.4825174825174825,
+      "top1_agree": 0.0,
+      "top3_jaccard": 0.6666666666666666,
+      "top5_jaccard": 0.6
+    }
+  ],
+  "summary": {
+    "per_feature": {
+      "rec_err": 0.38992682099342346
+    },
+    "global": {
+      "rec_err": 0.0849001333117485
+    },
+    "agreement": {
+      "spearman_mean": 0.2552047952047952,
+      "top1_match_rate": 0.2,
+      "top3_jaccard_mean": 0.4,
+      "top5_jaccard_mean": 0.4
+    }
+  }
+}
