@@ -159,7 +159,7 @@ Mavent         0.696    0.702    0.703    0.640    0.873    0.537
 
 ### 5.3 KG 结构（P0-P3 完成）
 
-**P0-P2 之前已完成**（详见 KG-STRUCTURE.md）：612 节点 / 625 关系。
+**P0-P2 之前已完成**（详见 KG-STRUCTURE.md）：当前实测 609 节点 / 622 关系（HANDOFF 初版记 612/625，之后库有微调，以 `biobridge/kg_backup/` 快照为准）。
 
 **P3（本轮新增）**：MIMICS 相似度从 4 维扩展到 5 维
 
@@ -178,6 +178,29 @@ Mavent         0.696    0.702    0.703    0.640    0.873    0.537
 **修复效果**：
 - 旧 aero 满分率 74%（用速度代理）→ 新 aero 满分率 16%（Re+St 精确）
 - 旧 morphology 只有 0/1 → 新 morphology 是连续值，无虚高满分
+
+### 5.5 换电脑 / Neo4j 数据迁移（★ 必看）
+
+**核心坑**：图谱只存在 Neo4j 数据库里，**git 里的 p0/p1/p2 脚本无法从空库重建**——它们是 `MATCH` 已有节点补属性（节点不存在直接跳过），不负责创建原始种子图。所以换电脑不能只靠 clone。
+
+**已做的备份**：整库快照到 `biobridge/kg_backup/`（已进 git）：
+- `nodes.jsonl`（609 节点）+ `rels.jsonl`（622 关系）
+- `export_kg.py` / `import_kg.py`：APOC-free 全图导出/导入（只用 neo4j 驱动）
+
+**新电脑恢复步骤**：
+```bash
+git clone https://github.com/humble-long/MAV.git && cd MAV
+pip install neo4j
+# 装并启动 Neo4j，设好任意新密码
+export NEO4J_PASSWORD=<新库密码>
+python3 biobridge/kg_backup/import_kg.py     # 空库直接跑；非空需加 --wipe
+```
+导入用旧 elementId 连关系、再清临时标记，节点/关系/属性与原库一致。密码与数据无关，导入脚本不依赖旧密码。
+
+**更新备份**（以后又改了图谱）：旧电脑 `NEO4J_PASSWORD=<pwd> python3 biobridge/kg_backup/export_kg.py` 重跑一次再 commit 即可。
+
+> 当前旧电脑 Neo4j 密码见环境变量约定（§4.2）；不要写进任何文件或 commit。
+
 
 ### 5.4 Mavent v2 prompt 修复（本轮关键）
 
