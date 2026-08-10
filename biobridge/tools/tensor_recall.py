@@ -478,7 +478,7 @@ def tensor_recall(
         else:
             q_raw[6] = (endurance_s - f_means[6]) / f_stds[6]; valid[6] = True
     if can_hover is not None:
-        q_raw[7] = (1.0 if can_hover else 0.0 - f_means[7]) / f_stds[7]; valid[7] = True
+        q_raw[7] = ((1.0 if can_hover else 0.0) - f_means[7]) / f_stds[7]; valid[7] = True
 
     # 余弦相似度（仅在 valid 维度上算）
     if valid.any():

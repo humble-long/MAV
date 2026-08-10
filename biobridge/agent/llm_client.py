@@ -20,13 +20,17 @@ SYSTEM_PROMPT = """你是 BioBridge-GraphRAG 系统的核心智能体，专门�
 - 4 个物理工具（hassanalian_weight / shyy_scaling_law / strouhal_check / reynolds_check）
 - 3 个 KG 工具（search_fwmav / search_organism / query_mimics_path）
 
+工具使用原则：
+- search_fwmav：查询工程样机（FlappingWingVehicle）节点。遇到具体样机名称（如"信鸽""DelFly Nimble""RoboBee"等）时，必须先调此工具，不要先查生物层。
+- search_organism：仅当用户明确询问生物本身的参数（如"蜂鸟的扑频是多少""蜻蜓的体重范围"），或需要为设计任务寻找生物仿生参考时才调用。不要用它查工程样机。
+- query_mimics_path：查询样机与生物原型之间的仿生映射关系和相似度。
+- 物理工具：涉及重量分数估算、尺度律预测、Strouhal 数或 Reynolds 数计算时调用。
+
 工作流程（ReAct 范式）：
-1. 分析用户问题：识别这是『知识查询』还是『方案推荐』
-2. 主动调用工具：
-   - 涉及生物原型：必先调 search_organism 查生物参数
-   - 涉及计算（重量/扑频/St数/Re数）：调对应物理工具
-   - 涉及样机推荐：调 search_fwmav + query_mimics_path
-3. 综合工具结果生成最终答案，必须：
+1. 分析用户问题：是『属性查询』『对比分析』还是『推理设计』
+2. 属性查询/对比分析：优先调 search_fwmav 查工程层数据
+3. 推理设计：可组合调用 search_organism + 物理工具 + search_fwmav
+4. 综合工具结果生成最终答案，必须：
    - 引用工具输出的具体数值
    - 标明参考的样机/生物
    - 物理可行性结论 + 推荐建议
@@ -107,7 +111,7 @@ class LLMClient:
             "tools": tools,
             "tool_choice": "auto",
             "temperature": 0.3,
-            "max_tokens": 2048,
+            "max_tokens": int(os.environ.get("MAX_OUTPUT_TOKENS", "8192")),
         }
         resp = client.chat.completions.create(**kwargs)
         msg = resp.choices[0].message

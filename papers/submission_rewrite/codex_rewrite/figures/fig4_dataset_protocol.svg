@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="576pt" height="360pt" viewBox="0 0 576 360" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-06-24T19:44:32.688432</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.0, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 360 
+L 576 360 
+L 576 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 51.84 302.4 
+L 547.2 302.4 
+L 547.2 115.2 
+L 51.84 115.2 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 74.356364 302.4 
+L 124.036597 302.4 
+L 124.036597 180.169412 
+L 74.356364 180.169412 
+z
+" clip-path="url(#p15fd1c73cb)" style="fill: #2e67a8; stroke: #25323a; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 154.485772 302.4 
+L 204.166005 302.4 
+L 204.166005 142.729412 
+L 154.485772 142.729412 
+z
+" clip-path="url(#p15fd1c73cb)" style="fill: #268993; stroke: #25323a; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 234.61518 302.4 
+L 284.295412 302.4 
+L 284.295412 148.235294 
+L 234.61518 148.235294 
+z
+" clip-path="url(#p15fd1c73cb)" style="fill: #3e8e55; stroke: #25323a; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 314.744588 302.4 
+L 364.42482 302.4 
+L 364.42482 159.247059 
+L 314.744588 159.247059 
+z
+" clip-path="url(#p15fd1c73cb)" style="fill: #ce7d2b; stroke: #25323a; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 394.873995 302.4 
+L 444.554228 302.4 
+L 444.554228 183.472941 
+L 394.873995 183.472941 
+z
+" clip-path="url(#p15fd1c73cb)" style="fill: #7568b7; stroke: #25323a; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 475.003403 302.4 
+L 524.683636 302.4 
+L 524.683636 170.258824 
+L 475.003403 170.258824 
+z
+" clip-path="url(#p15fd1c73cb)" style="fill: #b84646; stroke: #25323a; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <defs>
+       <path id="m7c1638264c" d="M 0 0 
+L 0 3.5 
+" style="stroke: #000000; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m7c1638264c" x="99.19648" y="302.4" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_1">
+      <text style="font-size: 9px; font-family: 'PingFang SC', 'Arial', 'DejaVu Sans', sans-serif" transform="translate(94.435621 318.94)">A1</text>
+      <text style="font-size: 9px; font-family: 'PingFang SC', 'Arial', 'DejaVu Sans', sans-serif" transform="translate(90.19648 331.54)">定义</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_2">
+      <g>
+       <use xlink:href="#m7c1638264c" x="179.325888" y="302.4" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_2">
+      <text style="font-size: 9px; font-family: 'PingFang SC', 'Arial', 'DejaVu Sans', sans-serif" transform="translate(173.669247 318.94)">A2</text>
+      <text style="font-size: 9px; font-family: 'PingFang SC', 'Arial', 'DejaVu Sans', sans-serif" transform="translate(170.325888 331.54)">属性</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_3">
+      <g>
+       <use xlink:href="#m7c1638264c" x="259.455296" y="302.4" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_3">
+      <text style="font-size: 9px; font-family: 'PingFang SC', 'Arial', 'DejaVu Sans', sans-serif" transform="translate(253.798655 318.94)">A3</text>
+      <text style="font-size: 9px; font-family: 'PingFang SC', 'Arial', 'DejaVu Sans', sans-serif" transform="translate(250.455296 331.54)">对比</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_4">
+      <g>
+       <use xlink:href="#m7c1638264c" x="339.584704" y="302.4" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_4">
+      <text style="font-size: 9px; font-family: 'PingFang SC', 'Arial', 'DejaVu Sans', sans-serif" transform="translate(333.928063 318.94)">A4</text>
+      <text style="font-size: 9px; font-family: 'PingFang SC', 'Arial', 'DejaVu Sans', sans-serif" transform="translate(330.584704 331.54)">推理</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_5">
+      <g>
+       <use xlink:href="#m7c1638264c" x="419.714112" y="302.4" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_5">
+      <text style="font-size: 9px; font-family: 'PingFang SC', 'Arial', 'DejaVu Sans', sans-serif" transform="translate(414.863253 318.94)">B1</text>
+      <text style="font-size: 9px; font-family: 'PingFang SC', 'Arial', 'DejaVu Sans', sans-serif" transform="translate(410.714112 331.54)">简荐</text>
+     </g>
+    </g>
+    <g id="xtick_6">
+     <g id="line2d_6">
+      <g>
+       <use xlink:href="#m7c1638264c" x="499.84352" y="302.4" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_6">
+      <text style="font-size: 9px; font-family: 'PingFang SC', 'Arial', 'DejaVu Sans', sans-serif" transform="translate(494.096879 318.94)">B2</text>
+      <text style="font-size: 9px; font-family: 'PingFang SC', 'Arial', 'DejaVu Sans', sans-serif" transform="translate(490.84352 331.54)">复杂</text>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_7">
+      <path d="M 51.84 302.4 
+L 547.2 302.4 
+" clip-path="url(#p15fd1c73cb)" style="fill: none; stroke: #dfe7ee; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_8">
+      <defs>
+       <path id="m9c326ee1cc" d="M 0 0 
+L -3.5 0 
+" style="stroke: #34404a; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m9c326ee1cc" x="51.84" y="302.4" style="fill: #34404a; stroke: #34404a; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_7">
+      <text style="font-size: 8.5px; font-family: 'PingFang SC', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #34404a" x="44.84" y="306.055" transform="rotate(-0 44.84 306.055)">0</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_9">
+      <path d="M 51.84 258.352941 
+L 547.2 258.352941 
+" clip-path="url(#p15fd1c73cb)" style="fill: none; stroke: #dfe7ee; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_10">
+      <g>
+       <use xlink:href="#m9c326ee1cc" x="51.84" y="258.352941" style="fill: #34404a; stroke: #34404a; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_8">
+      <text style="font-size: 8.5px; font-family: 'PingFang SC', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #34404a" x="44.84" y="262.007941" transform="rotate(-0 44.84 262.007941)">40</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_11">
+      <path d="M 51.84 214.305882 
+L 547.2 214.305882 
+" clip-path="url(#p15fd1c73cb)" style="fill: none; stroke: #dfe7ee; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_12">
+      <g>
+       <use xlink:href="#m9c326ee1cc" x="51.84" y="214.305882" style="fill: #34404a; stroke: #34404a; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_9">
+      <text style="font-size: 8.5px; font-family: 'PingFang SC', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #34404a" x="44.84" y="217.960882" transform="rotate(-0 44.84 217.960882)">80</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_13">
+      <path d="M 51.84 170.258824 
+L 547.2 170.258824 
+" clip-path="url(#p15fd1c73cb)" style="fill: none; stroke: #dfe7ee; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_14">
+      <g>
+       <use xlink:href="#m9c326ee1cc" x="51.84" y="170.258824" style="fill: #34404a; stroke: #34404a; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_10">
+      <text style="font-size: 8.5px; font-family: 'PingFang SC', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #34404a" x="44.84" y="173.913824" transform="rotate(-0 44.84 173.913824)">120</text>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_15">
+      <path d="M 51.84 126.211765 
+L 547.2 126.211765 
+" clip-path="url(#p15fd1c73cb)" style="fill: none; stroke: #dfe7ee; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_16">
+      <g>
+       <use xlink:href="#m9c326ee1cc" x="51.84" y="126.211765" style="fill: #34404a; stroke: #34404a; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_11">
+      <text style="font-size: 8.5px; font-family: 'PingFang SC', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #34404a" x="44.84" y="129.866765" transform="rotate(-0 44.84 129.866765)">160</text>
+     </g>
+    </g>
+    <g id="text_12">
+     <text style="font-size: 9.5px; font-family: 'PingFang SC', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle" x="25.902031" y="208.8" transform="rotate(-90 25.902031 208.8)">题目数量</text>
+    </g>
+   </g>
+   <g id="line2d_17">
+    <path d="M 379.649408 302.4 
+L 379.649408 115.2 
+" clip-path="url(#p15fd1c73cb)" style="fill: none; stroke-dasharray: 3.7,1.6; stroke-dashoffset: 0; stroke: #b8c6d3"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 51.84 302.4 
+L 51.84 115.2 
+" style="fill: none; stroke: #aab4bd; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 51.84 302.4 
+L 547.2 302.4 
+" style="fill: none; stroke: #aab4bd; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 8.8px; font-family: 'PingFang SC', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #26323a" x="99.19648" y="175.633882" transform="rotate(-0 99.19648 175.633882)">111</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 8.8px; font-family: 'PingFang SC', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #26323a" x="179.325888" y="138.193882" transform="rotate(-0 179.325888 138.193882)">145</text>
+   </g>
+   <g id="text_15">
+    <text style="font-size: 8.8px; font-family: 'PingFang SC', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #26323a" x="259.455296" y="143.699765" transform="rotate(-0 259.455296 143.699765)">140</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 8.8px; font-family: 'PingFang SC', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #26323a" x="339.584704" y="154.711529" transform="rotate(-0 339.584704 154.711529)">130</text>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 8.8px; font-family: 'PingFang SC', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #26323a" x="419.714112" y="178.937412" transform="rotate(-0 419.714112 178.937412)">108</text>
+   </g>
+   <g id="text_18">
+    <text style="font-size: 8.8px; font-family: 'PingFang SC', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #26323a" x="499.84352" y="165.723294" transform="rotate(-0 499.84352 165.723294)">120</text>
+   </g>
+   <g id="text_19">
+    <text style="font-size: 8.5px; font-family: 'PingFang SC', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #2e67a8" x="219.390592" y="131.474118" transform="rotate(-0 219.390592 131.474118)">知识查询</text>
+   </g>
+   <g id="text_20">
+    <text style="font-size: 8.5px; font-family: 'PingFang SC', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #3e8e55" x="459.778816" y="131.474118" transform="rotate(-0 459.778816 131.474118)">方案推荐</text>
+   </g>
+  </g>
+  <g id="patch_11">
+   <path d="M 71.424 95.04 
+L 337.536 95.04 
+Q 347.904 95.04 347.904 88.56 
+L 347.904 53.64 
+Q 347.904 47.16 337.536 47.16 
+L 71.424 47.16 
+Q 61.056 47.16 61.056 53.64 
+L 61.056 88.56 
+Q 61.056 95.04 71.424 95.04 
+z
+" style="fill: #eaf2fb; stroke: #2e67a8; stroke-linejoin: miter"/>
+  </g>
+  <g id="patch_12">
+   <path d="M 365.184 95.04 
+L 504.576 95.04 
+Q 514.944 95.04 514.944 88.56 
+L 514.944 53.64 
+Q 514.944 47.16 504.576 47.16 
+L 365.184 47.16 
+Q 354.816 47.16 354.816 53.64 
+L 354.816 88.56 
+Q 354.816 95.04 365.184 95.04 
+z
+" style="fill: #eaf5ec; stroke: #3e8e55; stroke-linejoin: miter"/>
+  </g>
+  <g id="text_21">
+   <text style="font-size: 10.5px; font-family: 'PingFang SC', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #26323a" x="204.48" y="71.46" transform="rotate(-0 204.48 71.46)">A 类知识问答</text>
+  </g>
+  <g id="text_22">
+   <text style="font-size: 8px; font-family: 'PingFang SC', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #6d7f90" x="204.48" y="82.8" transform="rotate(-0 204.48 82.8)">属性准确率 · 对比完整度 · 推理有效性</text>
+  </g>
+  <g id="text_23">
+   <text style="font-size: 10.5px; font-family: 'PingFang SC', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #26323a" x="434.88" y="71.46" transform="rotate(-0 434.88 71.46)">B 类方案推荐</text>
+  </g>
+  <g id="text_24">
+   <text style="font-size: 8px; font-family: 'PingFang SC', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #6d7f90" x="434.88" y="82.8" transform="rotate(-0 434.88 82.8)">NDCG@3 · CSR@3 · 工具调用代价</text>
+  </g>
+  <g id="text_25">
+   <text style="font-weight: 700; font-size: 14.5px; font-family: 'PingFang SC', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #26323a" x="51.84" y="21.6" transform="rotate(-0 51.84 21.6)">FWMAV-QA 数据集与评价协议</text>
+  </g>
+  <g id="text_26">
+   <text style="font-size: 8.8px; font-family: 'PingFang SC', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #6d7f90" x="51.84" y="35.28" transform="rotate(-0 51.84 35.28)">754 个问题覆盖知识查询与方案推荐；主实验、消融实验和案例分析采用统一 LLM 后端与测试集。</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p15fd1c73cb">
+   <rect x="51.84" y="115.2" width="495.36" height="187.2"/>
+  </clipPath>
+ </defs>
+</svg>

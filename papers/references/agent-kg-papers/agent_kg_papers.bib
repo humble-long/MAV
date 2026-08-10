@@ -1,0 +1,193 @@
+% Agent + KG 相关论文参考文献（为 BioBridge-GraphRAG 论文撰写收集）
+% 生成日期：2026-07-09
+% 导入方式：Zotero → File → Import → 选择本文件
+% PDF 文件位置：与本 .bib 文件同目录（arxiv_id.pdf）
+
+% ═══════════════════════════════════════════════════════════
+%   Category A: Agent 框架
+% ═══════════════════════════════════════════════════════════
+
+@inproceedings{yao2023react,
+  author    = {Yao, Shunyu and Zhao, Jeffrey and Yu, Dian and Du, Nan and
+               Shafran, Izhak and Narasimhan, Karthik and Cao, Yuan},
+  title     = {{ReAct}: Synergizing Reasoning and Acting in Language Models},
+  booktitle = {International Conference on Learning Representations (ICLR)},
+  year      = {2023},
+  url       = {https://arxiv.org/abs/2210.03629},
+  file      = {2210.03629.pdf},
+  keywords  = {agent, reasoning, acting, LLM, tool-use},
+  note      = {提出 Thought-Action-Observation 交错框架；
+               本文方法的 ReAct 基础结构。写作学习重点：
+               如何用"动作空间受限"来强调领域可控性}
+}
+
+@inproceedings{sun2024thinkongraph,
+  author    = {Sun, Jiashuo and Xu, Chengjin and Tang, Lumingyuan and
+               Wang, Saizhuo and Lin, Chen and Gong, Yeyun and
+               Shum, Heung-Yeung and Guo, Jian},
+  title     = {Think-on-Graph: Deep and Responsible Reasoning of Large
+               Language Model on Knowledge Graph},
+  booktitle = {International Conference on Learning Representations (ICLR)},
+  year      = {2024},
+  url       = {https://arxiv.org/abs/2307.07697},
+  file      = {2307.07697.pdf},
+  keywords  = {knowledge graph, LLM agent, beam search, KGQA},
+  note      = {LLM 在 KG 上做 beam search，本文的主要对比基线（ToG）。
+               写作学习重点：如何突出 training-free 优势；
+               如何写 agent 在图上搜索的 formulation}
+}
+
+@inproceedings{chen2024planongraph,
+  author    = {Chen, Liyi and Tong, Panrong and Jin, Zhongming and
+               Sun, Ying and Ye, Jieping and Xiong, Hui},
+  title     = {Plan-on-Graph: Self-Correcting Adaptive Planning of Large
+               Language Model on Knowledge Graphs},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year      = {2024},
+  url       = {https://arxiv.org/abs/2410.23875},
+  file      = {2410.23875.pdf},
+  keywords  = {knowledge graph, LLM, adaptive planning, self-correction},
+  note      = {Guidance+Memory+Reflection 三机制 KG 推理。
+               写作学习重点：如何将 agent 模块分解成清晰的 "三机制"；
+               如何写 adaptive vs. fixed exploration 的对比}
+}
+
+@inproceedings{liu2025symagent,
+  author    = {Liu, Ben and Zhang, Jihai and Lin, Fangquan and
+               Yang, Cheng and Peng, Min and Yin, Wai},
+  title     = {{SymAgent}: A Neural-Symbolic Self-Learning Agent Framework
+               for Complex Reasoning over Knowledge Graphs},
+  booktitle = {ACM Web Conference (WWW)},
+  year      = {2025},
+  url       = {https://arxiv.org/abs/2502.03283},
+  file      = {2502.03283.pdf},
+  keywords  = {neural-symbolic, agent, knowledge graph, self-learning, KGQA},
+  note      = {神经-符号 agent，Agent-Planner + Agent-Executor 双模块。
+               写作学习重点：如何写双模块协同的 agent 架构；
+               如何处理 KG incompleteness（与本文图谱不完整性问题类似）}
+}
+
+@article{zhao2024agentigraph,
+  author    = {Zhao, Xinjie and Blum, Moritz and Yang, Rui},
+  title     = {{AGENTiGraph}: An Interactive Knowledge Graph Platform for
+               {LLM}-based Chatbots Utilizing Private Data},
+  journal   = {arXiv preprint arXiv:2410.11531},
+  year      = {2024},
+  url       = {https://arxiv.org/abs/2410.11531},
+  file      = {2410.11531.pdf},
+  keywords  = {multi-agent, knowledge graph, chatbot, private data},
+  note      = {面向私有领域数据的多 agent KG 平台；
+               写作学习重点：如何写 private/domain-specific KG 的问答系统；
+               task classification + execution 双指标评测结构}
+}
+
+% ═══════════════════════════════════════════════════════════
+%   Category B: GraphRAG / KG+LLM 综述与框架
+% ═══════════════════════════════════════════════════════════
+
+@article{edge2024graphrag,
+  author    = {Edge, Darren and Trinh, Ha and Cheng, Newman and Bradley, Joshua and
+               Chao, Alex and Mody, Apurva and Truitt, Steven and Larson, Jonathan},
+  title     = {From Local to Global: A Graph {RAG} Approach to Query-Focused Summarization},
+  journal   = {arXiv preprint arXiv:2404.16130},
+  year      = {2024},
+  url       = {https://arxiv.org/abs/2404.16130},
+  file      = {2404.16130.pdf},
+  keywords  = {GraphRAG, community detection, summarization, Microsoft},
+  note      = {Microsoft GraphRAG；社区检测+层次摘要。
+               写作学习重点：如何写 local-to-global 的图检索动机；
+               如何区分 "global query" vs "local query" 的系统设计}
+}
+
+@inproceedings{liang2025kag,
+  author    = {Liang, Lei and Sun, Mengshu and Gui, Zhengke and Zhu, Zhongshu},
+  title     = {{KAG}: Boosting {LLM}s in Professional Domains via
+               Knowledge Augmented Generation},
+  booktitle = {Companion Proceedings of the ACM Web Conference (WWW)},
+  year      = {2025},
+  url       = {https://arxiv.org/abs/2409.13731},
+  file      = {2409.13731.pdf},
+  keywords  = {knowledge graph, professional domain, LLM, KAG},
+  note      = {专业领域 KG+LLM；逻辑形式引导推理。
+               写作学习重点：如何强调 "professional domain" 的特殊性
+               （类比本文 FWMAV 领域特殊性）；
+               如何写 KG 与向量检索互补的系统动机}
+}
+
+@article{peng2025graphragsurvey,
+  author    = {Peng, Boci and Zhu, Yun and Liu, Yongchao and Bo, Xiaohe and
+               Shi, Haizhou and Hong, Chuntao and Zhang, Yan and Tang, Siliang},
+  title     = {Graph Retrieval-Augmented Generation: A Survey},
+  journal   = {ACM Transactions on Information Systems},
+  year      = {2025},
+  url       = {https://arxiv.org/abs/2408.08921},
+  file      = {2408.08921.pdf},
+  keywords  = {GraphRAG, survey, knowledge graph, LLM, retrieval},
+  note      = {GraphRAG 综述，覆盖 query/retrieval/generation 全流程。
+               写作学习重点：related work 的组织框架；
+               如何分类 graph types 和 retrieval strategies}
+}
+
+@article{pan2024llmkg,
+  author    = {Pan, Shirui and Luo, Linhao and Wang, Yufei and Chen, Chen and
+               Wang, Jiapu and Wu, Xindong},
+  title     = {Unifying Large Language Models and Knowledge Graphs: A Roadmap},
+  journal   = {IEEE Transactions on Knowledge and Data Engineering},
+  volume    = {36},
+  number    = {7},
+  pages     = {3580--3599},
+  year      = {2024},
+  url       = {https://arxiv.org/abs/2306.08302},
+  file      = {2306.08302.pdf},
+  keywords  = {LLM, knowledge graph, survey, roadmap, KGQA},
+  note      = {LLM+KG 路线图，三类范式：KG-enhanced LLM / LLM-augmented KG / Synergized。
+               写作学习重点：三范式分类法；如何在 related work 中用范式分组}
+}
+
+@article{li2025graphragcustomized,
+  author    = {Li, Xuanyi and Zhao, Rui and Cheng, Yuequn},
+  title     = {A Survey of Graph Retrieval-Augmented Generation for
+               Customized Large Language Models},
+  journal   = {arXiv preprint arXiv:2501.13958},
+  year      = {2025},
+  url       = {https://arxiv.org/abs/2501.13958},
+  file      = {2501.13958.pdf},
+  keywords  = {GraphRAG, customized LLM, domain-specific, survey},
+  note      = {面向定制化 LLM 的 GraphRAG 综述；涵盖领域适配。
+               写作学习重点：如何说明 domain-specific GraphRAG 的研究空白}
+}
+
+% ═══════════════════════════════════════════════════════════
+%   Category C: RAG / Tool use 基础
+% ═══════════════════════════════════════════════════════════
+
+@inproceedings{lewis2020rag,
+  author    = {Lewis, Patrick and Perez, Ethan and Piktus, Aleksandra and
+               Petroni, Fabio and Karpukhin, Vladimir and Goyal, Naman and
+               Küttler, Heinrich and Lewis, Mike and Yih, Wen-tau and
+               Rocktäschel, Tim and Riedel, Sebastian and Kiela, Douwe},
+  title     = {Retrieval-Augmented Generation for Knowledge-Intensive {NLP} Tasks},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year      = {2020},
+  url       = {https://arxiv.org/abs/2005.11401},
+  file      = {2005.11401.pdf},
+  keywords  = {RAG, retrieval, generation, open-domain QA},
+  note      = {RAG 原始论文。写作学习重点：如何简洁定义 RAG 问题；
+               如何通过 parametric vs non-parametric memory 区分贡献}
+}
+
+@inproceedings{qin2024toolllm,
+  author    = {Qin, Yujia and Liang, Shihao and Ye, Yining and Zhu, Kunlun and
+               Yan, Lan and Lu, Yaxi and Lin, Yankai and Cong, Xin and
+               Tang, Xiangru and Qian, Bill and others},
+  title     = {{ToolLLM}: Facilitating Large Language Models to Master
+               16000+ Real-world {API}s},
+  booktitle = {International Conference on Learning Representations (ICLR)},
+  year      = {2024},
+  url       = {https://arxiv.org/abs/2307.16789},
+  file      = {2307.16789.pdf},
+  keywords  = {tool use, LLM, API, instruction tuning, ToolBench},
+  note      = {LLM 工具调用的系统性工作。写作学习重点：
+               如何定义 tool-augmented agent 的 action space；
+               工具封装和调用链的实验设计}
+}

@@ -1,18 +1,24 @@
 # BioBridge-GraphRAG 论文项目交接文档
 
 > 给下一个 Claude 对话的指引。
-> 写于 2026-06-20，基于至 v0.2 草稿的全部上下文。
+> 写于 2026-07-02，基于至 v0.2 草稿 + A/B 类全量实验完成 + Mavent v2 prompt 修复的全部上下文。
 > **如果你是新来的 Claude：先读完本文档，再决定问用户什么。不要立刻动手。**
 
 ---
 
 ## 1. TL;DR（60 秒入场）
 
-王嘉龙（用户）是西工大航空学院硕士生，正在写一篇投**航空学报**的中文论文。论文方法叫 **BioBridge-GraphRAG**，是"知识图谱增强的仿生飞行器设计问答智能体"——用 KG 当外部记忆 + LLM 当智能体大脑 + 8 个工具（4 物理 + 3 KG + 1 张量）做 ReAct 推理。
+王嘉龙（用户）是西工大航空学院硕士生，正在写一篇投**航空学报**的中文论文。方法是 **BioBridge-GraphRAG**（代码内改名 Mavent 已讨论但未实施）——KG 增强的仿生飞行器设计 Q&A 智能体，ReAct Agent + 8 tools（4 物理 + 3 KG + 1 tensor recall）。
 
-**当前状态**：v0.2 草稿，约 99% 完工。docx 已生成（4.8 MB，9 图 + 7 表 + 4 OMML 公式）。最大缺口是基线少（只有 B1 纯 LLM）和题集只用了 754 题中的 48 题。
+**这一轮对话核心产出**（2026-06-20 → 2026-07-02）：
+- ✅ **KG 升级**：MIMICS 相似度从 4 维扩展到 5 维（Scale/Morphology/Kinematics/Aero/Functional），补 3 个字段（wing_pairs/has_tail/can_glide）
+- ✅ **A 类全量实验完成**：5 系统 × 415 题推理 + LLM-as-Judge 评测
+- ✅ **Mavent v2 prompt 修复**：修正"信鸽先查生物层"bug，A2 从 0.751 → 0.832
+- ✅ **B 类评测体系全新设计**：graded relevance（0-3）自动打分 + 4 指标（NDCG@3 / R_strict / R_loose / P@1）
+- ✅ **B 类全量实验完成**：5 系统 × 228 题推理 + 规则评测
+- ⏳ **张量消融实验待跑**：现有 48 题旧数据不能用，需要新一轮 5 变体 × 415 题
 
-**最近的对话节奏**：用户在反复问 "**为什么 / 这是什么 / 我们做的有意义吗**"——你的任务更接近**陪他梳理论文的思路**而不是再写代码。沉得住气，先听他要什么。
+**结论：主实验数据齐了，只差张量消融。可以开始写论文了。**
 
 ---
 
@@ -23,30 +29,28 @@
 | 身份 | 西北工业大学航空学院硕士生 |
 | 专业 | 仿生扑翼飞行器设计 |
 | 工程能力 | Python 熟练；ML/LLM 概念懂但不深 |
-| 论文经验 | 这是第一篇 EI 期刊投稿，对学术范式（dev/test 划分、消融实验等）相对生疏 |
-| 目标期刊 | **航空学报**（首投）→ CIMS → 系统工程与电子技术 |
+| 论文经验 | 第一篇 EI 期刊投稿 |
+| 目标期刊 | 航空学报（首投）→ CIMS → 系统工程与电子技术 |
 | 时间敏感度 | 中等——希望尽快投，但接受先扎实再投 |
 
 ---
 
 ## 3. 协作偏好（重要）
 
-观察自这一长串对话：
-
 | 偏好 | 具体表现 |
 |---|---|
 | **要例子，不要术语** | "你能用例子给我讲一下吗"——出现 5+ 次 |
-| **要诚实，不要吹牛** | 经常追问"是不是言行不一致" "为什么只跑 48" |
-| **要短，不要冗长** | 喜欢 ASCII 图 + 速查表；不喜欢段落式分析 |
+| **要诚实，不要吹牛** | 经常追问"是不是言行不一致" |
+| **要短，不要冗长** | 喜欢 ASCII 图 + 速查表 |
 | **要决策树，不要选项罗列** | "我推荐 X 因为 Y" 比 "你可以选 A/B/C" 更受欢迎 |
-| **不要擅自推进** | 多次说"等一下" "我还没懂"——你要先确认理解再动手 |
+| **不要擅自推进** | 多次说"等一下" "我还没懂" |
 | **不喜欢生成新文档** | 除非他明说，不要写 *.md 总结 |
 | **中文为主** | 偶尔英文术语保留即可 |
 
-**反例**——他**不喜欢**这种回复：
-> "好的！让我深入分析一下您提出的精彩问题。这是一个非常有深度的话题..."
+**反例**：
+> "好的！让我深入分析一下您提出的精彩问题..."
 
-**正例**——他**喜欢**这种：
+**正例**：
 > "你抓到了一个真实的问题——这是论文当前最大的工程缺口。"
 > 然后直接给具体数据 + 权衡 + 推荐。
 
@@ -54,329 +58,335 @@
 
 ## 4. 不可改的约定
 
-### 4.1 论文标题（已敲定，不要再动）
+### 4.1 论文标题（已敲定）
 
 - **中文**：知识图谱增强的仿生飞行器设计问答智能体（19 字）
 - **英文**：A knowledge graph augmented agent for design question answering of bionic flapping-wing aircraft
 - **方法名**：BioBridge-GraphRAG（保留——已发 Zenodo DOI）
-  - "Bio" 指生物原型层、"Bridge" 指 4 类仿生映射
+- **代码内改名 Mavent**：已讨论但**尚未实施**，不要擅自改名
 
-### 4.2 关键动词措辞
+### 4.2 安全约束（绝对红线）
 
-- **正确**："**设计并实现了**一种…智能体"
-- **错误**："~~提出了~~一种…智能体"（动词与对象不搭配，已修）
-
-### 4.3 文件同步约定
-
-- **桌面 docx 是 primary**：`/Users/humble/Desktop/biobridge-graphrag-paper.docx`
-- **papers/ docx 是 git 副本**：`/Users/humble/studyProject/MAV/papers/biobridge-graphrag-paper.docx`
-- 改完桌面后 `cp` 一份到 papers/。改 papers/ 时反向也要同步。
-- 用户偶尔会**手动用 Word 编辑桌面版**——动手前 verify 桌面版字节数。
-
-### 4.4 安全约束（绝对红线 —— 不可 commit）
-
-以下凭证是**绝对不能进 git**的（实际值见用户的 `.env` / 环境变量，或私下询问用户）：
+以下凭证**绝对不能进 git**（值已由用户私下提供，放在环境变量中）：
 
 | 凭证名 | 用途 | 环境变量 |
 |---|---|---|
-| Neo4j 密码 | KG 数据库连接 | `NEO4J_PASSWORD` |
-| Zotero API key | Zotero MCP server | `ZOTERO_API_KEY` |
-| GitHub PAT | gh CLI / 推送 | `GITHUB_TOKEN`（或本地 keychain）|
 | 腾讯 qproxy API key | LLM 后端 | `OPENAI_API_KEY` |
+| qproxy base URL | `https://qproxy.gtimg.com/v1` | `OPENAI_BASE_URL` |
+| LLM 模型名 | 推理: `deepseek-v4-pro-official` / 评测: `claude-sonnet-4-6` | `OPENAI_MODEL` |
+| Neo4j 密码 | KG 数据库连接 | `NEO4J_PASSWORD` |
 
-所有脚本必须用 `os.environ.get(...)`。**不要把任何凭证值写进文件、commit 信息、或回复给用户**。如果发现历史 commit 含凭证，立刻告诉用户，让他 rotate。
+所有脚本必须用 `os.environ.get(...)`。**不要把任何凭证值写进文件、commit 信息、或回复给用户**。
 
 ---
 
-## 5. 当前状态（v0.2 草稿）
+## 5. 当前实验状态（★ 核心）
 
-### 5.1 已完工（99%）
+### 5.1 A 类实验（415 题）✅ 全部完成
 
-| 资产 | 状态 |
+**推理阶段**：
+
+| 系统 | 脚本 | 输出 | 延迟 |
+|---|---|---|---|
+| B1 Pure LLM | `baseline_b1_pure_llm.py` | `b1_pure_llm_predictions.jsonl` | 28.6s/题 |
+| B2 VectorRAG | `baseline_b2_vector_rag.py` | `b2_vector_rag_predictions.jsonl` | 21.4s/题 |
+| B3 KG-RAG | `baseline_b3_kg_rag.py` | `b3_kg_rag_predictions.jsonl` | 17.9s/题 |
+| B4 ToG | `baseline_b4_tog.py` | `b4_tog_predictions.jsonl` | 41.6s/题 |
+| **Mavent v2** | `run_biobridge.py` | `biobridge_predictions.jsonl` | 32.2s/题 |
+
+**评测阶段**（LLM-as-Judge，claude-sonnet-4-6 作 judge）：
+
+```
+系统            A2查询    A3对比    A4推理    延迟
+────────────────────────────────────────────────
+B1 Pure LLM    0.269    0.321    0.223    28.6s
+B2 VectorRAG   0.835    0.850    0.766    21.4s
+B3 KG-RAG      0.845    0.873    0.388    17.9s
+B4 ToG         0.771    0.811    0.250    41.6s
+Mavent v2      0.832    0.881    0.827★   32.2s
+```
+
+**关键发现**：
+- **A4 推理是 Mavent 的杀手场景**：0.827 vs 次优 0.766（B2 VecRAG）—— 差距 0.061
+- **A2/A3 三家（Mavent/B2/B3）持平**：都在 0.83~0.88 区间
+- **B4 ToG 全线垫底**：抽象约束题缺 KG 种子节点，beam search 失效
+- **B1 Pure LLM 拒答严重**：141/415（34%）拒答，A4 拒答率高达 48%
+
+### 5.2 B 类实验（228 题）✅ 全部完成
+
+**注意与 A 类的区别**：B 类不用 LLM-as-Judge，用**规则评测 + graded relevance**。
+
+**新数据集**：`papers/fwmav-qa-benchmark/data/fwmav_qa_v2_b_graded.jsonl`
+- 每道 B 题给全部 39 个 FWMAV 打 relevance（0-3 分）
+- 规则打分脚本：`biobridge/experiments/grade_b_relevance.py`
+- rel=3 全部硬约束满足 + 软约束匹配
+- rel=2 全部硬约束满足但软约束不匹配
+- rel=1 违反 1 个硬约束
+- rel=0 违反 2+ 硬约束或严重越界
+
+**指标（4 个）**：
+- **NDCG@3 (graded 0-3)**：推荐排序质量
+- **Recall_strict@3**：命中 rel=3 样机的比例
+- **Recall_loose@3**：命中 rel≥2 样机的比例
+- **P@1**：第一推荐是不是 rel=3
+
+**推理阶段**（用 `--data /tmp/b_only.jsonl`，产出到 `*_b_predictions.jsonl`）：
+
+| 系统 | 输出 |
 |---|---|
-| §1 引言 | ✅ v0.2，nature-reviewer P0 已修 |
-| §2 KG 构建 | ✅ v0.2，含 Tab.1 |
-| §3 路径推理 | ✅ v0.2，含 Algorithm 1 + Tab.2 |
-| §4 张量分解 | ✅ v0.2，含 3 公式 |
-| §5 实验与分析 | ✅ v0.2，B1 + Full + 4 ablation 数据齐 |
-| §6 结论 | ✅ v0.1，4 段 |
-| 摘要（中英）| ✅ v0.1，含真实数字 |
-| Fig. 1-9 | ✅ 9 张图（drawio 7 张 + matplotlib 2 张）|
-| Tab. 1-8 | ✅ 7 表 + 1 消融表 |
-| docx 全文 | ✅ 4.8 MB，9 图嵌入 + 7 native table + 4 OMML |
-| Excel 实验数据 | ✅ `experiment-results/biobridge-experiments.xlsx`（7 sheet）|
-| 实验讲解文档 | ✅ `EXPERIMENTS-EXPLAINED.md`（712 行）|
+| B1 | `b1_b_predictions.jsonl` |
+| B2 | `b2_b_predictions.jsonl` |
+| B3 | `b3_b_predictions.jsonl` |
+| B4 | `b4_b_predictions.jsonl` |
+| Mavent | `biobridge_b_predictions.jsonl` |
 
-### 5.2 实验已跑
+**评测结果**：
 
-| 实验 | 题量 | 系统数 | 状态 |
+```
+系统            NDCG@3    R_strict  R_loose   P@1     B1_NDCG   B2_NDCG
+────────────────────────────────────────────────────────────────────
+B1 Pure LLM    0.570    0.513    0.538    0.588    0.689    0.463
+B2 VectorRAG   0.839★   0.834★   0.806★   0.829★   0.926    0.760★
+B3 KG-RAG      0.508    0.572    0.392    0.605    0.483    0.530
+B4 ToG         0.452    0.504    0.365    0.513    0.459    0.445
+Mavent         0.696    0.702    0.703    0.640    0.873    0.537
+```
+
+**关键发现**：
+- **B2 VectorRAG 全面赢** —— 语义向量检索对推荐题极有效
+- **Mavent B1 强 (0.873)**，但 B2 弱 (0.537) —— 硬约束多字段过滤不是 ReAct 强项
+- **B3/B4 R_loose 远低于 R_strict** —— 推荐过于激进，中间地带覆盖不足
+
+### 5.3 KG 结构（P0-P3 完成）
+
+**P0-P2 之前已完成**（详见 KG-STRUCTURE.md）：612 节点 / 625 关系。
+
+**P3（本轮新增）**：MIMICS 相似度从 4 维扩展到 5 维
+
+补充脚本：`papers/fwmav-qa-benchmark/scripts/p2_3_supplement_wing_props.py`
+- 给 39 FWMAV + 23 Organism 加 3 字段：`wing_pairs` / `has_tail` / `can_glide`
+
+打分脚本更新：`papers/fwmav-qa-benchmark/scripts/p1_1_mimics_score.py`
+- **旧 4 维**：Scale / Morphology(布尔) / Kinematics / Aero(速度代理)
+- **新 5 维**：
+  - **Scale**：重量 + 翼展（对数距离）
+  - **Morphology**：wing_pairs + has_tail + AR（三合一，Shyy 尺度律推 AR）
+  - **Kinematics**：扑频
+  - **Aero**：Reynolds 数 + Strouhal 数（弦长≈翼展/4）
+  - **Functional**：can_hover + can_glide
+
+**修复效果**：
+- 旧 aero 满分率 74%（用速度代理）→ 新 aero 满分率 16%（Re+St 精确）
+- 旧 morphology 只有 0/1 → 新 morphology 是连续值，无虚高满分
+
+### 5.4 Mavent v2 prompt 修复（本轮关键）
+
+**发现的 Bug**：Mavent v1 遇到"信鸽的起飞重量"这类题目，因为 system prompt 说"涉及生物原型必先调 search_organism"，会先查生物层的鸽子（返回 200-500g），而不是查工程样机层的信鸽（280g），答错。
+
+**修复**：`biobridge/agent/llm_client.py` 的 SYSTEM_PROMPT 里改成：
+- 遇到具体样机名称必须先调 search_fwmav
+- search_organism 只在明确询问生物参数或需要仿生参考时调用
+
+**效果**：Mavent A2 从 0.751 → 0.832，工具调用平均从 6.9 → 5.6/题（不再乱调 organism）
+
+### 5.5 关键 max_tokens 设置（易踩坑）
+
+| 场景 | 变量 | 值 | 原因 |
 |---|---|---|---|
-| 主实验（B1 vs Full）| 48 | 2 | ✅ |
-| 创新点级消融 | 48 | 5（Full + 4 ablation）| ✅ |
-| E1 R 敏感性 | 5 query | — | ✅ |
-| E2 α 敏感性 | 5 query | — | ✅ |
-| E3 z-score 对比 | 5 query | — | ✅ |
-| §5.7 案例研究 | 3 案例 | 2 | ✅ 但单人评分 |
+| Mavent 推理 | `MAX_OUTPUT_TOKENS` | 8192（默认）| ReAct 需要长思考链 |
+| A 类 Judge | `MAX_OUTPUT_TOKENS` | 4096 | claude-sonnet-4-6 输出 JSON |
+| B 类标注（annotate_b_relevance）| `max_tokens` 硬编码 1500 | - | claude 有中文双引号问题（已修复） |
+
+**踩坑记录**：minimax-m2.7 是 reasoning model，30000 token 全被 reasoning 阶段吃掉，content 输出为空——**不要用 minimax 作 judge**。
 
 ---
 
-## 6. 已识别的真实漏洞（避免重复发现）
+## 6. 下一步：待做的工作
 
-**这一节非常重要——下个 Claude 不要再"发现"一遍这些问题然后告诉用户**。用户已经知道。如果用户问起，告诉他这是已知的、列在这里。
+### 6.1 张量消融实验 ⏳（论文的关键补充）
 
-### 6.1 题集利用率漏洞
+**现状**：现有 `ablation_*_predictions.jsonl` 只有 48 题（旧数据，含 A1，用旧 EM/F1 评测）。**不能用于论文**。
 
-- **现状**：FWMAV-QA Benchmark 公开了 **754 题**，但实验只用了 **48 题**（6.4%）
-- **影响**：审稿人会问"754 是不是只为了好看"
-- **改进路径**：A 类扩到全集 374 题（约 17h 跑批）；B 类受 6.2 限制保持 48 题
-- **用户反应**：已意识到，未决定何时实施
+**5 个消融变体**（在 `biobridge/agent/react_loop_ablation.py`）：
 
-### 6.2 B 类题 gold_entities 未标注
+| 变体 | 说明 |
+|---|---|
+| `full` | 完整 Mavent |
+| `no_bilayer` | 去掉生物层 |
+| `no_tools` | 去掉 4 个物理工具 |
+| `no_tensor` | 去掉张量粗筛 |
+| `no_pathreasoning` | 只用张量 + 简单格式化 |
 
-- **现状**：B 类（B1+B2 共 228 题）`gold_entities` 字段是空的
-- **后果**：B 类 Hit@k / Entity Recall **全部为 0**——不是系统不行，是**评测器失灵**
-- **当前替代**：Faithfulness Lite + §5.7 案例研究人工 5 分制
-- **改进路径**：228 题 × 39 候选 = 8892 次相关度判断，需要 2-3 人协作 1-2 周
-- **解锁后**：可计算 NDCG@5，B 类自动评测复活
+**推荐方案**（用户在 6-24 讨论过，倾向选 B）：
+- **选 A**：全部 5 变体 × 415 题（12-15 小时）
+- **选 B（推荐）**：只跑 no_tensor + no_tools 两个关键变体（5-6 小时），对比 Full 得张量和物理工具的独立贡献
 
-### 6.3 基线只有 B1（最大工程缺口）
+**跑命令模板**（用户还没确认最终方案，等他决定）：
+```bash
+NEO4J_PASSWORD=<pwd> \
+OPENAI_BASE_URL=https://qproxy.gtimg.com/v1 \
+OPENAI_API_KEY=<key> \
+OPENAI_MODEL=deepseek-v4-pro-official \
+python3 -u biobridge/experiments/run_ablation.py --variant no_tensor
+```
 
-- **现状**：Tab.6/7 的对比基线列只有 B1，B2-B6（VectorRAG / GraphRAG / LightRAG / ToG / HippoRAG）全是 `<待填>`
-- **改进推荐**：先补 B2 (VectorRAG) + B5 (ToG) ——一周左右；其余 3 个留修订版
-- **用户反应**：上次问起补哪两个时给了选项，他没回答就转去问别的——**他可能没真正想好优先级**
+### 6.2 论文写作
 
-### 6.4 张量超参在测试 query 上调
+**主实验数据齐了**（A + B），可以开始起草：
+- **§4.2 A 类实验**：5 系统 × 3 指标（A2/A3/A4）主表 + A4 单独柱状图
+- **§4.3 B 类实验**：5 系统 × 4 指标（NDCG/R_strict/R_loose/P@1）+ B1/B2 分开子表
+- **§4.4 消融实验**（等张量消融跑完再写）
 
-- **现状**：R=12 / α=0.4 是在 5 个 query 上选的，又在同 5 个 query 上报告——既调超参又当测试集
-- **航空学报接受度**：通常宽容（KGQA 圈不严抠 dev/test）
-- **顶会会扣分**：如要投顶会需补 dev/test 划分
-
-### 6.5 单人评分
-
-- §5.7 案例研究的 5 分制评分由用户自己打——缺独立专家
-- 改进：找 3 名 FWMAV 同学独立打分 + 报 Cohen's kappa
+**用户曾表达过的写作偏好**：
+- 论点 1：A4 推理任务需要工具增强（0.223→0.827 的跳变是最强证据）
+- 论点 2：ToG 在扑翼机 QA 上不适合（负面证据也是贡献）
+- 论点 3：不同任务需要不同架构（诚实承认 B 类 Mavent 不如 VecRAG）
 
 ---
 
-## 7. 待办 + 优先级（按用户当前真实状态排）
+## 7. 已知漏洞（不要再重新发现）
 
-| 优先级 | 任务 | 预估时间 | 备注 |
-|---|---|---|---|
-| ★★★ | **决定下一步主攻什么**（用户当前在思考） | 用户决策 | 不要替他决定 |
-| ★★ | 补 B2 VectorRAG（BGE-M3 + FAISS）| 1 天工程 + 0.5h 跑 | 最快的基线 |
-| ★★ | 扩 A 类到全集 374 题 | 17h 无人值守 | 与上一项可合并跑 |
-| ★★ | 补 B5 ToG | 3-4 天工程 + 1h 跑 | 与图路径推理直接对比 |
-| ★ | B 类 gold_entities 标注 | 2-3 人 × 2 周 | 解锁 NDCG@5 |
-| ★ | 多 LLM 后端复现（DeepSeek-R1）| 4h | 增强可重现性 |
-| ★ | 独立专家 5 分制评分 | 3 人 × 半天 | 解锁 Likert |
-| ☆ | Reference 列表替换（[1]-[11] 模板 → 18+ 真实 BibKey）| 1h | 投稿前必做 |
-| ☆ | 用 nature-citation skill 转 GB/T 7714 | 30 min | 投稿前必做 |
-| ☆ | Algorithm 1 在 docx 里的 code block 排版 | 1-2h | 投稿前必做 |
+### 7.1 单人评分（案例研究）
+
+案例研究部分若涉及 5 分制打分，由用户自己打，缺独立专家。
+
+### 7.2 Mavent 改名未实施
+
+代码/docs 内所有 BioBridge-GraphRAG 引用尚未统一改名到 Mavent。
+
+### 7.3 张量超参在测试 query 上调（需修）
+
+R=12 / α=0.4 在 5 个 query 上选又在同 5 个 query 上报告——留在论文里的老 caveat。跑消融时可能需要 hold-out。
+
+### 7.4 B2 硬约束题 Mavent 不占优
+
+B2 类多字段联合过滤（"翼展≤250mm+重量≤30g+悬停+相机"），Cypher 一句 WHERE 就能搞定，Mavent ReAct 反而绕路。这个 finding **在论文里应该主动承认**，不要藏。
+
+### 7.5 baseline 脚本已改支持 A+B（已完成）
+
+5 个脚本的过滤条件都改成了 `.startswith(("A", "B"))`——之前只跑 A 类。
 
 ---
 
 ## 8. 关键文件地图
 
-### 8.1 论文文本
-
 ```
-papers/
-  ├── 01-论文大纲-航空学报.md          —— 总大纲，**已含历史归档**
-  ├── README.md                        —— 项目入口（先读）
-  ├── EXPERIMENTS-EXPLAINED.md         —— 实验全解读 712 行（先读 §1 §11）
-  ├── HANDOFF.md                       —— 你正在读
-  ├── biobridge-graphrag-paper.docx    —— git 副本（4.8 MB）
-  └── sections/
-      ├── abstract.md                  —— 摘要中英
-      ├── section1-introduction.md
-      ├── section2-kg.md
-      ├── section3-path-reasoning.md
-      ├── section4-tensor.md
-      ├── section5-experiments.md      —— 最长，6300 字
-      └── section6-conclusion.md
-```
+biobridge/experiments/
+  ├── baseline_b1_pure_llm.py       —— B1 纯 LLM
+  ├── baseline_b2_vector_rag.py     —— B2 VectorRAG + FAISS
+  ├── baseline_b3_kg_rag.py         —— B3 KG-RAG（Cypher）
+  ├── baseline_b4_tog.py            —— B4 ToG beam search
+  ├── run_biobridge.py              —— Mavent 主系统
+  ├── run_ablation.py               —— 消融实验（待跑新一轮）
+  ├── evaluate.py                   —— 统一评测入口
+  ├── llm_judge.py                  —— A 类 LLM-as-Judge（claude-sonnet-4-6）
+  ├── b_metrics.py                  —— B 类 4 指标计算（graded NDCG + R_strict + R_loose + P@1）
+  ├── grade_b_relevance.py          —— B 类 graded relevance 自动打分
+  ├── annotate_b_relevance.py       —— B 类硬约束标注（旧版）
+  ├── repair_b_annotation.py        —— annotate 失败样本降级修复
+  └── metrics.py                    —— 旧 EM/F1（已废弃）
 
-### 8.2 实验代码与数据
+biobridge/agent/
+  ├── llm_client.py                 —— LLM 客户端 + SYSTEM_PROMPT（v2 已修复）
+  ├── react_loop.py                 —— ReAct 主循环
+  └── react_loop_ablation.py        —— 消融变体 ReAct 变种
 
-```
-biobridge/
-  ├── tools/
-  │   ├── physics_tools.py     —— 4 个物理工具
-  │   ├── kg_tools.py          —— 3 个 KG 工具
-  │   ├── tensor_recall.py     —— 张量分解粗筛
-  │   └── tool_specs.py        —— OpenAI Function Calling spec（**先看这个理解全套工具**）
-  ├── agent/
-  │   ├── llm_client.py        —— 多后端封装
-  │   ├── react_loop.py        —— 主推理循环
-  │   └── react_loop_ablation.py —— 消融变体（带 allowed_tools 过滤）
-  └── experiments/
-      ├── metrics.py           —— EM/F1/Hit@k/Faith 实现（**指标定义在这**）
-      ├── run_sensitivity.py   —— E1+E2+E3
-      ├── baseline_b1_pure_llm.py
-      ├── run_biobridge.py
-      ├── run_ablation.py      —— 5 变体一次跑完
-      └── evaluate.py          —— 统一评测入口
+biobridge/tools/
+  ├── physics_tools.py              —— 4 物理工具
+  ├── kg_tools.py                   —— 3 KG 工具（返回 5 维相似度）
+  └── tensor_recall.py              —— 张量分解粗筛
+
+papers/fwmav-qa-benchmark/data/
+  ├── fwmav_qa_v2_final.jsonl       —— 754 题原始数据集
+  ├── fwmav_qa_v2_b_annotated.jsonl —— B 类原 gold + hard_constraints
+  └── fwmav_qa_v2_b_graded.jsonl    —— ★ B 类 39 FWMAV × 228 题的 graded relevance
+
+papers/fwmav-qa-benchmark/scripts/
+  ├── p1_1_mimics_score.py          —— MIMICS 5 维打分（已更新）
+  ├── p2_3_supplement_wing_props.py —— 补 wing_pairs/has_tail/can_glide
 
 papers/experiment-results/
-  ├── eval_summary.json              —— 所有系统指标聚合
-  ├── eval_report.md                 —— 人类可读
-  ├── b1_pure_llm_predictions.jsonl
-  ├── ablation_*_predictions.jsonl   —— 5 个变体预测结果
-  ├── e1/e2/e3_*.json                —— 敏感性原始数据
-  └── biobridge-experiments.xlsx     —— 7 sheet 数据汇总
-```
+  ├── b1_pure_llm_predictions.jsonl —— A 类 415 题 × 5 系统
+  ├── b2_vector_rag_predictions.jsonl
+  ├── b3_kg_rag_predictions.jsonl
+  ├── b4_tog_predictions.jsonl
+  ├── biobridge_predictions.jsonl   —— Mavent v2 A 类结果
+  ├── b1_b_predictions.jsonl        —— B 类 228 题 × 5 系统
+  ├── b2_b_predictions.jsonl
+  ├── b3_b_predictions.jsonl
+  ├── b4_b_predictions.jsonl
+  ├── biobridge_b_predictions.jsonl
+  ├── ablation_*_predictions.jsonl  —— 旧 48 题（不能用）
+  ├── vector_rag_index.faiss        —— B2 的 FAISS 索引
+  ├── vector_rag_index.json
+  ├── eval_summary.json             —— B 类最新评测（覆盖了 A 类的旧摘要）
+  └── eval_report.md                —— B 类最新报告
 
-### 8.3 数据集
+papers/
+  ├── HANDOFF.md                    —— 你正在读
+  ├── EXPERIMENTS-EXPLAINED.md      —— 实验全解读（可能已过期）
+  ├── KG-STRUCTURE.md               —— KG 结构说明
+  └── biobridge-graphrag-paper.docx —— git 副本
 
-```
-papers/fwmav-qa-benchmark/
-  └── data/
-      ├── fwmav_qa_v2_final.jsonl    —— 754 题最终版
-      ├── fwmav_qa_v1_754.jsonl      —— v1 历史
-      └── batch_wjl_*.jsonl          —— 手写 + 模板生成原始批次
-```
-
-### 8.4 docx 批量处理脚本
-
-```
-papers/.docx-batch/
-  ├── 01-header.json
-  ├── 02-clean.json
-  ├── 03-body-content.json
-  ├── build_body.py / run_body.py    —— resident 模式批处理
-  ├── run_figures.py / run_tables.py
-  ├── run_format_fixes.py / run_fix_equations.py
-  ├── run_56_ablation.py
-  └── build_xlsx.py                  —— 生成 biobridge-experiments.xlsx
+桌面 docx（primary）:
+  /Users/humble/Desktop/biobridge-graphrag-paper.docx
 ```
 
 ---
 
-## 9. 环境与工具
+## 9. LLM 调用配置
 
-| 工具 | 用途 | 入口 |
+**推理时**（跑 baseline / Mavent）：
+```bash
+export OPENAI_BASE_URL=https://qproxy.gtimg.com/v1
+export OPENAI_API_KEY=<qproxy key>
+export OPENAI_MODEL=deepseek-v4-pro-official
+export MAX_OUTPUT_TOKENS=8192
+export NEO4J_PASSWORD=<pwd>
+```
+
+**评测时**（跑 evaluate.py）：
+```bash
+export OPENAI_MODEL=claude-sonnet-4-6      # ← 换成 claude 作 judge
+export MAX_OUTPUT_TOKENS=4096
+```
+
+**qproxy 特点**（易踩坑）：
+- 不支持 `response_format={"type":"json_object"}`
+- Claude 系列的 JSON 输出可能被 markdown 包裹（```json...```）——`llm_judge.py` 已用正则提取
+- Claude 输出中文引号可能不转义，破坏 JSON——注意
+- **不能用 minimax-m2.7 作 judge**（reasoning model，content 空）
+
+---
+
+## 10. 信号灯
+
+| 灯 | 含义 | 怎么办 |
 |---|---|---|
-| **腾讯 qproxy** | LLM 后端（claude-sonnet-4-6）| `OPENAI_BASE_URL=https://qproxy.gtimg.com/v1` + 环境变量 KEY |
-| **officecli** | 改 docx/xlsx | `officecli help <docx\|xlsx>` |
-| **draw.io Desktop** | 改 figures（drawio 源文件）| brew 已装 |
-| **nature-skills** | 论文写作辅助 | nature-writing / nature-reviewer / nature-figure / nature-citation |
-| **drawio Skill** | 生成 drawio 文件 | jgraph/drawio-mcp 官方 |
-
-### LLM 后端调用约定
-
-```python
-import os
-from openai import OpenAI
-client = OpenAI(
-    base_url=os.environ["OPENAI_BASE_URL"],   # qproxy
-    api_key=os.environ["OPENAI_API_KEY"],
-)
-# 模型名：claude-sonnet-4-6
-```
+| 🔴 用户说 "我还不太懂" / "等一下" | 停下，换例子再讲 | 不要前进 |
+| 🟡 用户说 "是不是…" | 他在质疑 | 诚实回答 |
+| 🟢 用户说 "可以 / 现在做 / 你直接动手" | 可推进 | 但仍 verify 范围 |
+| 🟣 用户长沉默后问技术细节 | 在准备答辩/写作 | 给可直接复用的素材 |
 
 ---
 
-## 10. 常用命令速查
+## 11. 不要主动做的事
 
-### 改 docx
-
-```bash
-PAPER=/Users/humble/Desktop/biobridge-graphrag-paper.docx
-
-# 找段落
-officecli query "$PAPER" 'p:contains("某段开头文字")' --json
-
-# 改段落
-officecli set "$PAPER" '/body/p[@paraId=XXXXXXXX]' --prop 'text=新文本'
-
-# 改完同步到 papers/
-cp "$PAPER" /Users/humble/studyProject/MAV/papers/biobridge-graphrag-paper.docx
-```
-
-### 跑实验
-
-```bash
-# 主实验
-python biobridge/experiments/baseline_b1_pure_llm.py
-python biobridge/experiments/run_biobridge.py
-
-# 消融
-python biobridge/experiments/run_ablation.py
-
-# 敏感性
-python biobridge/experiments/run_sensitivity.py
-
-# 评测
-python biobridge/experiments/evaluate.py
-```
-
-### 同步检查
-
-```bash
-# 桌面 docx 与 papers/ 字节数应一致
-ls -la /Users/humble/Desktop/biobridge-graphrag-paper.docx \
-       /Users/humble/studyProject/MAV/papers/biobridge-graphrag-paper.docx
-```
+- 不要主动跑代码（先确认要跑什么）
+- 不要主动改 docx（先确认要改什么）
+- 不要主动写新 markdown 文档
+- 不要主动 commit（每次都要确认）
+- 不要重复发现 §7 的已知漏洞
+- 不要给方法改名 Mavent（尚未实施）
+- **不要用 minimax 作 judge**（会全部 score=0）
+- **不要用 4 维旧 MIMICS 打分**（已升级到 5 维，别退化）
+- **不要跑 baseline 时忘记设 `MAX_OUTPUT_TOKENS`**（Mavent 会被截断，工具调用 JSON 不完整）
 
 ---
 
-## 11. 推荐的开场对话
+## 12. 最后一句
 
-下个 Claude 接手时**第一条回复**建议这样问：
-
-> 我已经读完 HANDOFF.md 和 EXPERIMENTS-EXPLAINED.md。你今天想推进哪一块？
->
-> 1. **补基线**（B2 VectorRAG / B5 ToG）—— 上次卡在选哪两个
-> 2. **扩题量**（A 类扩到 374 题）—— 与基线可合并跑
-> 3. **B 类标注**（解锁 NDCG@5）—— 工程量大需要协作
-> 4. **答辩准备**（继续梳理论文逻辑）—— 最近会话的方向
-> 5. **投稿前琐事**（references / GB/T 7714 / Algorithm 排版）
-> 6. **别的**
-
-**不要主动**：
-- 主动跑代码（先确认要跑什么）
-- 主动改 docx（先确认要改什么）
-- 主动写新 markdown 文档（用户不喜欢冗余文档）
-- 主动 commit（每次都要明确确认）
-
-**可以主动**：
-- 读已有文件回答问题
-- 用例子讲解概念
-- 指出潜在问题（但不要重复 §6 已知漏洞）
-
----
-
-## 12. 最近一次会话讨论焦点（2026-06-19~20）
-
-按时间顺序：
-
-1. **标题统一**：把残留的"基于 KG 与 LLM 的方法"全改成新风格
-2. **病句修复**："提出 + 智能体" 改成 "设计并实现"
-3. **MathType 安装**：用户问了，但被打断；最终没装（OMML 已够用）
-4. **方法名讨论**：用户提出 BioBridge-GraphRAG 是不是该改名 → 决定保留 + 加词源解释
-5. **生成 Excel**：用 officecli 生成了 7 sheet 的 `biobridge-experiments.xlsx`
-6. **基线讨论**：讨论补 B2/B5，但用户没决定
-7. **论文 SCOPE 反思**：用户连续问"我们的论文做了什么"、"为什么需要 KG"、"为什么需要双层本体"、"什么时候走粗筛精排" —— 是在为答辩或 cover letter 做准备
-8. **实验逻辑梳理**：讨论了 754 vs 48、gold_entities、为什么需要实验、"B 类不分胜负"的真实含义
-9. **指标定义补充**：用户截图问了 5 个指标各自含义 → 需要把 §1.5 速查表加到 EXPERIMENTS-EXPLAINED.md（**未做**）
-
-**最有可能的下一步**：用户继续问概念性问题，或决定开工补基线/扩题量。
-
----
-
-## 13. 信号灯
-
-| 灯 | 含义 | 出现时怎么办 |
-|---|---|---|
-| 🔴 用户说 "我还不太懂" / "等一下" | **停下，再讲一次** | 换更具体的例子，不要前进 |
-| 🟡 用户说 "是不是…" | **他在质疑** | 诚实回答，不要圆场 |
-| 🟢 用户说 "可以补 / 现在做 / 你直接动手" | **可以推进** | 但仍 verify 范围 |
-| 🟣 用户长沉默后问技术细节 | **他在准备答辩/写作** | 给他可直接复用的素材（句式、表格、图）|
-
----
-
-> 写于 2026-06-20。如果三个月后下个对话来接手，先核对：
-> 1. docx 字节数（看是否被人手动改过）
-> 2. 当前 git branch + uncommitted changes
-> 3. 实验数据有无更新
-> 4. 是否已投稿（航空学报 / CIMS）
+**下次对话首先要确认的三件事**：
+1. 张量消融实验要跑吗？跑 A 方案（全 5 变体）还是 B 方案（no_tensor + no_tools）？
+2. 论文写作从哪里开始？§4 实验章节还是先修 §3 方法？
+3. Mavent 是否需要 v3 修复？（B2 类硬约束题的短板可以尝试改进）

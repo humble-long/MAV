@@ -44,8 +44,13 @@ def load_test_set(jsonl_path: Path, n: int, seed: int = 42, sample_per_cat: bool
         for line in f:
             line = line.strip()
             if line:
-                items.append(json.loads(line))
+                it = json.loads(line)
+                if it.get("category") != "A1":
+                    items.append(it)
     random.seed(seed)
+    if n >= len(items):
+        random.shuffle(items)
+        return items
     if not sample_per_cat:
         random.shuffle(items)
         return items[:n]

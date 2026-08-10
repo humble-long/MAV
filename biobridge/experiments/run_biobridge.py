@@ -30,8 +30,13 @@ def load_test_set(jsonl_path: Path, n: int, seed: int = 42, sample_per_cat: bool
         for line in f:
             line = line.strip()
             if line:
-                items.append(json.loads(line))
+                it = json.loads(line)
+                if it.get("category") != "A1":
+                    items.append(it)
     random.seed(seed)
+    if n >= len(items):
+        random.shuffle(items)
+        return items
     if not sample_per_cat:
         random.shuffle(items)
         return items[:n]
@@ -50,7 +55,7 @@ def load_test_set(jsonl_path: Path, n: int, seed: int = 42, sample_per_cat: bool
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--n", type=int, default=50)
+    parser.add_argument("--n", type=int, default=9999)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument(
         "--data",
@@ -68,7 +73,8 @@ def main():
     print("=" * 70)
 
     test_set = load_test_set(Path(args.data), n=args.n, seed=args.seed)
-    print(f"\n  Sampled {len(test_set)} questions (seed={args.seed})")
+    test_set = [it for it in test_set if it.get("category", "").startswith(("A", "B"))]
+    print(f"\n  A 类题: {len(test_set)} (seed={args.seed})")
     by_cat = {}
     for it in test_set:
         c = it.get("category", "?")

@@ -198,11 +198,12 @@ def query_mimics_path(
     WHERE """ + " AND ".join(where_parts) + """
     RETURN v.name AS vehicle,
            o.name AS organism,
-           m.mimics_aero AS aero,
-           m.mimics_kinematics AS kinematics,
+           m.mimics_scale      AS scale,
            m.mimics_morphology AS morphology,
-           m.mimics_scale AS scale,
-           m.mimics_dominant_type AS dominant_type,
+           m.mimics_kinematics AS kinematics,
+           m.mimics_aero       AS aero,
+           m.mimics_functional AS functional,
+           m.mimics_dominant_type  AS dominant_type,
            m.mimics_dominant_score AS dominant_score
     ORDER BY m.mimics_dominant_score DESC
     LIMIT 30

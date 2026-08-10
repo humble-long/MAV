@@ -1,20 +1,16 @@
 #!/usr/bin/env python3
-"""P1-1: MIMICS 关系细分 + 自动打分.
+"""P1-1: MIMICS 关系细分 + 自动打分 (v2: 5 维度).
 
-把现有 50 条 MIMICS 边升级为带 4 类相似度分数的边:
-- mimics_aero       : 气动参数相似度 (Reynolds, Strouhal)
-- mimics_kinematics : 运动学相似度 (扑频)
-- mimics_morphology : 形态学相似度 (展弦比、悬停能力一致性)
-- mimics_scale      : 尺度相似度 (重量、翼展)
+5 个维度:
+- mimics_scale      : 尺度相似度      (重量 + 翼展)
+- mimics_morphology : 形态/构型相似度  (wing_pairs + has_tail + 展弦比AR)
+- mimics_kinematics : 运动学相似度    (扑频)
+- mimics_aero       : 气动机制相似度  (Reynolds数 Re + Strouhal数 St)
+- mimics_functional : 飞行功能相似度  (can_hover + can_glide)
 
-每个分数 ∈ [0, 1]，越大越相似。
-不删除原 MIMICS 边，仅在原边上加属性 + 取 dominant_type.
-
-公式（对数尺度的相对距离）:
-    sim_log(a, b) = exp(-|log(a/b)|)
-
-对工程层单值 vs 生物层 [min, max] 区间:
-    用最近邻取相对误差，区间内 -> 1.0
+每个分数 ∈ [0, 1]，越大越相似。不匹配的布尔特征给 0.3 软惩罚，不给 0。
+Re 由 speed × chord (≈ wingspan/4) / ν 计算；St 由 freq × chord / speed 计算。
+展弦比 AR 由 Shyy 尺度律从质量估算翼面积后导出。
 """
 
 from __future__ import annotations
@@ -47,6 +43,13 @@ def sim_log(value, lo, hi):
     return math.exp(-log_dist)
 
 
+def sim_log_pair(a, b):
+    """两个单值之间的对数相似度: exp(-|log10(a/b)|)."""
+    if a is None or b is None or a <= 0 or b <= 0:
+        return None
+    return math.exp(-abs(math.log10(a / b)))
+
+
 def avg_skip_none(values):
     valid = [v for v in values if v is not None]
     if not valid:
@@ -75,54 +78,103 @@ def to_float(v):
 
 
 def compute_similarities(vehicle, organism):
-    """计算 4 类相似度.
+    """计算 5 类相似度.
 
     Args:
-        vehicle: FlappingWingVehicle 节点属性 (含 *_std)
-        organism: Organism 节点属性 (含 *_min/*_max)
+        vehicle:  FlappingWingVehicle 节点属性
+        organism: Organism 节点属性
 
     Returns:
-        dict with keys: mimics_scale, mimics_kinematics, mimics_aero, mimics_morphology
+        dict: mimics_scale / mimics_morphology / mimics_kinematics /
+              mimics_aero / mimics_functional
     """
     sims = {}
+    NU = 1.516e-5  # 运动粘度 m²/s (20°C, 海平面)
 
-    # ===== 1. SCALE: 重量 + 翼展 =====
-    weight = to_float(vehicle.get("weight_g_std"))
-    span = to_float(vehicle.get("wingspan_mm"))  # mm
-    org_mass_lo = to_float(organism.get("body_mass_g_min"))
-    org_mass_hi = to_float(organism.get("body_mass_g_max"))
-    org_span_lo = to_float(organism.get("wingspan_cm_min"))
-    org_span_hi = to_float(organism.get("wingspan_cm_max"))
+    weight   = to_float(vehicle.get("weight_g_std"))
+    span_mm  = to_float(vehicle.get("wingspan_mm"))
+    freq     = to_float(vehicle.get("frequency_hz_min_std"))
+    speed    = to_float(vehicle.get("speed_max_m_s_std"))
 
+    org_mass_lo  = to_float(organism.get("body_mass_g_min"))
+    org_mass_hi  = to_float(organism.get("body_mass_g_max"))
+    org_span_lo  = to_float(organism.get("wingspan_cm_min"))
+    org_span_hi  = to_float(organism.get("wingspan_cm_max"))
+    org_freq_lo  = to_float(organism.get("flap_freq_hz_min"))
+    org_freq_hi  = to_float(organism.get("flap_freq_hz_max"))
+    org_Re_lo    = to_float(organism.get("reynolds_min"))
+    org_Re_hi    = to_float(organism.get("reynolds_max"))
+    org_St_lo    = to_float(organism.get("strouhal_min"))
+    org_St_hi    = to_float(organism.get("strouhal_max"))
+
+    # ── 1. SCALE: 重量 + 翼展 ───────────────────────────────────────
     s_mass = sim_log(weight, org_mass_lo, org_mass_hi)
-    # 翼展从 mm 转 cm
-    s_span = sim_log(span / 10.0 if span else None, org_span_lo, org_span_hi)
-    scale = avg_skip_none([s_mass, s_span])
+    s_span = sim_log(span_mm / 10.0 if span_mm else None, org_span_lo, org_span_hi)
+    scale  = avg_skip_none([s_mass, s_span])
     if scale is not None:
         sims["mimics_scale"] = round(scale, 3)
 
-    # ===== 2. KINEMATICS: 扑频 =====
-    freq = to_float(vehicle.get("frequency_hz_min_std"))
-    org_freq_lo = to_float(organism.get("flap_freq_hz_min"))
-    org_freq_hi = to_float(organism.get("flap_freq_hz_max"))
+    # ── 2. MORPHOLOGY: wing_pairs + has_tail + 展弦比 AR ────────────
+    v_wp = vehicle.get("wing_pairs")
+    o_wp = organism.get("wing_pairs")
+    v_ht = vehicle.get("has_tail")
+    o_ht = organism.get("has_tail")
+
+    morph_parts = []
+    if v_wp is not None and o_wp is not None:
+        morph_parts.append(1.0 if v_wp == o_wp else 0.3)
+    if v_ht is not None and o_ht is not None:
+        morph_parts.append(1.0 if v_ht == o_ht else 0.3)
+
+    # 展弦比 AR = b² / S，翼面积 S 用 Shyy 尺度律从质量估算
+    if weight and span_mm:
+        v_AR = (span_mm / 1000.0) ** 2 / (0.16 * (weight / 1000.0) ** (2.0 / 3.0))
+        org_mass_mid = avg_skip_none([org_mass_lo, org_mass_hi])
+        org_span_mid = avg_skip_none([org_span_lo, org_span_hi])
+        if org_mass_mid and org_span_mid and org_mass_mid > 0:
+            o_AR = (org_span_mid / 100.0) ** 2 / (0.16 * (org_mass_mid / 1000.0) ** (2.0 / 3.0))
+            s_AR = sim_log_pair(v_AR, o_AR)
+            if s_AR is not None:
+                morph_parts.append(s_AR)
+
+    if morph_parts:
+        sims["mimics_morphology"] = round(avg_skip_none(morph_parts), 3)
+
+    # ── 3. KINEMATICS: 扑频 ─────────────────────────────────────────
     s_freq = sim_log(freq, org_freq_lo, org_freq_hi)
     if s_freq is not None:
         sims["mimics_kinematics"] = round(s_freq, 3)
 
-    # ===== 3. AERO: 速度 (Reynolds 代理) =====
-    speed = to_float(vehicle.get("speed_max_m_s_std"))
-    org_speed_lo = to_float(organism.get("cruise_speed_m_s_min"))
-    org_speed_hi = to_float(organism.get("cruise_speed_m_s_max"))
-    s_speed = sim_log(speed, org_speed_lo, org_speed_hi)
-    if s_speed is not None:
-        sims["mimics_aero"] = round(s_speed, 3)
+    # ── 4. AERO: Reynolds数 Re + Strouhal数 St ──────────────────────
+    # 弦长估算: chord ≈ wingspan / 4
+    aero_parts = []
+    if speed and span_mm and speed > 0:
+        chord_m = (span_mm / 1000.0) / 4.0
+        v_Re = speed * chord_m / NU
+        s_Re = sim_log(v_Re, org_Re_lo, org_Re_hi)
+        if s_Re is not None:
+            aero_parts.append(s_Re)
+        if freq and freq > 0:
+            v_St = freq * chord_m / speed
+            s_St = sim_log(v_St, org_St_lo, org_St_hi)
+            if s_St is not None:
+                aero_parts.append(s_St)
+    if aero_parts:
+        sims["mimics_aero"] = round(avg_skip_none(aero_parts), 3)
 
-    # ===== 4. MORPHOLOGY: 悬停能力一致性 =====
+    # ── 5. FUNCTIONAL: can_hover + can_glide ────────────────────────
     v_hover = vehicle.get("can_hover")
     o_hover = organism.get("can_hover")
+    v_glide = vehicle.get("can_glide")
+    o_glide = organism.get("can_glide")
+
+    func_parts = []
     if v_hover is not None and o_hover is not None:
-        # 完全一致 = 1.0; 不一致 = 0.0
-        sims["mimics_morphology"] = 1.0 if v_hover == o_hover else 0.0
+        func_parts.append(1.0 if v_hover == o_hover else 0.3)
+    if v_glide is not None and o_glide is not None:
+        func_parts.append(1.0 if v_glide == o_glide else 0.3)
+    if func_parts:
+        sims["mimics_functional"] = round(avg_skip_none(func_parts), 3)
 
     return sims
 
@@ -168,7 +220,8 @@ def main():
                 MATCH ()-[r:MIMICS]->()
                 WHERE elementId(r) = $rid
                 REMOVE r.mimics_aero, r.mimics_kinematics, r.mimics_morphology,
-                       r.mimics_scale, r.mimics_dominant_type, r.mimics_dominant_score,
+                       r.mimics_scale, r.mimics_functional,
+                       r.mimics_dominant_type, r.mimics_dominant_score,
                        r.scored_at
                 """,
                 rid=rel_id,
@@ -198,7 +251,7 @@ def main():
             updated += 1
 
             score_summary = " | ".join(
-                f"{k.replace('mimics_', '')[:4]}:{v}"
+                f"{k.replace('mimics_', '')[:5]}:{v}"
                 for k, v in sims.items()
                 if k.startswith("mimics_") and not k.endswith("type") and not k.endswith("score")
             )

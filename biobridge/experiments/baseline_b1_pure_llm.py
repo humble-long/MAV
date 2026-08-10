@@ -41,14 +41,20 @@ def load_test_set(jsonl_path: Path, n: int, seed: int = 42, sample_per_cat: bool
         for line in f:
             line = line.strip()
             if line:
-                items.append(json.loads(line))
+                it = json.loads(line)
+                if it.get("category") != "A1":
+                    items.append(it)
 
     random.seed(seed)
+    if n >= len(items):
+        # 全量，不抽样
+        random.shuffle(items)
+        return items
     if not sample_per_cat:
         random.shuffle(items)
         return items[:n]
 
-    # 按 6 类均衡抽样
+    # 按类别均衡抽样
     by_cat = {}
     for it in items:
         c = it.get("category", "?")
@@ -82,7 +88,7 @@ def query_pure_llm(llm: LLMClient, question: str) -> dict:
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--n", type=int, default=50, help="样本数")
+    parser.add_argument("--n", type=int, default=9999, help="样本数")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument(
         "--data",
@@ -100,7 +106,8 @@ def main():
 
     print(f"\n  Loading test set from {args.data} ...")
     test_set = load_test_set(Path(args.data), n=args.n, seed=args.seed)
-    print(f"  Sampled {len(test_set)} questions")
+    test_set = [it for it in test_set if it.get("category", "").startswith(("A", "B"))]
+    print(f"  A 类题: {len(test_set)}")
     by_cat = {}
     for it in test_set:
         c = it.get("category", "?")
