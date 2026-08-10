@@ -117,6 +117,15 @@
 
 7 类关系：MIMICS（已细分 4 类 + 自动打分）、HAS_PERFORMANCE、EQUIPPED_WITH、SUITABLE_FOR、HAS_DRIVE_MECHANISM、HAS_REFERENCE、DEVELOPED_BY、FUNDED_BY。
 
+> **换电脑 / 从零恢复图谱**：本仓库的 KG 构建脚本（p0/p1/p2）只在已有节点上补属性，**不能从空库重建**。整库快照已备份到 `biobridge/kg_backup/`（`nodes.jsonl` + `rels.jsonl`）。新机器装好并启动 Neo4j 后执行：
+>
+> ```bash
+> export NEO4J_PASSWORD="<新库密码>"
+> python3 biobridge/kg_backup/import_kg.py    # 空库直接跑；非空加 --wipe
+> ```
+>
+> 即可还原为一模一样的图谱。详见 `papers/HANDOFF.md` §5.5。
+
 ## 6. 复现脚本运行
 
 ```bash

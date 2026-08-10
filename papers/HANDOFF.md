@@ -179,7 +179,27 @@ Mavent         0.696    0.702    0.703    0.640    0.873    0.537
 - 旧 aero 满分率 74%（用速度代理）→ 新 aero 满分率 16%（Re+St 精确）
 - 旧 morphology 只有 0/1 → 新 morphology 是连续值，无虚高满分
 
-### 5.5 换电脑 / Neo4j 数据迁移（★ 必看）
+### 5.4 Mavent v2 prompt 修复（本轮关键）
+
+**发现的 Bug**：Mavent v1 遇到"信鸽的起飞重量"这类题目，因为 system prompt 说"涉及生物原型必先调 search_organism"，会先查生物层的鸽子（返回 200-500g），而不是查工程样机层的信鸽（280g），答错。
+
+**修复**：`biobridge/agent/llm_client.py` 的 SYSTEM_PROMPT 里改成：
+- 遇到具体样机名称必须先调 search_fwmav
+- search_organism 只在明确询问生物参数或需要仿生参考时调用
+
+**效果**：Mavent A2 从 0.751 → 0.832，工具调用平均从 6.9 → 5.6/题（不再乱调 organism）
+
+### 5.5 关键 max_tokens 设置（易踩坑）
+
+| 场景 | 变量 | 值 | 原因 |
+|---|---|---|---|
+| Mavent 推理 | `MAX_OUTPUT_TOKENS` | 8192（默认）| ReAct 需要长思考链 |
+| A 类 Judge | `MAX_OUTPUT_TOKENS` | 4096 | claude-sonnet-4-6 输出 JSON |
+| B 类标注（annotate_b_relevance）| `max_tokens` 硬编码 1500 | - | claude 有中文双引号问题（已修复） |
+
+**踩坑记录**：minimax-m2.7 是 reasoning model，30000 token 全被 reasoning 阶段吃掉，content 输出为空——**不要用 minimax 作 judge**。
+
+### 5.6 换电脑 / Neo4j 数据迁移（★ 必看）
 
 **核心坑**：图谱只存在 Neo4j 数据库里，**git 里的 p0/p1/p2 脚本无法从空库重建**——它们是 `MATCH` 已有节点补属性（节点不存在直接跳过），不负责创建原始种子图。所以换电脑不能只靠 clone。
 
@@ -200,27 +220,6 @@ python3 biobridge/kg_backup/import_kg.py     # 空库直接跑；非空需加 --
 **更新备份**（以后又改了图谱）：旧电脑 `NEO4J_PASSWORD=<pwd> python3 biobridge/kg_backup/export_kg.py` 重跑一次再 commit 即可。
 
 > 当前旧电脑 Neo4j 密码见环境变量约定（§4.2）；不要写进任何文件或 commit。
-
-
-### 5.4 Mavent v2 prompt 修复（本轮关键）
-
-**发现的 Bug**：Mavent v1 遇到"信鸽的起飞重量"这类题目，因为 system prompt 说"涉及生物原型必先调 search_organism"，会先查生物层的鸽子（返回 200-500g），而不是查工程样机层的信鸽（280g），答错。
-
-**修复**：`biobridge/agent/llm_client.py` 的 SYSTEM_PROMPT 里改成：
-- 遇到具体样机名称必须先调 search_fwmav
-- search_organism 只在明确询问生物参数或需要仿生参考时调用
-
-**效果**：Mavent A2 从 0.751 → 0.832，工具调用平均从 6.9 → 5.6/题（不再乱调 organism）
-
-### 5.5 关键 max_tokens 设置（易踩坑）
-
-| 场景 | 变量 | 值 | 原因 |
-|---|---|---|---|
-| Mavent 推理 | `MAX_OUTPUT_TOKENS` | 8192（默认）| ReAct 需要长思考链 |
-| A 类 Judge | `MAX_OUTPUT_TOKENS` | 4096 | claude-sonnet-4-6 输出 JSON |
-| B 类标注（annotate_b_relevance）| `max_tokens` 硬编码 1500 | - | claude 有中文双引号问题（已修复） |
-
-**踩坑记录**：minimax-m2.7 是 reasoning model，30000 token 全被 reasoning 阶段吃掉，content 输出为空——**不要用 minimax 作 judge**。
 
 ---
 
